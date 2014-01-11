@@ -1,0 +1,258 @@
+{
+    "0" : {
+        "message"    : "Easy translate text on web pages",
+        "description": "A description of the app in common list of extensions in Chrome"
+    },
+    "1" : {
+        "message"    : "Settings",
+        "description": "Tab name in top-right corner"
+    },
+    "2" : {
+        "message"    : "Text Input",
+        "description": "Tab name in top-right corner"
+    },
+    "3" : {
+        "message"    : "Pop-up definitions",
+        "description": "A title for block of settings"
+    },
+    "4" : {
+        "message"    : "Translation service",
+        "description": "A title for block of settings"
+    },
+    "5" : {
+        "message"    : "Pop-up theme customization",
+        "description": "A title for block of settings"
+    },
+    "6" : {
+        "message"    : "URL exclusions",
+        "description": "A title for block of settings"
+    },
+    "7" : {
+        "message"    : "Display pop-up when I double-click a word",
+        "description": "A label for checkbox in settings"
+    },
+    "8" : {
+        "message"    : "Display pop-up when I select a word or phrase",
+        "description": "A label for checkbox in settings"
+    },
+    "9" : {
+        "message"    : "Display pop-up when I press a hotkey",
+        "description": "A label for checkbox in settings"
+    },
+    "10": {
+        "message"    : "To define the hotkey press at least one of control keys (Ctrl, Alt, Shift) and one letter or number",
+        "description": "Help how to define hotkey to make translation"
+    },
+    "11": {
+        "message"    : "Theme {0} already exists!",
+        "description": "Error message appears when user tries to save a theme with name which is already exist"
+    },
+    "12": {
+        "message"    : "To save current theme, type a name and press [Enter]-key",
+        "description": "A tooltip for field with new theme name"
+    },
+    "13": {
+        "message"    : "Theme name must contain visible chars",
+        "description": "Error message"
+    },
+    "14": {
+        "message"    : "Swap languages",
+        "description": "Replace direction of the translation on opposite"
+    },
+    "15": {
+        "message"    : "Auto play text-to-speech",
+        "description": "A label for checkbox in settings"
+    },
+    "16": {
+        "message"    : "Show text-to-speech icon",
+        "description": "A label for checkbox in settings"
+    },
+    "17": {
+        "message"    : "Show extension's button on the toolbar",
+        "description": "A label for checkbox in settings"
+    },
+    "18": {
+        "message"    : "If you don't want activate the extension on some pages, just list the URLs in text area below.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "19": {
+        "message"    : "Use [Enter]-key for separation URLs.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "20": {
+        "message"    : "Don't forget to reload the page(s) to apply changes.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "21": {
+        "message"    : "Collapse or expand block",
+        "description": "A title for +/- icon in right-top corner of each block"
+    },
+    "22": {
+        "message"    : "Translated text",
+        "description": "Result of translation, dummy-text in pop-up (user styles)"
+    },
+    "23": {
+        "message"    : "noun",
+        "description": "Part of speech, dummy-text in pop-up (user styles)"
+    },
+    "24": {
+        "message"    : "Word 1, Word 2, Word N",
+        "description": "Result of translation for specific part of speech, dummy-text in pop-up (user styles)"
+    },
+    "25": {
+        "message"    : "Theme",
+        "description": "Set of styles for pop-up block"
+    },
+    "26": {
+        "message"    : "Cancel saving the theme",
+        "description": "Text for a button to cancel saving the theme"
+    },
+    "27": {
+        "message"    : "You cannot use reserved name for custom theme",
+        "description": "Error tooltip appears in case if user tries to save a theme with reserved name"
+    },
+    "28": {
+        "message"    : "Save current theme",
+        "description": "Text for a button to save custom user theme"
+    },
+    "29": {
+        "message"    : "Remove",
+        "description": "Text for a button to remove the theme"
+    },
+    "30": {
+        "message"    : "Common",
+        "description": "Sub-title for CSS styles of pop-up generally (padding, shadow, etc.)"
+    },
+    "31": {
+        "message"    : "Background",
+        "description": "Sub-title for CSS styles relative to background (color, opacity, etc.)"
+    },
+    "32": {
+        "message"    : "Border",
+        "description": "Sub-title for CSS styles relative to border (color, radius, etc.)"
+    },
+    "33": {
+        "message"    : "Text",
+        "description": "Sub-title for CSS styles relative to text (size, font, etc.)"
+    },
+    "34": {
+        "message"    : "Additional CSS rules",
+        "description": "A part of pop-up style settings for advanced users, who knows CSS"
+    },
+    "35": {
+        "message"    : "All CSS rules will be applied relative to the main container (inspect the popup in dev-tools to find out the details of structure).",
+        "description": "Information about how to use extra CSS-rules to customize pop-up"
+    },
+    "36": {
+        "message"    : "Color",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "37": {
+        "message"    : "Opacity",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "38": {
+        "message"    : "Use linear gradient",
+        "description": "A label for checkbox, defines a type of gradient for CSS background"
+    },
+    "39": {
+        "message"    : "Width",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "40": {
+        "message"    : "Radius",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "41": {
+        "message"    : "Size",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "42": {
+        "message"    : "Font",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "43": {
+        "message"    : "Inside the box",
+        "description": "A title for checkbox, defines that the shadow it will be inner (inset)"
+    },
+    "44": {
+        "message"    : "Please support us if you like the extension",
+        "description": "Text to support developers of the extension"
+    },
+    "45": {
+        "message"    : "Rate 5 start",
+        "description": "Text for the link"
+    },
+    "46": {
+        "message"    : "Make a donation",
+        "description": "Text for a pseudo-link"
+    },
+    "47": {
+        "message"    : "Maybe, you mean $1?",
+        "description": "Suggestion to correct a word or sentence for translation"
+    },
+    "48": {
+        "message"    : "Listen",
+        "description": "A title tooltip for an icon to play text-to-speech"
+    },
+    "49": {
+        "message"    : "Translated from $1 (Powered by $2)",
+        "description": "A title tooltip for pop-up block"
+    },
+    "50": {
+        "message"    : "Shadow",
+        "description": "A sub-title for definition a box shadow for the pop-up"
+    },
+    "51": {
+        "message"    : "Padding",
+        "description": "A sub-title for definition an inner margin inside the pop-up"
+    },
+    "52": {
+        "message"    : "Max width",
+        "description": "A sub-title for definition a maximum width for the pop-up"
+    },
+    "53": {
+        "message"    : "Max height",
+        "description": "A sub-title for definition a maximum height for the pop-up"
+    },
+    "54": {
+        "message"    : "Style",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "55": {
+        "message"    : "Text",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "56": {
+        "message"    : "Blur radius",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "57": {
+        "message"    : "Offset",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "58": {
+        "message"    : "Family",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "59": {
+        "message"    : "To change color smoothly you can press and hold one of or all together control keys (Ctrl, Alt, Shift) and  [↑] or [↓] key.",
+        "description": "A tooltip title for the color picker box"
+    },
+    "60": {
+        "message"    : "If you like the app, please support us and future releases. {0} or {1}. Thank you.",
+        "description": "A text in the footer"
+    },
+    "61": {
+        "message"    : "Rate 5 stars",
+        "description": "First placeholder in the footer"
+    },
+    "62": {
+        "message"    : "make a donation",
+        "description": "Second placeholder in the footer"
+    },
+    "63": {
+        "message"    : "Start typing to get translation",
+        "description": "Placeholder inside text area in the user input"
+    }
+}

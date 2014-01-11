@@ -1,0 +1,102 @@
+@import "../_vars", "../_mixins";
+
+// form control
+.slider {
+  $sliderHeight: 7px;
+  $bgcDisabled: #c0c0c0;
+  $pointColor: #008000;
+
+  position: relative;
+  width: auto;
+  height: $sliderHeight;
+  border-radius: $sliderHeight;
+  border: 1px solid #6A6A6A;
+  display: block;
+
+  .line {
+    position: absolute;
+    border-radius: $sliderHeight;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    @include prop-with-vendors(background, 'linear-gradient(top, #2CB500, #267C00)');
+  }
+
+  .value {
+    $pointSize: $sliderHeight + 3;
+
+    position: absolute;
+    outline: none;
+    top: $sliderHeight - $pointSize;
+    width: $pointSize;
+    height: $pointSize;
+    margin: 0 -#{$pointSize / 2};
+
+    &:focus {
+      .title {
+        display: block;
+      }
+      .point {
+        @include formControlFocus;
+        border-style: solid;
+      }
+    }
+
+    &.low {
+      left: 0;
+    }
+
+    &.high {
+      right: 0;
+    }
+
+    .point {
+      position: absolute;
+      width: inherit;
+      height: inherit;
+      border-radius: 50%;
+      z-index: 1;
+      border: 2px outset white;
+      box-shadow: 0 1px 3px black;
+      background: $pointColor;
+      cursor: pointer;
+
+      &:hover + .title {
+        display: block;
+      }
+    }
+
+    .title {
+      position: absolute;
+      font-style: normal;
+      display: none;
+      text-shadow: -1px -1px 0 black;
+      color: white;
+      white-space: nowrap;
+      background: $darkBgColor;
+      padding: 0 $radius;
+      top: -$pointSize * 2;
+      border-radius: $radius;
+      border: 1px solid $bgcDisabled;
+      z-index: 2;
+    }
+  }
+
+  &.disabled {
+    .value .point {
+      background: #666;
+    }
+    .line {
+      background: $bgcDisabled;
+    }
+  }
+}
+
+// bug fixes for FireFox
+@-moz-document url-prefix() {
+  .slider .point {
+    // incorrect "outset" border-style for rounded elements
+    border-style: solid !important;
+  }
+}

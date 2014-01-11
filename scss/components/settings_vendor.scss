@@ -1,0 +1,25 @@
+@import "../vars", '../mixins';
+
+.settingsVendor {
+  .languagesPairSelect {
+    @include addSepLine;
+  }
+
+  .vendor {
+    .title {
+      padding: 0;
+    }
+
+    .url {
+      margin-left: $spacing;
+      color: lightskyblue;
+
+      &:before {
+        content: "(";
+      }
+      &:after {
+        content: ")";
+      }
+    }
+  }
+}

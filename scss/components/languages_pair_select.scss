@@ -1,0 +1,72 @@
+@import "../vars", "../mixins";
+
+.languagesPairSelect {
+  $iconSize: 16px;
+
+  text-align: center;
+  white-space: nowrap;
+  margin-top: $padding;
+
+  > * {
+    display: inline-block;
+    vertical-align: middle;
+    &:not(:last-child) {
+      margin-right: $spacing;
+    }
+  }
+
+  .flagFrom, .flagTo {
+    width: $iconSize;
+    height: $iconSize;
+  }
+
+  .swapLang {
+    $arrowSize: 4px;
+    $lineHeight: 2px;
+    $color: white;
+
+    position: relative;
+    width: $iconSize;
+    height: $iconSize;
+    line-height: $iconSize;
+    margin-left: $spacing;
+    margin-right: $padding;
+    cursor: pointer;
+    opacity: .5;
+
+    @include with-vendors(transition, opacity .3s);
+    &:hover {
+      opacity: 1;
+    }
+
+    .line {
+      position: relative;
+      display: block;
+      height: $lineHeight;
+      background: $color;
+      top: 50%;
+      margin-top: -($lineHeight / 2);
+    }
+
+    &:before, &:after {
+      position: absolute;
+      top: 50%;
+      margin: 0 -1px;
+      margin-top: -$arrowSize;
+    }
+
+    &:before {
+      @include triangle($arrowSize, $color, left);
+      left: 0;
+    }
+
+    &:after {
+      @include triangle($arrowSize, $color, right);
+      right: 0;
+    }
+  }
+
+  .select {
+    width: 39%;
+  }
+}

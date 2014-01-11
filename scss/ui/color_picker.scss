@@ -1,0 +1,85 @@
+@import "../_vars", "../mixins";
+
+// form control
+.colorPicker {
+  $boxSize: 17px;
+
+  .colorBox {
+    width: $boxSize;
+    height: $boxSize;
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    border: 2px solid rgba(0, 0, 0, .5);
+    cursor: pointer;
+
+    @include with-vendors(transition, background-color .35s);
+
+    &:not(.right) {
+      margin-right: $spacing;
+    }
+    &.right {
+      margin-left: $spacing;
+    }
+    &:hover {
+      border-color: rgba(255, 255, 255, .5);
+    }
+  }
+
+  .textInput {
+    width: 75px;
+    vertical-align: middle;
+
+    &.rgb {
+      width: 85px;
+    }
+
+    .editBox {
+      text-transform: uppercase;
+    }
+  }
+}
+
+// flying panel
+.colorPalette {
+  $size: 15px;
+
+  position: absolute;
+  background: $darkBgColor;
+  padding: $spacing;
+  margin: $spacing 0;
+  border-radius: $radius;
+  border: 1px solid #525252;
+  box-shadow: 0 0 10px #000;
+  z-index: 1000;
+
+  .colorSet {
+    float: left;
+
+    &:not(:last-child) {
+      margin-right: $spacing;
+    }
+
+    .color {
+      width: $size;
+      height: $size;
+      border: 1px solid #ccc;
+      display: block;
+
+      &:first-child {
+        margin-bottom: $spacing;
+      }
+
+      &:not(:first-child) {
+        margin-top: -1px;
+      }
+
+      &:hover {
+        border-color: white;
+        box-shadow: 0 0 2px 3px #a9a9a9;
+        position: relative;
+        z-index: 5;
+      }
+    }
+  }
+}

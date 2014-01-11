@@ -1,0 +1,46 @@
+@import "../vars";
+
+.scrollBar {
+  $padding: 2px;
+
+  position: absolute;
+  width: $scrollBarSize;
+  top: $padding;
+  bottom: $padding;
+  left: $padding;
+  right: $padding;
+  overflow: hidden;
+
+  &.left { margin-right: auto; }
+  &.right { margin-left: auto; }
+
+  // draggable bar
+  .bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    min-height: $scrollBarSize;
+    border-radius: $scrollBarSize;
+    background-color: white;
+    opacity: .7;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
+// block that contains the scroll
+.scrollable {
+  position: relative;
+  overflow: hidden;
+
+  &.right {
+    padding-right: $scrollBarSize + $spacing;
+  }
+
+  &.left {
+    padding-left: $scrollBarSize + $spacing;
+  }
+}

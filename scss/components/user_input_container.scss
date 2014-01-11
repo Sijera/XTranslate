@@ -1,0 +1,11 @@
+@import "../vars", '../mixins';
+
+.userInputContainer {
+  .languagesPairSelect {
+    @include addSepLine(bottom);
+  }
+
+  textarea {
+    height: 75px;
+  }
+}

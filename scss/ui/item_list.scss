@@ -1,0 +1,81 @@
+@import '../vars', '../mixins';
+
+.itemList {
+  $removeIcon: 13px;
+  $padding: 3px;
+
+  position: relative;
+  overflow: hidden;
+  list-style: none;
+  background: $darkBgColor;
+  padding: $padding;
+  border-radius: $radius;
+  border: 1px solid $lightBgColor;
+  cursor: default;
+
+  li {
+    position: relative;
+    padding: 1px $spacing;
+    border-radius: $radius;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-top: $padding;
+
+    > span.item {
+      color: inherit;
+    }
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &.selected {
+      background-color: $frameBgColor !important;
+    }
+
+    &.disabled {
+      pointer-events: none;
+      color: gray;
+      background: none !important;
+    }
+
+    &:hover {
+      background-color: $lightBgColor;
+    }
+  }
+
+  &.removable {
+    li {
+      padding-right: $removeIcon + $spacing;
+
+      &.selected, &:hover {
+        .removeIcon {
+          display: block;
+        }
+      }
+    }
+
+    .removeIcon {
+      position: absolute;
+      right: 0;
+      top: 0;
+      margin: $radius;
+      width: $removeIcon;
+      height: $removeIcon;
+      border-radius: $radius;
+      text-align: center;
+      cursor: pointer;
+      display: none;
+
+      &:hover {
+        background: rgba(0, 0, 0, .25);
+      }
+
+      &:after {
+        position: relative;
+        top: -6px;
+        @include iconDelete;
+      }
+    }
+  }
+}

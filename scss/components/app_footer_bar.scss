@@ -1,0 +1,7 @@
+@import "../vars", '../mixins';
+
+.appFooterBar {
+  @include addSepLine;
+  color: silver;
+  font-style: italic;
+}

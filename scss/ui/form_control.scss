@@ -1,0 +1,34 @@
+@import "../_vars";
+
+.formControl {
+  position: relative;
+  display: inline-block;
+  text-align: left;
+
+  &.error {
+    $errorColor: #9f4747;
+    background-color: $errorColor;
+    border-color: lighten($errorColor, 15);
+  }
+
+  &.disabled {
+    pointer-events: none;
+    opacity: .5;
+    cursor: default;
+  }
+}
+
+// flying panel
+.tooltip {
+  position: absolute;
+  background: rgba(255, 255, 255, .85);
+  border-radius: $radius;
+  margin: $spacing 0;
+  box-shadow: 1px 1px 5px black;
+  padding: .5em;
+  left: 0;
+  top: 150%;
+  color: black;
+  z-index: 100;
+  display: none;
+}

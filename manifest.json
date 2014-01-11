@@ -1,0 +1,35 @@
+{
+    "name"            : "XTranslate",
+    "description"     : "__MSG_0__",
+    "version"         : "1.0",
+    "manifest_version": 2,
+    "default_locale"  : "en",
+    "options_page"    : "options.html",
+
+    "icons": {},
+
+    "browser_action": {
+        "default_icon": {},
+        "default_popup": ""
+    },
+
+    "web_accessible_resources": ["img/*"],
+
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*", "file://*/*"],
+            "css"    : ["css/injected.css"],
+            "js"     : ["js/libs/jquery.min.js", "js/injected.js"]
+        }
+    ],
+
+    "permissions": [
+        "storage",
+        "clipboardWrite",
+        "http://translate.google.com/",
+        "http://translate.yandex.com/",
+        "http://bing.com/translator/"
+    ]
+}

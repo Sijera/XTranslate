@@ -1,0 +1,35 @@
+@import "../_vars", "../mixins";
+
+// item list
+.tabBar {
+  list-style: none;
+
+  li {
+    display: inline-block;
+    margin-top: 0;
+    border-bottom: 1px solid transparent;
+    vertical-align: middle;
+    padding: 2px;
+
+    &:not(.selected) {
+      cursor: pointer;
+      border-bottom: 1px dotted white;
+      border-radius: 0;
+
+      &:hover {
+        background: none;
+      }
+    }
+
+    &.selected {
+      font-weight: bold;
+      background: none !important;
+    }
+
+    &:not(:last-child) {
+      margin-right: $padding;
+    }
+  }
+}
+
+

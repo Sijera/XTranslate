@@ -1,0 +1,37 @@
+@import "../vars", "../mixins";
+
+// form control
+.button {
+  $bgc: #555;
+  $hoverBgc: gray;
+
+  background-color: $bgc;
+  border-radius: $radius;
+  height: $formControlBaseHeight;
+  padding: 0 $padding;
+  color: white;
+  text-align: center;
+  box-shadow: 0 0 10px -3px black;
+  border: 1px solid $bgc;
+  cursor: pointer;
+
+  &:not(button):active {
+    padding-top: 0;
+  }
+
+  &:active {
+    padding-top: 2px;
+  }
+
+  &:focus {
+    border-color: $hoverBgc;
+    @include formControlFocus;
+  }
+
+  &:hover {
+    border-color: $hoverBgc;
+    background-color: darken($bgc, 10%);
+  }
+}
+
+

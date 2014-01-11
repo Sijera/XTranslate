@@ -1,0 +1,15 @@
+@import "../vars", '../mixins';
+
+.settingsPopupDefinitions {
+  .hotKey {
+    border-radius: $padding;
+    text-align: center;
+    display: block;
+    width: 125px;
+    margin: auto;
+  }
+
+  .sep {
+    @include addSepLine;
+  }
+}

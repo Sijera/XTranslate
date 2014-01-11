@@ -1,0 +1,77 @@
+@import "vars", 'mixins';
+
+html, body {
+  @include with-vendors(user-select, none);
+  background-color: $darkBgColor;
+  height: 100%;
+}
+
+* {
+  @include with-vendors(box-sizing, border-box);
+  margin: 0;
+  padding: 0;
+  outline: none;
+}
+
+body, table, textarea, input, button, select, a {
+  font: 13px Verdana, sans-serif;
+  color: white;
+}
+
+a {
+  font: inherit;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+textarea {
+  resize: vertical;
+  width: 100%;
+  height: 50px;
+  background: none;
+  border: 1px solid gray;
+  border-radius: $radius;
+  padding: $spacing;
+  overflow: hidden;
+
+  &:focus {
+    border-color: silver;
+    @include formControlFocus;
+  }
+}
+
+#app {
+  position: relative;
+  width: 425px;
+  margin: auto;
+  padding: $padding;
+}
+
+// <ui>
+@import "ui/flying_panel";
+@import "ui/form_control";
+@import "ui/button";
+@import "ui/check_box";
+@import "ui/radio";
+@import "ui/select";
+@import "ui/slider";
+@import "ui/text_input";
+@import "ui/number_input";
+@import "ui/color_picker";
+@import "ui/item_list";
+@import "ui/tab_bar";
+@import "ui/scroll_bar";
+
+// <app-components>
+@import "components/popup";
+@import "components/app_header_bar";
+@import "components/app_footer_bar";
+@import "components/languages_pair_select";
+@import "components/settings_container";
+@import "components/settings_block";
+@import "components/settings_popup_definitions";
+@import "components/settings_vendor";
+@import "components/settings_popup_style";
+@import "components/settings_exclusions";
+@import "components/user_input_container";

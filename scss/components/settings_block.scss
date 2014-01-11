@@ -1,0 +1,92 @@
+@import "../vars";
+
+.settingsBlock {
+  $iconSize: 15px;
+  $borderColor: gray;
+
+  position: relative;
+  padding: $padding;
+  border: 1px solid $borderColor;
+  border-radius: $radius;
+  min-height: 27px;
+  box-shadow: 0 0 15px -2px rgba(255, 255, 255, .25);
+
+  div, span {
+    &.title {
+      font-weight: bold;
+      text-shadow: 1px 1px 0 black;
+      padding-right: $iconSize + $padding;
+      display: inline-block;
+    }
+  }
+
+  .content {
+    margin: $padding 0 0 $padding;
+    &:empty {
+      display: none;
+    }
+  }
+
+  &:not(:last-child) {
+    margin-bottom: $padding;
+  }
+
+  &.collapsed {
+    > .content {
+      display: none;
+    }
+
+    .iconPlusMinus {
+      &:before {
+        content: "";
+        background: $borderColor;
+        position: absolute;
+        top: 2px;
+        bottom: 2px;
+        left: floor($iconSize / 2) - 1;
+        width: 1px;
+      }
+    }
+  }
+
+  // Form controls
+  .checkBox, .radio {
+    margin-left: 0;
+    display: block;
+
+    &:not(:last-child) {
+      margin-bottom: $spacing;
+    }
+  }
+
+  // Collapse and expand block's content
+  .iconPlusMinus {
+    position: absolute;
+    right: 0;
+    top: 0;
+    cursor: pointer;
+    border: 1px solid $borderColor;
+    border-radius: $radius;
+    width: $iconSize;
+    height: $iconSize;
+    margin: $padding;
+
+    &:hover {
+      $bgc: silver;
+      border-color: $bgc;
+      &:after, &:before {
+        background: $bgc;
+      }
+    }
+
+    &:after {
+      content: "";
+      background: $borderColor;
+      position: absolute;
+      left: 2px;
+      right: 2px;
+      top: floor($iconSize / 2) - 1;
+      height: 1px;
+    }
+  }
+}

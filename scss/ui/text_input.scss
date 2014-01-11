@@ -1,0 +1,38 @@
+@import "../_vars", "../mixins";
+
+.textInput {
+  background-color: $darkBgColor;
+  border: 1px solid $lightBgColor;
+  border-radius: $radius;
+  height: $formControlBaseHeight;
+
+  &.focused {
+    @include formControlFocus;
+    border-color: lighten($lightBgColor, 15);
+  }
+
+  .editBox {
+    position: absolute;
+    padding: 0 $spacing;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background: none;
+    border: none;
+    outline: none;
+    text-align: inherit;
+
+    &[readonly] {
+      pointer-events: none;
+      cursor: default;
+    }
+  }
+
+  ::-ms-clear {
+    display: none;
+  }
+}

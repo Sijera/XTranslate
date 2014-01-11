@@ -1,0 +1,140 @@
+@import 'vars';
+
+@mixin with-vendors($prop, $value...) {
+  -moz-#{$prop}: $value;
+  -webkit-#{$prop}: $value;
+  #{$prop}: $value;
+}
+
+@mixin prop-with-vendors($prop, $value) {
+  #{$prop}: -ms-#{$value};
+  #{$prop}: -moz-#{$value};
+  #{$prop}: -webkit-#{$value};
+  #{$prop}: #{$value};
+}
+
+// Draw a triangle via CSS-borders
+// Available direction: ltr, rtl, top to bottom, bottom to top
+@mixin triangle($size: 4px, $color: white, $dir: left, $base: 1) {
+  width: 0;
+  height: 0;
+  content: '';
+  display: block;
+
+  $visible: $size solid $color;
+  $hidden: $size * $base solid transparent !important;
+
+  @if $dir == left {
+    border-left: 0;
+    border-right: $visible;
+    border-top: $hidden;
+    border-bottom: $hidden;
+  } @else if $dir == right {
+    border-right: 0;
+    border-left: $visible;
+    border-top: $hidden;
+    border-bottom: $hidden;
+  } @else if $dir == top {
+    border-top: 0;
+    border-bottom: $visible;
+    border-left: $hidden;
+    border-right: $hidden;
+  } @else if $dir == bottom {
+    border-bottom: 0;
+    border-top: $visible;
+    border-left: $hidden;
+    border-right: $hidden;
+  }
+}
+
+// Add ability to element to switch in loader/waiting mode with CSS-animated lines on the background
+// To switch in loaded-mode you need to use additional class "wait"/or "waiting"/or "loading" in JS
+@mixin loader($color1: #a0a0a0, $color2: #333) {
+  $bgc: linear-gradient(-45deg, $color1 0px, $color1 15px, $color2 15px, $color2 29px, $color1 29px, $color1 43px, $color2 43px);
+
+  &.loading, &.waiting, &.wait {
+    @include prop-with-vendors(background, $bgc !important);
+    @include with-vendors(animation, loader 1.3s linear infinite);
+    background-size: 40px 40px !important;
+    cursor: default;
+    @content;
+  }
+}
+
+// Special mixin for correct building gaps between the elements in popup menus/blocks
+// If you need to support IE you should used, otherwise do the bicycle ;)
+@mixin spacer($size: 5px, $type: horizontal, $pos: 'left|right|top|bottom', $pseudo: ':before') {
+  &:#{$pseudo} {
+    content: "";
+    position: absolute;
+    background: rgba(0, 0, 0, 0); // use it instead of transparent to avoid fuck ups in IE
+
+    @if $type == horizontal {
+      width: 100%;
+      height: $size;
+      left: 0;
+      @if $pos == bottom {
+        bottom: -$size;
+      } @else {
+        top: -$size;
+      }
+    } @else if $type == vertical {
+      width: $size;
+      height: 100%;
+      top: 0;
+      @if $pos == right {
+        right: -$size;
+      } @else {
+        left: -$size;
+      }
+    }
+    @content;
+  }
+}
+
+@mixin clearFix {
+  &:after {
+    content: "";
+    width: 100%;
+    display: block;
+    height: 0;
+    overflow: hidden;
+    clear: both;
+  }
+}
+
+@mixin addSepLine($side: 'top', $margin: 10px, $color1: #777, $color2: #111) {
+  position: relative;
+  margin-#{$side}: $margin;
+  padding-#{$side}: $margin;
+
+  &:after {
+    position: absolute;
+    opacity: .5;
+    left: 0;
+    #{$side}: 0;
+    width: 100%;
+    height: 1px;
+    background: $color1;
+    box-shadow: 0 1px 0 $color2;
+    content: "";
+  }
+}
+
+@mixin iconDelete($color: white) {
+  content: "";
+  width: 1px;
+  height: 1px;
+  display: inline-block;
+  overflow: hidden;
+  background: $color;
+  box-shadow: -1px -1px $color, -2px -2px $color, -3px -3px $color,
+    1px -1px $color,  2px -2px $color,  3px -3px $color,
+    -1px  1px $color, -2px  2px $color, -3px  3px $color, 1px 1px $color, 2px 2px $color, 3px 3px $color;
+}
+
+@mixin formControlFocus {
+  box-shadow: 0 0 5px -1px white;
+  @include with-vendors(transition, box-shadow .3s);
+  @content;
+}

@@ -1,0 +1,43 @@
+@import "../vars";
+
+.radio {
+  $boxSize: 16px;
+  $bgColor: #555;
+  $pointColor: #fff;
+  $borderSize: round($boxSize * .25);
+
+  .box {
+    position: relative;
+    display: inline-block;
+    background: $bgColor;
+    width: $boxSize;
+    height: $boxSize;
+    line-height: $boxSize;
+    border-radius: 50%;
+    margin-right: 5px;
+    vertical-align: middle;
+    border: 1px solid transparent;
+  }
+
+  .label {
+    vertical-align: middle;
+    cursor: pointer;
+  }
+
+  &.checked {
+    .box {
+      background: $pointColor;
+      border: $borderSize solid $bgColor;
+    }
+  }
+
+  &:focus {
+    .box {
+      box-shadow: 0 0 0 1px lighten($bgColor, 20%);
+    }
+  }
+
+  + .radio {
+    margin-left: $spacing * 2;
+  }
+}

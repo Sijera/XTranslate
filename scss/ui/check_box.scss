@@ -1,0 +1,58 @@
+@import "../vars", '../mixins';
+
+.checkBox {
+  $bgColor: #555;
+  $markColor: white;
+  $boxSize: 16px;
+
+  position: relative;
+  display: inline-block;
+
+  &:focus {
+    .box {
+      border: 1px solid lighten($bgColor, 20%);
+    }
+  }
+
+  .box {
+    position: relative;
+    overflow: hidden;
+    width: $boxSize;
+    height: $boxSize;
+    border-radius: $radius;
+    background: $bgColor;
+    display: inline-block;
+    vertical-align: middle;
+    border: 1px solid transparent;
+
+    &.checked {
+      &:after {
+        content: '';
+        position: absolute;
+        width: 7px;
+        height: 3px;
+        background: transparent;
+        top: 0;
+        left: 0;
+        margin: 3px;
+        border: 3px solid $markColor;
+        border-top: none;
+        border-right: none;
+        @include with-vendors(transform, rotate(-45deg));
+      }
+    }
+  }
+
+  + .checkBox {
+    margin-left: $spacing * 2;
+  }
+
+  .label {
+    margin-left: $spacing;
+    line-height: $boxSize;
+    vertical-align: middle;
+    cursor: pointer;
+  }
+}
+
+

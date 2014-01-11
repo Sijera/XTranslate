@@ -1,0 +1,53 @@
+@import "../_vars", "../_mixins";
+
+.numberInput {
+  $arrHoverColor: white;
+
+  .editBox {
+    padding-right: $formControlArrowSpace;
+  }
+
+  &:before {
+    position: absolute;
+    content: '';
+    right: 0;
+    top: 0;
+    background: rgba(255, 255, 255, 0);
+    width: $formControlArrowSpace;
+    height: 100%;
+    cursor: default;
+    z-index: 9;
+  }
+
+  &.error {
+    .upArr,
+    .downArr {
+      border-color: $arrHoverColor;
+    }
+  }
+
+  .upArr,
+  .downArr {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    right: 0;
+    cursor: pointer;
+    margin: 4px 3px;
+    z-index: 10;
+
+    &:hover {
+      border-color: $arrHoverColor;
+    }
+  }
+
+  .upArr {
+    top: 0;
+    @include triangle($formControlArrowSize, $lightBgColor, top);
+  }
+
+  .downArr {
+    bottom: 0;
+    @include triangle($formControlArrowSize, $lightBgColor, bottom);
+  }
+}

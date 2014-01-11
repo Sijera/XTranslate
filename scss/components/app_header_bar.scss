@@ -1,0 +1,32 @@
+@import "../_vars";
+
+.appHeaderBar {
+  $height: 25px;
+
+  position: relative;
+  height: $height;
+  line-height: $height;
+  margin-bottom: $padding;
+
+  .name {
+    font-weight: bold;
+    text-shadow: 1px 1px 0 black;
+  }
+
+  .version {
+    font: 10px Arial,Tahoma, sans-serif;
+    vertical-align: top;
+    margin-left: 2px;
+    color: gray;
+    line-height: 100%;
+  }
+
+  .tabBar {
+    position: absolute;
+    right: 0;
+    top: 2px;
+    border: 0;
+    padding: 0;
+    line-height: 100%;
+  }
+}

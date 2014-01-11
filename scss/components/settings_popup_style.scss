@@ -1,0 +1,142 @@
+@import "../_vars", '../_mixins';
+
+.settingsPopupStyle {
+  .popupPreview {
+    border: 1px dashed lighten($darkBgColor, 15%);
+    height: 120px;
+    text-align: center;
+    margin-bottom: $padding;
+    overflow: hidden;
+
+    .popup {
+      @include with-vendors(transform, translateY(-50%));
+      top: 50%;
+      position: relative !important;
+      margin: auto;
+      z-index: 0;
+    }
+  }
+
+  // form controls
+  .button {
+    text-shadow: 1px 1px 0 black;
+    background: none;
+    color: silver;
+    vertical-align: top;
+    margin-left: $spacing;
+    font-weight: bold;
+
+    &:focus,
+    &:hover {
+      color: white;
+    }
+  }
+
+  .colorPicker {
+    .colorBox {
+      border-radius: 50%;
+      border: 1px solid white;
+    }
+  }
+
+  .colorPicker .textInput,
+  .borderStyle,
+  .numberInput {
+    width: 80px;
+  }
+
+  .checkBox {
+    margin-top: $spacing;
+  }
+
+  // block of styles
+  .block {
+    &:not(.commonBlock) {
+      @include addSepLine(bottom, $padding);
+    }
+
+    .name {
+      font-weight: bold;
+      margin-bottom: $spacing;
+      display: block;
+      text-shadow: 1px 1px 0 black;
+    }
+  }
+
+  .subBlock {
+    width: 100%;
+    display: table;
+
+    > div {
+      display: table-cell;
+      padding: $spacing;
+      white-space: nowrap;
+
+      > * {
+        vertical-align: middle;
+        margin-right: $spacing;
+      }
+      &.param {
+        min-width: 85px;
+      }
+      &.data {
+        width: 100%;
+      }
+    }
+  }
+
+  .themeBlock {
+    margin-bottom: $padding;
+
+    .themeSelect, .themeName {
+      width: auto;
+      display: block;
+      overflow: hidden;
+    }
+
+    .themeName {
+      display: none;
+    }
+
+    .actionButtons {
+      float: right;
+    }
+
+    &.saving {
+      .themeSelect, .saveTheme {
+        display: none;
+      }
+      .themeName, .cancelSave {
+        display: block;
+      }
+    }
+
+    .saveTheme, .cancelSave {
+      width: $formControlBaseHeight;
+      border: 0;
+      padding: 0;
+      box-shadow: none !important;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    .saveTheme { background-image: url("/img/save.png"); }
+    .cancelSave { background-image: url("/img/cancel.png"); display: none; }
+  }
+
+  .textBlock {
+    .fontFamily {
+      display: inline-block;
+      width: 67%;
+    }
+
+    .textShadow {
+      .numberInput {
+        width: 67px;
+      }
+      b {
+        color: silver;
+      }
+    }
+  }
+}
