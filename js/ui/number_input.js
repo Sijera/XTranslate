@@ -1,7 +1,8 @@
 'use strict';
 
 var inherit = require('../utils').inherit,
-    TextInput = require('./text_input').TextInput;
+    TextInput = require('./text_input').TextInput,
+    jQueryMouseWheel = require('../libs/jquery-mousewheel');
 
 /** @const */ var TIMER_DELAY = 500;
 /** @const */ var TIMER_SPEED = 30;
@@ -148,6 +149,7 @@ NumberInput.prototype.setValueByStep = function (dir) {
 NumberInput.prototype.onScroll = function (e) {
     if (e.wheelDelta > 0) this.increase();
     if (e.wheelDelta < 0) this.decrease();
+    e.preventDefault();
     e.stopPropagation();
 };
 

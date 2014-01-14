@@ -9,12 +9,16 @@ var inherit = require('../utils').inherit,
 var CheckBox = function (options) {
     CheckBox.superclass.constructor.call(this, options = options || {});
 
-    this.$container.addClass('checkBox').attr('tabIndex', options.tabIndex || 0);
-    this.$container.on('keydown', this.onKeyDown.bind(this));
-    this.$checkbox = $('<span class="box"/>').on('click', this.toggle.bind(this)).appendTo(this.$container);
-    this.$input = $('<input type="hidden">').attr('name', options.name).appendTo(this.$container);
-    this.value = options.value;
+    this.$container.addClass('checkBox').on('keydown', this.onKeyDown.bind(this));
 
+    this.$input = $('<input type="hidden">').attr('name', this.name).appendTo(this.$container);
+
+    this.$checkbox = $('<span class="box"/>')
+        .attr('tabIndex', options.tabIndex || 0)
+        .on('click', this.toggle.bind(this))
+        .appendTo(this.$container);
+
+    this.value = options.value;
     this.setLabel(options.label);
     this.setTitle(options.title);
     this.setValue(!!options.checked, true);

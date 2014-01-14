@@ -7,9 +7,7 @@ var inherit = require('./utils').inherit,
     AppFooterBar = require('./components/app_footer_bar').AppFooterBar,
     SettingsContainer = require('./components/settings_container').SettingsContainer,
     UserInputContainer = require('./components/user_input_container').UserInputContainer,
-    Chrome = require('./extension/chrome').Chrome,
-    Opera = require('./extension/opera').Opera,
-    Firefox = require('./extension/firefox').Firefox;
+    Chrome = require('./extension/chrome').Chrome;
 
 /**
  * @constructor
@@ -17,9 +15,8 @@ var inherit = require('./utils').inherit,
 var XTranslate = function (options) {
     XTranslate.superclass.constructor.call(this, options);
 
-    /** @type {Google|Yandex|Bing} */
-    this.vendor = undefined;
-    this.extension = new Chrome();
+    /** @type {Google|Yandex|Bing} */ this.vendor = undefined;
+    /** @type {Chrome|Opera|Firefox} */ this.extension = new Chrome();
 };
 
 inherit(XTranslate, UIComponent);

@@ -67,7 +67,7 @@ SettingsVendor.prototype.fillVendors = function () {
 /** @private */
 SettingsVendor.prototype.addVendor = function (vendor) {
     var $label = $('<span class="title"/>').text(vendor.title);
-    var $url = $('<a class="url" target="_blank"/>')
+    var $url = $('<a class="url" target="_blank" tabIndex="-1"/>')
         .attr('href', vendor.url)
         .text(vendor.url.replace(/^https?:\/\/|\/$/gi, ''))
         .on('click', function (e) { e.stopPropagation() });

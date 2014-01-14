@@ -1,9 +1,8 @@
 /**
- * jQuery plugins/fixes/extensions used in the application
+ * jQuery work-around for mousewheel-event in Firefox
+ * Docs: http://learn.jquery.com/events/event-extensions/
  */
 
-// Transparent work-around for mousewheel-event in Firefox
-// Docs: http://learn.jquery.com/events/event-extensions/
 $.extend($.event.special, {
     DOMMouseScroll: {
         bindType: 'DOMMouseScroll',

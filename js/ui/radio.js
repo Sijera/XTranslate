@@ -16,10 +16,13 @@ var Radio = function (options) {
     this.title = options.title || '';
     this.value = options.value !== undefined ? options.value : '';
 
-    this.$container.addClass('radio').attr('tabIndex', options.tabIndex || 0);
-    this.$container.on('keydown', this.onKeyDown.bind(this));
-    this.$radio = $('<i class="box"/>').on('click', this.check.bind(this, false)).appendTo(this.$container);
+    this.$container.addClass('radio').on('keydown', this.onKeyDown.bind(this));
     this.$input = $('<input type="radio">').hide().val(this.value).attr('name', this.name).appendTo(this.$container);
+
+    this.$radio = $('<i class="box"/>')
+        .attr('tabIndex', options.tabIndex || 0)
+        .on('click', this.check.bind(this, false))
+        .appendTo(this.$container);
 
     if (this.title) this.$container.attr('title', this.title);
     if (this.label) {
@@ -42,7 +45,7 @@ Radio.prototype.setChecked = function (val, silent) {
     if (this.checked === val) return;
     this.checked = (val = !!val);
     this.$input.prop('checked', val);
-    this.$container.toggleClass('checked', val);
+    this.$radio.toggleClass('checked', val);
     if (!silent) this.trigger('change', this.value);
 };
 
