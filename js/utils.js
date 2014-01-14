@@ -63,8 +63,8 @@ exports.isControlKey = function (e) {
     var keyCode = e.which;
     if (isAppleDevice) {
         return e.metaKey ||
-            keyCode === 91 || //(Left Apple)
-            keyCode === 93;  // (Right Apple)
+            keyCode === 91 || // (Left Cmd)
+            keyCode === 93;  // (Right Cmd)
     } else {
         return e.ctrlKey || keyCode === 17;
     }
@@ -119,9 +119,9 @@ exports.parseUrl = function (url) {
 };
 
 /**
- * Spawns a new element and insert it into DOM tree in invisible container
- * we must have element inserted in order to calculate its dimensions, padding & etc.
- *
+ * Creates a new element and puts it in invisible HTML-element attached to the DOM.
+ * We should keep created element in this manner in order to calculate its dimensions
+ * straight after its creating and without displaying it on the page.
  * @param {String} str
  * @return jQuery
  */
@@ -138,13 +138,14 @@ exports.spawnDomElement = function __(str) {
 };
 
 /**
- * Find items by test a regexp on provided object's field
+ * Find objects in array by its property
  * @param {Array.<Object>} itemList List with items
  * @param {String} field Name of property in the item
  * @param {RegExp|String} subject Regular expression or string to test the field
- * @param {Boolean} onlyFirst If it is true, don't search all matches, only one!
+ * @param {Boolean=} onlyFirst If it is true, don't search all matches, only one!
+ * @return Array List of matched objects
  */
-exports.findInObjList = function (itemList, field, subject, onlyFirst) {
+exports.objLookup = function (itemList, field, subject, onlyFirst) {
     var item, value, matched,
         searchResult = [],
         isRegExp = subject instanceof RegExp;
@@ -186,9 +187,4 @@ exports.isEqualObjects = function isEqualObjects(obj1, obj2) {
     }
 
     return true;
-};
-
-exports.isBrowser = function (name) {
-    name = name.toLowerCase();
-    return window[name] || navigator.userAgent.toLowerCase().indexOf(name) > -1;
 };

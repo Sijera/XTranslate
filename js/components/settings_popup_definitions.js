@@ -33,6 +33,7 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
 
     this.hotKey = new TextInput({className: 'hotKey', value: state['hotKey'] || 'Ctrl+Shift+X'}).appendTo(this.$content);
     this.hotKey.$container.attr('title', __(10));
+    this.hotKey.toggle(this.keyAction.getValue());
 };
 
 /** @private */

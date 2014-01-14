@@ -1,7 +1,6 @@
 'use strict';
 
 var inherit = require('./utils').inherit,
-    isBrowser = require('./utils').isBrowser,
     isEqualObjects = require('./utils').isEqualObjects,
     UIComponent = require('./ui/ui_component').UIComponent,
     AppHeaderBar = require('./components/app_header_bar').AppHeaderBar,
@@ -20,10 +19,7 @@ var XTranslate = function (options) {
 
     /** @type {Google|Yandex|Bing} */
     this.vendor = undefined;
-
-    if (isBrowser('chrome')) this.extension = new Chrome();
-    if (isBrowser('opera')) this.extension = new Opera();
-    if (isBrowser('firefox')) this.extension = new Firefox();
+    this.extension = new Chrome();
 };
 
 inherit(XTranslate, UIComponent);
