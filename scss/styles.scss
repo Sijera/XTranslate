@@ -48,7 +48,7 @@ textarea {
   padding: $padding;
 }
 
-// <ui>
+// common
 @import "ui/flying_panel";
 @import "ui/form_control";
 @import "ui/button";
@@ -63,15 +63,15 @@ textarea {
 @import "ui/tab_bar";
 @import "ui/scroll_bar";
 
-// <app-components>
-@import "components/popup";
-@import "components/app_header_bar";
-@import "components/app_footer_bar";
-@import "components/languages_pair_select";
-@import "components/settings_container";
-@import "components/settings_block";
-@import "components/settings_popup_definitions";
-@import "components/settings_vendor";
-@import "components/settings_popup_style";
-@import "components/settings_exclusions";
-@import "components/user_input_container";
+// app
+@import "views/popup";
+@import "views/app_header_bar";
+@import "views/app_footer_bar";
+@import "views/languages_pair_select";
+@import "views/settings_container";
+@import "views/settings_block";
+@import "views/settings_popup_definitions";
+@import "views/settings_vendor";
+@import "views/settings_popup_style";
+@import "views/settings_exclusions";
+@import "views/user_input_container";

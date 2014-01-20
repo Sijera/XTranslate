@@ -357,7 +357,7 @@ SettingsPopupStyle.prototype.applyTheme = function (theme) {
 /**
  * Bind "change"-event for all components provided in arguments
  * @private
- * @param {...Object} components A list of {FormControl} components with available event
+ * @param {...Object} components A list of {FormControl} views with available event
  */
 SettingsPopupStyle.prototype.bindChangeStyle = function (components) {
     components = $.makeArray(arguments);

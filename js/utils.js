@@ -7,13 +7,9 @@
  */
 exports.inherit = function (Child, Parent) {
     var childProto = Child.prototype;
-
-    // Inherit parent's prototype
     Child.prototype = Object.create(Parent.prototype);
 
-    // Copy all properties from old prototype (including constructor, which will be overwritten)
     var props = Object.getOwnPropertyNames(childProto);
-
     for (var i = props.length; i--;) {
         if (childProto.hasOwnProperty(props[i])) {
             var desc = Object.getOwnPropertyDescriptor(childProto, props[i]);
@@ -119,25 +115,6 @@ exports.parseUrl = function (url) {
 };
 
 /**
- * Creates a new element and puts it in invisible HTML-element attached to the DOM.
- * We should keep created element in this manner in order to calculate its dimensions
- * straight after its creating and without displaying it on the page.
- * @param {String} str
- * @return jQuery
- */
-exports.spawnDomElement = function __(str) {
-    if (!__.$pool) {
-        __.$pool = $('<div id="spawning_pool"/>').css({
-            position: 'relative',
-            width   : 0,
-            height  : 0,
-            overflow: 'hidden'
-        }).appendTo(document.body);
-    }
-    return $(str).appendTo(__.$pool);
-};
-
-/**
  * Find objects in array by its property
  * @param {Array.<Object>} itemList List with items
  * @param {String} field Name of property in the item
@@ -161,30 +138,4 @@ exports.objLookup = function (itemList, field, subject, onlyFirst) {
         }
     }
     return searchResult;
-};
-
-/**
- * Compare two plain objects
- * @param obj1
- * @param obj2
- * @return Boolean
- */
-exports.isEqualObjects = function isEqualObjects(obj1, obj2) {
-    if (!(obj1 instanceof Object) || !(obj2 instanceof Object)) return obj1 === obj2;
-    if (obj1.constructor !== obj2.constructor) return false;
-
-    var keys1 = Object.keys(obj1).sort();
-    var keys2 = Object.keys(obj2).sort();
-
-    if (keys1.join('') != keys2.join('')) return false;
-
-    for (var i = 0, len = keys1.length; i < len; i++) {
-        var p = keys1[i];
-        if (obj1[p] instanceof Object) {
-            if (!isEqualObjects(obj1[p], obj2[p])) return false;
-        }
-        else if (obj1[p] !== obj2[p]) return false;
-    }
-
-    return true;
 };
