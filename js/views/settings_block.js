@@ -8,14 +8,10 @@ var inherit = require('../utils').inherit,
  * @constructor
  */
 var SettingsBlock = function (options) {
-    options = options || {};
     SettingsBlock.superclass.constructor.call(this, options);
 
     this.createDom(this.state);
     this.bindEvents();
-
-    var collapsed = this.state['collapsed'];
-    this.setCollapsed(collapsed !== undefined ? collapsed : !!options.collapsed);
 };
 
 inherit(SettingsBlock, UIComponent);
@@ -23,10 +19,11 @@ inherit(SettingsBlock, UIComponent);
 /** @private */
 SettingsBlock.prototype.createDom = function (state) {
     this.$container.addClass('settingsBlock');
+    this.setCollapsed(state.collapsed);
 
-    /** @type {jQuery} */ this.$icon = $('<i class="iconPlusMinus"/>').attr('title', __(21)).appendTo(this.$container);
-    /** @type {jQuery} */ this.$title = $('<div class="title"/>').appendTo(this.$container);
-    /** @type {jQuery} */ this.$content = $('<div class="content"/>').appendTo(this.$container);
+    this.$icon = $('<i class="iconPlusMinus"/>').attr('title', __(21)).appendTo(this.$container);
+    this.$title = $('<div class="title"/>').appendTo(this.$container);
+    this.$content = $('<div class="content"/>').appendTo(this.$container);
 };
 
 /** @private */
@@ -34,10 +31,9 @@ SettingsBlock.prototype.bindEvents = function () {
     this.$icon.on('click', this.onIconClick.bind(this));
 };
 
-SettingsBlock.prototype.setCollapsed = function (boolValue) {
-    if (this.collapsed == boolValue) return;
-    this.collapsed = boolValue;
-    this.$container.toggleClass('collapsed', boolValue);
+SettingsBlock.prototype.setCollapsed = function (val) {
+    this.state.collapsed = val;
+    this.$container.toggleClass('collapsed', val);
 };
 
 SettingsBlock.prototype.setTitle = function (title) {
@@ -46,13 +42,7 @@ SettingsBlock.prototype.setTitle = function (title) {
 
 /** @private */
 SettingsBlock.prototype.onIconClick = function () {
-    this.setCollapsed(!this.collapsed);
-};
-
-SettingsBlock.prototype.getState = function () {
-    return {
-        'collapsed': this.collapsed
-    };
+    this.setCollapsed(!this.state.collapsed);
 };
 
 exports.SettingsBlock = SettingsBlock;

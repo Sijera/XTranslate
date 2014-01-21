@@ -13,7 +13,6 @@ var Yandex = function (options) {
     this.title = 'Yandex';
     this.url = 'http://translate.yandex.com';
     this.langList = LANGUAGES;
-    this.tts = false;
 };
 
 inherit(Yandex, Vendor);

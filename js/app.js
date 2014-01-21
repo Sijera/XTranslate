@@ -2,6 +2,9 @@
 
 var inherit = require('./utils').inherit,
     EventDriven = require('./events').EventDriven,
+    Google = require('./vendors/google').Google,
+    Bing = require('./vendors/bing').Bing,
+    Yandex = require('./vendors/yandex').Yandex,
     Chrome = require('./extension/chrome').Chrome;
 
 /**
@@ -11,19 +14,50 @@ var inherit = require('./utils').inherit,
 var App = function (options) {
     App.superclass.constructor.call(this, options);
 
-    /** @type {Google|Yandex|Bing} */ this.vendor = undefined;
-    /** @type {Chrome|Opera|Firefox} */ this.extension = new Chrome();
+    /** @type {Chrome|Firefox|Opera} */
+    this.extension = new Chrome();
+
+    this.vendors = {
+        'google': new Google(),
+        'yandex': new Yandex(),
+        'bing'  : new Bing()
+    };
+
+    /** @type {Google|Yandex|Bing} */
+    Object.defineProperty(this, 'vendor', {
+        get: function () {
+            return this.vendors[this.state.settingsContainer.vendorBlock.activeVendor]
+        }.bind(this)
+    });
 
     this.init();
 };
 
 inherit(App, EventDriven);
 
+// Default settings
 App.prototype.state = {
-    header: {
+    headerBar: {
         activeTab: 0
     },
-    scroll: 0
+    settingsContainer: {
+        popupBlock: {
+            collapsed    : true,
+            autoPlay     : false,
+            showPlayIcon : true,
+            showOnToolbar: true,
+            clickAction  : true,
+            selectAction : false,
+            keyAction    : true,
+            hotKey       : 'Ctrl+Shift+X'
+        },
+        vendorBlock: {
+            collapsed   : false,
+            activeVendor: 'google',
+            langFrom    : 'auto',
+            langTo      : navigator.language.split('-')[0]
+        }
+    }
 };
 
 App.prototype.init = function () {
@@ -42,7 +76,7 @@ App.prototype.initState = function (parentChain, stateObj) {
     Object.keys(stateObj).forEach(function (prop) {
         var chain = parentChain ? parentChain + '.' + prop : prop;
         var value = stateObj[prop];
-        this.defineProp(chain.split('.'), value, true);
+        this.defineProp(chain.split('.'), value);
         if (typeof value == 'object' && typeof value !== null) this.initState(chain, value);
     }, this);
 };
@@ -120,12 +154,8 @@ App.prototype.get = function (chain) {
     }
 };
 
-App.prototype.clear = function (chain) {
-    this.set(chain, undefined);
-};
-
-App.prototype.toJSON = function () {
-    return JSON.parse(JSON.stringify(this.state));
+App.prototype.clear = function (chain, silent) {
+    this.set(chain, undefined, silent);
 };
 
 exports.App = App;

@@ -27,16 +27,14 @@ AppView.prototype.init = function (appModel) {
 AppView.prototype.createDom = function (state) {
     this.$container.addClass('XTranslate');
 
-    this.headerBar = new AppHeaderBar({state: state['header']}).appendTo(this);
-//    this.settingsContainer = new SettingsContainer({state: state['settings']}).appendTo(this);
+    this.headerBar = new AppHeaderBar({state: state.headerBar}).appendTo(this);
+    this.settingsContainer = new SettingsContainer({state: state.settingsContainer}).appendTo(this);
 //    this.userInputContainer = new UserInputContainer().appendTo(this);
-//    this.footerBar = new AppFooterBar().appendTo(this);
+    this.footerBar = new AppFooterBar().appendTo(this);
 
-    this.headerBar.addTab(__(1)/*, this.settingsContainer*/);
+    this.headerBar.addTab(__(1), this.settingsContainer);
     this.headerBar.addTab(__(2)/*, this.userInputContainer*/);
     this.headerBar.refresh();
-
-    window.scrollTo(0, state['scroll']);
 };
 
 /** @private */

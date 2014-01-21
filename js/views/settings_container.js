@@ -22,24 +22,10 @@ inherit(SettingsContainer, UIComponent);
 SettingsContainer.prototype.createDom = function (state) {
     this.$container.addClass('settingsContainer');
 
-    this.popupDefinitions = new SettingsPopupDefinitions({collapsed: true, state: state['popup']}).appendTo(this);
-    this.vendorSettings = new SettingsVendor({state: state['vendor']}).appendTo(this);
-    this.popupStyleSettings = new SettingsPopupStyle({state: state['styles']}).appendTo(this);
-    this.exclusionSettings = new SettingsExclusions({collapsed: true, state: state['exclusions']}).appendTo(this);
-};
-
-SettingsContainer.prototype.show = function () {
-    SettingsContainer.superclass.show.apply(this, arguments);
-    APP.data('langPair').$container.appendTo(this.vendorSettings.$langPairHolder);
-};
-
-SettingsContainer.prototype.getState = function () {
-    return {
-        'popup'     : this.popupDefinitions.getState(),
-        'vendor'    : this.vendorSettings.getState(),
-        'styles'    : this.popupStyleSettings.getState(),
-        'exclusions': this.exclusionSettings.getState()
-    };
+    this.popupDefinitions = new SettingsPopupDefinitions({state: state.popupBlock}).appendTo(this);
+    this.vendorSettings = new SettingsVendor({state: state.vendorBlock}).appendTo(this);
+//    this.popupStyleSettings = new SettingsPopupStyle({state: state['styles']}).appendTo(this);
+//    this.exclusionSettings = new SettingsExclusions({collapsed: true, state: state['exclusions']}).appendTo(this);
 };
 
 exports.SettingsContainer = SettingsContainer;

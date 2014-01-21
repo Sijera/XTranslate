@@ -10,9 +10,7 @@ var CheckBox = function (options) {
     CheckBox.superclass.constructor.call(this, options = options || {});
 
     this.$container.addClass('checkBox').on('keydown', this.onKeyDown.bind(this));
-
     this.$input = $('<input type="hidden">').attr('name', this.name).appendTo(this.$container);
-
     this.$checkbox = $('<span class="box"/>')
         .attr('tabIndex', options.tabIndex || 0)
         .on('click', this.toggle.bind(this))

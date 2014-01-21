@@ -37,7 +37,6 @@ UserInputContainer.prototype.onInput = function () {
 
 UserInputContainer.prototype.show = function () {
     UserInputContainer.superclass.show.apply(this, arguments);
-    APP.data('langPair').$container.appendTo(this.$langPairHolder);
     this.$text.focus();
 };
 
