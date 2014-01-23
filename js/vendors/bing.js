@@ -13,6 +13,7 @@ var Bing = function (options) {
     this.title = 'Bing';
     this.url = 'http://bing.com/translator/';
     this.langList = LANGUAGES;
+    this.textToSpeech = true;
 };
 
 inherit(Bing, Vendor);

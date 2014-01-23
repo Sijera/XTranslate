@@ -22,9 +22,9 @@ inherit(SettingsContainer, UIComponent);
 SettingsContainer.prototype.createDom = function (state) {
     this.$container.addClass('settingsContainer');
 
-    this.popupDefinitions = new SettingsPopupDefinitions({state: state.popupBlock}).appendTo(this);
+    this.popupDefinitions = new SettingsPopupDefinitions({state: state.popupDefinitions}).appendTo(this);
     this.vendorSettings = new SettingsVendor({state: state.vendorBlock}).appendTo(this);
-//    this.popupStyleSettings = new SettingsPopupStyle({state: state['styles']}).appendTo(this);
+    this.popupStyleSettings = new SettingsPopupStyle({state: state.popupStyle}).appendTo(this);
     this.exclusionSettings = new SettingsExclusions({state: state.siteExclusions}).appendTo(this);
 };
 

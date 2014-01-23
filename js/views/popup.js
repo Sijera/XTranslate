@@ -35,16 +35,15 @@ Popup.prototype.createDom = function () {
 Popup.prototype.bindEvents = function () {
     this.$playSound.on('click', this.onPlayIconClick.bind(this));
     this.$container.on('click', '.link', this.onLinkTextClick.bind(this));
-    APP.on('vendorChange playIconToggle', this.refreshPlayIcon, this);
+    APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
+    APP.on('change:settingsContainer.vendorBlock.activeVendor', this.refreshPlayIcon, this);
 };
 
 /**
- * Parse data from translation vendor and update pop-up content
+ * Parse data from translation vendor and update content
  * @param {Object} data
  */
 Popup.prototype.parseData = function (data) {
-    var vendor = APP.data('vendor');
-
     /** @type {String} */ this.sourceText = data['sourceText'];
     /** @type {Boolean} */ this.showSimilar = data['showSimilar'];
     /** @type {String} */ var lang = data['langDetected'];
@@ -52,7 +51,7 @@ Popup.prototype.parseData = function (data) {
     /** @type {Array=} */ var dictionary = data['dictionary'] || [];
     /** @type {String} */ var textCorrection = data['correction'];
 
-    this.$container.attr('title', lang ? __(49, [lang, vendor.title]) : '');
+    this.$container.attr('title', lang ? __(49, [lang, APP.vendor.title]) : '');
     this.$main.text(translation);
     this.$dictionaries.empty();
 
@@ -114,9 +113,9 @@ Popup.prototype.onPlayIconClick = function (e) {
 
 /** @private */
 Popup.prototype.refreshPlayIcon = function () {
-    var boxChecked = APP.data('useTextToSpeech');
-    var supported = APP.data('vendor').tts;
-    this.$playSound.toggle(boxChecked && supported);
+    var showIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
+    var featureAvail = APP.vendor.textToSpeech;
+    this.$playSound.toggle(showIcon && featureAvail);
 };
 
 exports.Popup = Popup;

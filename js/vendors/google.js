@@ -13,6 +13,7 @@ var Google = function (options) {
     this.title = 'Google';
     this.url = 'http://translate.google.com';
     this.langList = LANGUAGES;
+    this.textToSpeech = true;
 };
 
 inherit(Google, Vendor);

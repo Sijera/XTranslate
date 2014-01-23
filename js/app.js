@@ -26,8 +26,7 @@ var App = function (options) {
     /** @type {Google|Yandex|Bing} */
     Object.defineProperty(this, 'vendor', {
         get: function () {
-            var vendor = this.get('settingsContainer.vendorBlock.activeVendor');
-            return this.vendors[vendor];
+            return this.vendors[this.state.settingsContainer.vendorBlock.activeVendor];
         }.bind(this)
     });
 
@@ -42,7 +41,7 @@ App.prototype.state = {
         activeTab: 0
     },
     settingsContainer: {
-        popupBlock: {
+        popupDefinitions: {
             collapsed    : true,
             autoPlay     : false,
             showPlayIcon : true,
@@ -58,6 +57,12 @@ App.prototype.state = {
             langFrom    : 'auto',
             langTo      : navigator.language.split('-')[0]
         },
+        popupStyle: {
+            collapsed  : true,
+            activeTheme: null,
+            customTheme: null,
+            themes     : null
+        },
         siteExclusions: {
             collapsed: true,
             links    : 'acid3.acidtests.org'
@@ -71,8 +76,15 @@ App.prototype.init = function () {
 
 /** @private */
 App.prototype.onReady = function (state) {
-    this.state = $.extend(true, this.state, state);
-    this.initState('', this.state);
+    state = state || {};
+
+    var appVersion = this.extension.getInfo().version;
+    if (appVersion !== state.version) {
+        state.version = appVersion;
+        state = $.extend(true, {}, this.state, state);
+    }
+
+    this.initState('', this.state = state);
     this.trigger('ready');
 };
 
@@ -82,7 +94,7 @@ App.prototype.initState = function (parentChain, stateObj) {
         var chain = parentChain ? parentChain + '.' + prop : prop;
         var value = stateObj[prop];
         this.defineProp(chain.split('.'), value);
-        if (typeof value == 'object' && typeof value !== null) this.initState(chain, value);
+        if ($.isPlainObject(value)) this.initState(chain, value);
     }, this);
 };
 

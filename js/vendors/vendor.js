@@ -11,7 +11,7 @@ var Vendor = function (options) {
     Vendor.superclass.constructor.call(this, options);
 
     this.autoDetect = 'auto';
-    this.textToSpeech = true;
+    this.textToSpeech = false;
 };
 
 inherit(Vendor, EventDriven);

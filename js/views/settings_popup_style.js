@@ -13,17 +13,12 @@ var UTILS = require('../utils'),
     ColorPicker = require('../ui/color_picker').ColorPicker,
     SettingsBlock = require('./settings_block').SettingsBlock;
 
-/** @const */ var STATE_SAVING_THEME = 'saving';
+/** @const */ var CSS_SAVING_THEME = 'saving';
 
 /**
  * @constructor
  */
 var SettingsPopupStyle = function (options) {
-    this.popupDemoText = {
-        translation: __(22),
-        dictionary : [[__(23), __(24).split(', ')]]
-    };
-
     SettingsPopupStyle.superclass.constructor.call(this, options);
     this.setTitle(__(5));
 };
@@ -35,13 +30,17 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
 
-    this.themes = state['themes'] || CSS_THEMES;
-    this.customTheme = state['customTheme'];
+    state.themes = state.themes || CSS_THEMES;
+    state.activeTheme = !state.customTheme ? state.activeTheme || Object.keys(state.themes)[0] : null;
+
     this.customThemeName = '--';
-    this.activeTheme = this.customTheme ? undefined : (state['activeTheme'] || Object.keys(this.themes)[0]);
+    this.popupPreviewData = {
+        translation: __(22),
+        dictionary : [[__(23), __(24).split(', ')]]
+    };
 
     this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
-    this.popup = new Popup().parseData(this.popupDemoText).appendTo(this.$popupPreview);
+    this.popup = new Popup().parseData(this.popupPreviewData).appendTo(this.$popupPreview);
     this.popup.$container.show();
 
     this.addThemeBlock();
@@ -50,7 +49,7 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     this.addBorderStyle();
     this.addCommonStyle();
 
-    this.theme.setValue(this.activeTheme || this.customThemeName, true);
+    this.theme.setValue(state.activeTheme || this.customThemeName, true);
     this.applyTheme();
 };
 
@@ -88,6 +87,23 @@ SettingsPopupStyle.prototype.bindEvents = function () {
         this.boxShadowOpacity,
         this.boxShadowInner
     );
+};
+
+/**
+ * Bind change-event for all ui components, provided in the arguments
+ * @private
+ * @param {...FormControl|*} components
+ */
+SettingsPopupStyle.prototype.bindChangeStyle = function (components) {
+    components = $.makeArray(arguments);
+    components.forEach(function (component) {
+        component.on('change', this.onChangeStyle, this);
+    }, this);
+};
+
+/** @private */
+SettingsPopupStyle.prototype.onChangeStyle = function () {
+    this.setCustomTheme();
 };
 
 /**
@@ -149,9 +165,9 @@ SettingsPopupStyle.prototype.addThemeBlock = function () {
         .on('click', this.cancelSaving, this)
         .appendTo($actionButtons);
 
-    Object.keys(this.themes).forEach(function (themeName) {
-        var theme = this.themes[themeName];
-        this.addTheme(themeName, theme);
+    var themes = this.state.themes;
+    Object.keys(themes).forEach(function (name) {
+        this.addTheme(name, themes[name]);
     }, this);
 };
 
@@ -227,7 +243,7 @@ SettingsPopupStyle.prototype.addTextStyle = function () {
 };
 
 /** @protected */
-SettingsPopupStyle.prototype.convertToCSS = function (theme) {
+SettingsPopupStyle.prototype.getThemeCSS = function (theme) {
     // background
     var bgcMain = theme.background.color[0],
         bgcSec = theme.background.color[1],
@@ -321,10 +337,13 @@ SettingsPopupStyle.prototype.createTheme = function () {
 
 /** @private */
 SettingsPopupStyle.prototype.applyTheme = function (theme) {
-    theme = theme || this.getTheme();
-    if (!theme) return;
+    var themes = this.state.themes,
+        activeTheme = this.state.activeTheme,
+        customTheme = this.state.customTheme;
 
-    this.popup.$container.css(this.convertToCSS(theme));
+    theme = theme || themes[activeTheme] || customTheme;
+    if (!theme) return;
+    this.popup.$container.css(this.getThemeCSS(theme));
 
     this.bgcMain.setValue(theme.background.color[0], true);
     this.bgcSec.setValue(theme.background.color[1], true);
@@ -354,53 +373,32 @@ SettingsPopupStyle.prototype.applyTheme = function (theme) {
     this.boxShadowInner.setValue(theme.box.shadow.inner, true);
 };
 
-/**
- * Bind "change"-event for all components provided in arguments
- * @private
- * @param {...Object} components A list of {FormControl} views with available event
- */
-SettingsPopupStyle.prototype.bindChangeStyle = function (components) {
-    components = $.makeArray(arguments);
-    components.forEach(function (component) {
-        component.on('change', this.onChangeStyle, this);
-    }, this);
-};
-
 SettingsPopupStyle.prototype.saveTheme = function () {
-    this.$themeBlock.addClass(STATE_SAVING_THEME);
+    this.$themeBlock.addClass(CSS_SAVING_THEME);
     this.themeName.$input.focus();
 };
 
 SettingsPopupStyle.prototype.cancelSaving = function () {
-    this.$themeBlock.removeClass(STATE_SAVING_THEME);
+    this.$themeBlock.removeClass(CSS_SAVING_THEME);
     this.themeName.value = '';
     this.themeName.valid = true;
     this.themeName.inputted = false;
 };
 
 SettingsPopupStyle.prototype.setCustomTheme = function () {
-    if (this.activeTheme) this.theme.setValue(this.customThemeName);
-    this.customTheme = this.createTheme();
+    if (this.state.activeTheme) {
+        this.state.activeTheme = null;
+        this.theme.setValue(this.customThemeName, true);
+    }
+    this.state.customTheme = this.createTheme();
     this.applyTheme();
-    delete this.activeTheme;
-};
-
-SettingsPopupStyle.prototype.getTheme = function (themeName) {
-    themeName = themeName || this.activeTheme;
-    return this.themes[themeName] || this.customTheme;
-};
-
-/** @private */
-SettingsPopupStyle.prototype.onChangeStyle = function () {
-    this.setCustomTheme();
 };
 
 /** @private */
 SettingsPopupStyle.prototype.onChangeTheme = function (themeName) {
-    var theme = this.theme.getData();
-    this.activeTheme = theme ? themeName : undefined;
+    this.state.activeTheme = themeName;
+    this.state.customTheme = null;
     this.applyTheme();
-    delete this.customTheme;
 };
 
 /** @private */
@@ -416,7 +414,7 @@ SettingsPopupStyle.prototype.onSaveTheme = function (e) {
 SettingsPopupStyle.prototype.onRemoveTheme = function (itemObj) {
     var themeName = itemObj.value;
     if (itemObj.selected) this.setCustomTheme();
-    delete this.themes[themeName];
+    delete this.state.themes[themeName];
 };
 
 /** @private */
@@ -424,7 +422,7 @@ SettingsPopupStyle.prototype.themeNameValidator = function (value, validObj) {
     value = value.trim();
     var tooltip = '';
     var emptyName = !value;
-    var themeExists = this.themes[value];
+    var themeExists = this.state.themes[value];
     var reservedName = value == this.customThemeName;
 
     if (emptyName) tooltip = __(13);
@@ -439,22 +437,13 @@ SettingsPopupStyle.prototype.themeNameValidator = function (value, validObj) {
 SettingsPopupStyle.prototype.addTheme = function (themeName, theme) {
     theme = theme || this.createTheme();
 
-    this.themes[themeName] = theme;
+    this.state.themes[themeName] = theme;
     this.theme.add({
         title      : themeName,
         value      : themeName,
         data       : theme,
         removeTitle: __(29)
     }, true);
-};
-
-SettingsPopupStyle.prototype.getState = function () {
-    var state = SettingsPopupStyle.superclass.getState.apply(this, arguments);
-    return $.extend(state, {
-        'activeTheme': this.activeTheme,
-        'customTheme': this.customTheme,
-        'themes'     : this.themes
-    });
 };
 
 /** @const */
