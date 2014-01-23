@@ -26,7 +26,8 @@ var App = function (options) {
     /** @type {Google|Yandex|Bing} */
     Object.defineProperty(this, 'vendor', {
         get: function () {
-            return this.vendors[this.state.settingsContainer.vendorBlock.activeVendor]
+            var vendor = this.get('settingsContainer.vendorBlock.activeVendor');
+            return this.vendors[vendor];
         }.bind(this)
     });
 
@@ -56,6 +57,10 @@ App.prototype.state = {
             activeVendor: 'google',
             langFrom    : 'auto',
             langTo      : navigator.language.split('-')[0]
+        },
+        siteExclusions: {
+            collapsed: true,
+            links    : 'acid3.acidtests.org'
         }
     }
 };

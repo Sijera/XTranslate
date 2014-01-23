@@ -7,8 +7,6 @@ var inherit = require('../utils').inherit,
  * @constructor
  */
 var SettingsExclusions = function (options) {
-    this.defaultLinks = ['acid3.acidtests.org'];
-
     SettingsExclusions.superclass.constructor.call(this, options);
     this.setTitle(__(6));
 };
@@ -30,26 +28,17 @@ SettingsExclusions.prototype.createDom = function (state) {
         .on('blur', this.refreshLinks.bind(this))
         .appendTo(this.$content);
 
-    this.links = state['links'] || this.defaultLinks;
     this.refreshLinks();
 };
 
 /** @private */
-SettingsExclusions.prototype.refreshLinks = function () {
-    this.$links.val(this.links.join('\n'));
+SettingsExclusions.prototype.onInput = function () {
+    this.state.links = this.$links.val().trim().split(/\s*\n\s*/).join('|');
 };
 
 /** @private */
-SettingsExclusions.prototype.onInput = function () {
-    var value = this.$links.val().trim();
-    this.links = value ? value.split(/\s*\n\s*/) : [];
-};
-
-SettingsExclusions.prototype.getState = function () {
-    var state = SettingsExclusions.superclass.getState.apply(this, arguments);
-    return $.extend(state, {
-        'links': this.links
-    });
+SettingsExclusions.prototype.refreshLinks = function () {
+    this.$links.val(this.state.links.split('|').join('\n').trim());
 };
 
 exports.SettingsExclusions = SettingsExclusions;

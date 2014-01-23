@@ -19,7 +19,7 @@ inherit(AppView, UIComponent);
 
 AppView.prototype.init = function (appModel) {
     this.model = appModel;
-    this.createDom(this.model.state);
+    this.createDom(appModel.state);
     this.bindEvents();
 };
 
@@ -29,29 +29,22 @@ AppView.prototype.createDom = function (state) {
 
     this.headerBar = new AppHeaderBar({state: state.headerBar}).appendTo(this);
     this.settingsContainer = new SettingsContainer({state: state.settingsContainer}).appendTo(this);
-//    this.userInputContainer = new UserInputContainer().appendTo(this);
+    this.userInputContainer = new UserInputContainer({state: state.settingsContainer.vendorBlock}).appendTo(this);
     this.footerBar = new AppFooterBar().appendTo(this);
 
     this.headerBar.addTab(__(1), this.settingsContainer);
-    this.headerBar.addTab(__(2)/*, this.userInputContainer*/);
+    this.headerBar.addTab(__(2), this.userInputContainer);
     this.headerBar.refresh();
 };
 
 /** @private */
 AppView.prototype.bindEvents = function () {
-    $(window)
-        .on('unload', this.onUnload.bind(this))
-        .on('scroll', this.onScroll.bind(this));
+    $(window).on('unload', this.onUnload.bind(this));
 };
 
 /** @private */
 AppView.prototype.onUnload = function () {
     this.model.sync();
-};
-
-/** @private */
-AppView.prototype.onScroll = function () {
-    this.model.set('scroll', window.pageYOffset);
 };
 
 exports.AppView = AppView;

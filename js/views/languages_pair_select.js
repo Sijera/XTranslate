@@ -33,7 +33,10 @@ LanguagesPairSelect.prototype.bindEvents = function () {
     this.langFrom.on('change', this.setLangFrom.bind(this));
     this.langTo.on('change', this.setLangTo.bind(this));
     this.$swapLang.on('click', this.onSwapLangPair.bind(this));
+
     APP.on('change:settingsContainer.vendorBlock.activeVendor', this.refresh.bind(this));
+    APP.on('change:settingsContainer.vendorBlock.langFrom', this.setLangFrom.bind(this));
+    APP.on('change:settingsContainer.vendorBlock.langTo', this.setLangTo.bind(this));
 };
 
 /**
@@ -66,8 +69,6 @@ LanguagesPairSelect.prototype.refresh = function () {
 };
 
 LanguagesPairSelect.prototype.setLangFrom = function (lang) {
-    lang = lang || this.state.langFrom;
-
     this.state.langFrom = lang;
     this.langFrom.selectByValue(lang, true);
     this.$langFrom.attr('src', this.getFlagUrl(lang));
@@ -75,8 +76,6 @@ LanguagesPairSelect.prototype.setLangFrom = function (lang) {
 };
 
 LanguagesPairSelect.prototype.setLangTo = function (lang) {
-    lang = lang || this.state.langTo;
-
     this.state.langTo = lang;
     this.langTo.selectByValue(lang, true);
     this.$langTo.attr('src', this.getFlagUrl(lang));
@@ -109,7 +108,7 @@ LanguagesPairSelect.prototype.onSwapLangPair = function () {
         autoDetect = APP.vendor.autoDetect;
     if (langFrom == autoDetect) return;
 
-    this.setLangFrom(autoDetect); // make changes to something different
+    this.setLangFrom(autoDetect);
     this.setLangTo(langFrom);
     this.setLangFrom(langTo);
 };

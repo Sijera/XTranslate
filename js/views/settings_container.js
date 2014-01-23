@@ -25,7 +25,7 @@ SettingsContainer.prototype.createDom = function (state) {
     this.popupDefinitions = new SettingsPopupDefinitions({state: state.popupBlock}).appendTo(this);
     this.vendorSettings = new SettingsVendor({state: state.vendorBlock}).appendTo(this);
 //    this.popupStyleSettings = new SettingsPopupStyle({state: state['styles']}).appendTo(this);
-//    this.exclusionSettings = new SettingsExclusions({collapsed: true, state: state['exclusions']}).appendTo(this);
+    this.exclusionSettings = new SettingsExclusions({state: state.siteExclusions}).appendTo(this);
 };
 
 exports.SettingsContainer = SettingsContainer;

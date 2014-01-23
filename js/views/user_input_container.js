@@ -2,6 +2,7 @@
 
 var UTILS = require('../utils'),
     inherit = UTILS.inherit,
+    LanguagesPairSelect = require('./languages_pair_select').LanguagesPairSelect,
     UIComponent = require('../ui/ui_component').UIComponent;
 
 /**
@@ -10,17 +11,17 @@ var UTILS = require('../utils'),
 var UserInputContainer = function (options) {
     UserInputContainer.superclass.constructor.call(this, options);
 
-    this.createDom();
+    this.createDom(this.state);
     this.bindEvents();
 };
 
 inherit(UserInputContainer, UIComponent);
 
 /** @private */
-UserInputContainer.prototype.createDom = function () {
+UserInputContainer.prototype.createDom = function (state) {
     this.$container.addClass('userInputContainer');
 
-    this.$langPairHolder = $('<div class="langPairHolder"/>').appendTo(this.$container);
+    this.langPairSelect = new LanguagesPairSelect({state: state}).appendTo(this.$container);
     this.$text = $('<textarea class="text"/>').attr('placeholder', __(63)).appendTo(this.$container);
     this.$results = $('<div class="results"/>').appendTo(this.$container);
 };
@@ -32,7 +33,6 @@ UserInputContainer.prototype.bindEvents = function () {
 
 /** @private */
 UserInputContainer.prototype.onInput = function () {
-
 };
 
 UserInputContainer.prototype.show = function () {
