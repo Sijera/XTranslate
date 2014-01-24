@@ -35,6 +35,73 @@ var App = function (options) {
 
 inherit(App, EventDriven);
 
+//  Default themes
+var CSS_THEMES = {
+    "Dark warrior": {
+        "background": {
+            "color"  : ["#000000", "#7f7f7f"],
+            "linear" : true,
+            "opacity": 80
+        },
+        "border"    : {
+            "color"  : "#000000",
+            "style"  : "solid",
+            "width"  : 1,
+            "radius" : 5,
+            "opacity": 100
+        },
+        "text"      : {
+            "color" : "#ffffff",
+            "font"  : "Verdana",
+            "size"  : 13,
+            "shadow": {"offset": [1, 1], "blur": 0, "color": "#000000"}
+        },
+        "box"       : {
+            "padding"  : 1,
+            "maxWidth" : 300,
+            "maxHeight": 200,
+            "shadow"   : {
+                "color"  : "#ffffff",
+                "size"   : 10,
+                "opacity": 100,
+                "inner"  : true
+            }
+        }
+    },
+
+    "Light breath": {
+        "background": {
+            "color"  : ["#ffffff", "#7f7f7f"],
+            "linear" : false,
+            "opacity": 95
+        },
+        "border"    : {
+            "color"  : "#000000",
+            "style"  : "solid",
+            "width"  : 1,
+            "radius" : 5,
+            "opacity": 0
+        },
+        "text"      : {
+            "color" : "#000000",
+            "font"  : "Verdana",
+            "size"  : 13,
+            "shadow": {"offset": [0, 0], "blur": 0, "color": "#000000"}
+        },
+        "box"       : {
+            "padding"  : 0.8,
+            "maxWidth" : 300,
+            "maxHeight": 200,
+            "shadow"   : {
+                "color"  : "#000000",
+                "size"   : 11,
+                "opacity": 50,
+                "inner"  : false
+            }
+        }
+    }
+};
+
 // Default settings
 App.prototype.state = {
     headerBar: {
@@ -59,9 +126,9 @@ App.prototype.state = {
         },
         popupStyle: {
             collapsed  : true,
-            activeTheme: null,
-            customTheme: null,
-            themes     : null
+            activeTheme: Object.keys(CSS_THEMES)[0],
+            themes     : CSS_THEMES,
+            customTheme: null
         },
         siteExclusions: {
             collapsed: true,

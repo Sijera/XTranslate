@@ -19,6 +19,12 @@ var UTILS = require('../utils'),
  * @constructor
  */
 var SettingsPopupStyle = function (options) {
+    this.customThemeName = '--';
+
+    this.popupPreviewData = {
+        translation: __(22),
+        dictionary : [[__(23), __(24).split(', ')]]
+    };
     SettingsPopupStyle.superclass.constructor.call(this, options);
     this.setTitle(__(5));
 };
@@ -29,15 +35,6 @@ inherit(SettingsPopupStyle, SettingsBlock);
 SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
-
-    state.themes = state.themes || CSS_THEMES;
-    state.activeTheme = !state.customTheme ? state.activeTheme || Object.keys(state.themes)[0] : null;
-
-    this.customThemeName = '--';
-    this.popupPreviewData = {
-        translation: __(22),
-        dictionary : [[__(23), __(24).split(', ')]]
-    };
 
     this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
     this.popup = new Popup().parseData(this.popupPreviewData).appendTo(this.$popupPreview);
@@ -463,72 +460,5 @@ var FONTS = [
     "MS UI Gothic",
     "VL Gothic"
 ];
-
-/** @const */
-var CSS_THEMES = {
-    "Dark warrior": {
-        "background": {
-            "color"  : ["#000000", "#7f7f7f"],
-            "linear" : true,
-            "opacity": 80
-        },
-        "border"    : {
-            "color"  : "#000000",
-            "style"  : "solid",
-            "width"  : 1,
-            "radius" : 5,
-            "opacity": 100
-        },
-        "text"      : {
-            "color" : "#ffffff",
-            "font"  : "Verdana",
-            "size"  : 13,
-            "shadow": {"offset": [1, 1], "blur": 0, "color": "#000000"}
-        },
-        "box"       : {
-            "padding"  : 1,
-            "maxWidth" : 300,
-            "maxHeight": 200,
-            "shadow"   : {
-                "color"  : "#ffffff",
-                "size"   : 10,
-                "opacity": 100,
-                "inner"  : true
-            }
-        }
-    },
-
-    "Light breath": {
-        "background": {
-            "color"  : ["#ffffff", "#7f7f7f"],
-            "linear" : false,
-            "opacity": 95
-        },
-        "border"    : {
-            "color"  : "#000000",
-            "style"  : "solid",
-            "width"  : 1,
-            "radius" : 5,
-            "opacity": 0
-        },
-        "text"      : {
-            "color" : "#000000",
-            "font"  : "Verdana",
-            "size"  : 13,
-            "shadow": {"offset": [0, 0], "blur": 0, "color": "#000000"}
-        },
-        "box"       : {
-            "padding"  : 0.8,
-            "maxWidth" : 300,
-            "maxHeight": 200,
-            "shadow"   : {
-                "color"  : "#000000",
-                "size"   : 11,
-                "opacity": 50,
-                "inner"  : false
-            }
-        }
-    }
-};
 
 exports.SettingsPopupStyle = SettingsPopupStyle;
