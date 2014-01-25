@@ -15,7 +15,8 @@ var UIComponent = function (options) {
 
     this.name = options.name || '';
     this.state = options.state || {};
-    this.$container = $(options.container || '<' + options.nodeType + '>').addClass(options.className);
+    this.$container = options.container !== undefined ? $(options.container) : UTILS.spawnElement('<' + options.nodeType + '>');
+    this.$container.addClass(options.className);
 };
 
 inherit(UIComponent, EventDriven);

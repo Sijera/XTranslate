@@ -21,6 +21,23 @@ exports.inherit = function (Child, Parent) {
     Child.superclass = Parent.prototype;
 };
 
+/**
+ * Creates a HTML-element and puts it inside invisible DOM-container (aka spawning pool, hello StarCraft!:)
+ * We must keep the element attached in the DOM to make possible calculate its dimensions (padding, width, height, etc.)
+ * @return {jQuery}
+ */
+exports.spawnElement = function __(htmlStr) {
+    if (!__.$pool) {
+        __.$pool = $('<div id="spawningPool"/>').css({
+            position: 'relative',
+            width   : 0,
+            height  : 0,
+            overflow: 'hidden'
+        }).appendTo(document.body);
+    }
+    return $(htmlStr).appendTo(__.$pool);
+};
+
 exports.sprintf = function () {
     var args = Array.prototype.slice.call(arguments),
         str = args.shift();

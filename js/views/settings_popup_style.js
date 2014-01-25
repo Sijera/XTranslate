@@ -36,8 +36,8 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
 
-    this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
-    this.popup = new Popup().parseData(this.popupPreviewData).appendTo(this.$popupPreview);
+    /** @type {jQuery} */ this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
+    /** @type {Popup} */ this.popup = new Popup().parseData(this.popupPreviewData).appendTo(this.$popupPreview);
     this.popup.$container.show();
 
     this.addThemeBlock();
@@ -78,6 +78,8 @@ SettingsPopupStyle.prototype.bindEvents = function () {
         this.textShadowBlurRadius,
 
         // common
+        this.boxMaxWidth,
+        this.boxMaxHeight,
         this.boxPadding,
         this.boxShadowColor,
         this.boxShadowSize,
