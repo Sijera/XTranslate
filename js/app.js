@@ -1,6 +1,7 @@
 'use strict';
 
 var inherit = require('./utils').inherit,
+    THEMES = require('./theme').THEMES,
     EventDriven = require('./events').EventDriven,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
@@ -35,73 +36,6 @@ var App = function (options) {
 
 inherit(App, EventDriven);
 
-//  Default themes
-var CSS_THEMES = {
-    "Dark warrior": {
-        "background": {
-            "color"  : ["#000000", "#7f7f7f"],
-            "linear" : true,
-            "opacity": 80
-        },
-        "border"    : {
-            "color"  : "#000000",
-            "style"  : "solid",
-            "width"  : 1,
-            "radius" : 5,
-            "opacity": 100
-        },
-        "text"      : {
-            "color" : "#ffffff",
-            "font"  : "Verdana",
-            "size"  : 13,
-            "shadow": {"offset": [1, 1], "blur": 0, "color": "#000000"}
-        },
-        "box"       : {
-            "padding"  : 1,
-            "maxWidth" : 300,
-            "maxHeight": 200,
-            "shadow"   : {
-                "color"  : "#ffffff",
-                "size"   : 10,
-                "opacity": 100,
-                "inner"  : true
-            }
-        }
-    },
-
-    "Light breath": {
-        "background": {
-            "color"  : ["#ffffff", "#7f7f7f"],
-            "linear" : false,
-            "opacity": 95
-        },
-        "border"    : {
-            "color"  : "#000000",
-            "style"  : "solid",
-            "width"  : 1,
-            "radius" : 5,
-            "opacity": 0
-        },
-        "text"      : {
-            "color" : "#000000",
-            "font"  : "Verdana",
-            "size"  : 13,
-            "shadow": {"offset": [0, 0], "blur": 0, "color": "#000000"}
-        },
-        "box"       : {
-            "padding"  : 0.8,
-            "maxWidth" : 300,
-            "maxHeight": 200,
-            "shadow"   : {
-                "color"  : "#000000",
-                "size"   : 11,
-                "opacity": 50,
-                "inner"  : false
-            }
-        }
-    }
-};
-
 // Default settings
 App.prototype.state = {
     headerBar: {
@@ -126,8 +60,8 @@ App.prototype.state = {
         },
         popupStyle: {
             collapsed  : true,
-            activeTheme: Object.keys(CSS_THEMES)[0],
-            themes     : CSS_THEMES,
+            activeTheme: Object.keys(THEMES)[0],
+            themes     : THEMES,
             customTheme: null
         },
         siteExclusions: {
@@ -151,7 +85,9 @@ App.prototype.onReady = function (state) {
         state = $.extend(true, {}, this.state, state);
     }
 
-    this.initState('', this.state = state);
+    this.state = state;
+    this.stateLastSync = JSON.stringify(state);
+    this.initState('', state);
     this.trigger('ready');
 };
 
@@ -169,7 +105,8 @@ App.prototype.initState = function (parentChain, stateObj) {
  * Save the state on external resource (local storage, remote server, etc.)
  */
 App.prototype.sync = function () {
-    this.extension.saveState(this.state);
+    if (this.stateLastSync === JSON.stringify(this.state)) return;
+    this.extension.saveState(this.toJSON());
 };
 
 /**
@@ -240,6 +177,11 @@ App.prototype.get = function (chain) {
 
 App.prototype.clear = function (chain, silent) {
     this.set(chain, undefined, silent);
+};
+
+/** @private */
+App.prototype.toJSON = function () {
+    return JSON.parse(JSON.stringify(this.state));
 };
 
 exports.App = App;

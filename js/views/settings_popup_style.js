@@ -1,8 +1,8 @@
 'use strict';
 
 var UTILS = require('../utils'),
-    inherit = UTILS.inherit,
-    hex2Rgba = UTILS.hex2Rgba,
+    THEME = require('../theme'),
+    inherit = require('../utils').inherit,
     Popup = require('./popup').Popup,
     Button = require('../ui/button').Button,
     Select = require('../ui/select').Select,
@@ -210,7 +210,7 @@ SettingsPopupStyle.prototype.addBorderStyle = function () {
     /** @type {Select} */ this.borderStyle = new Select({className: 'borderStyle', title: __(54)}).appendTo($style);
     /** @type {NumberInput} */ this.borderWidth = new NumberInput({minValue: 0, maxValue: 25, title: __(39)}).appendTo($style);
 
-    BORDER_STYLES.forEach(function (style) {
+    THEME.BORDER_STYLES.forEach(function (style) {
         this.borderStyle.add(style, true);
     }, this);
 };
@@ -234,102 +234,38 @@ SettingsPopupStyle.prototype.addTextStyle = function () {
     this.textShadowOffsetY.$container.before('<b>Y:</b>');
     this.textShadowBlurRadius.$container.before('<b>R:</b>');
 
-    FONTS.forEach(function (fontFamily) {
+    THEME.FONTS.forEach(function (fontFamily) {
         this.fontFamily.add(fontFamily, true);
     }, this);
-};
-
-/** @protected */
-SettingsPopupStyle.prototype.getThemeCSS = function (theme) {
-    // background
-    var bgcMain = theme.background.color[0],
-        bgcSec = theme.background.color[1],
-        bgcOpacity = theme.background.opacity / 100;
-
-    if (bgcOpacity < 1) {
-        bgcMain = hex2Rgba(bgcMain, bgcOpacity);
-        bgcSec = hex2Rgba(bgcSec, bgcOpacity);
-    }
-    if (theme.background.linear) {
-        bgcMain = UTILS.sprintf('linear-gradient(180deg, {0}, {1})', bgcMain, bgcSec);
-    }
-
-    // border
-    var borderOpacity = theme.border.opacity / 100;
-    var borderColor = borderOpacity < 1 ? hex2Rgba(theme.border.color, borderOpacity) : theme.border.color;
-    var border = [theme.border.width + 'px', theme.border.style, borderColor].join(' ');
-    var borderRadius = theme.border.radius + 'px';
-
-    // text
-    var fontFamily = theme.text.font;
-    var fontSize = theme.text.size + 'px';
-    var textColor = theme.text.color;
-    var textShadowX = theme.text.shadow.offset[0];
-    var textShadowY = theme.text.shadow.offset[1];
-    var textShadowBlur = theme.text.shadow.blur;
-    var textShadow = [textShadowX + 'px', textShadowY + 'px', textShadowBlur + 'px', theme.text.shadow.color].join(' ');
-    if (!textShadowX && !textShadowY && !textShadowBlur) textShadow = 'none';
-
-    // box
-    var maxWidth = theme.box.maxWidth ? theme.box.maxWidth : 'none';
-    var maxHeight = theme.box.maxHeight ? theme.box.maxHeight : 'none';
-    var padding = theme.box.padding + 'em';
-    var boxShadowOpacity = theme.box.shadow.opacity / 100;
-    var boxShadowColor = boxShadowOpacity < 1 ? hex2Rgba(theme.box.shadow.color, boxShadowOpacity) : theme.box.shadow.color;
-    var boxShadow = [theme.box.shadow.inner ? 'inset' : '', 0, 0, theme.box.shadow.size + 'px', boxShadowColor].join(' ');
-
-    return {
-        maxWidth    : maxWidth,
-        maxHeight   : maxHeight,
-        padding     : padding,
-        background  : bgcMain,
-        border      : border,
-        borderRadius: borderRadius,
-        fontFamily  : fontFamily,
-        fontSize    : fontSize,
-        color       : textColor,
-        textShadow  : textShadow,
-        boxShadow   : boxShadow
-    };
 };
 
 /** @private */
 SettingsPopupStyle.prototype.createTheme = function () {
     return {
-        "background": {
-            "color"  : [this.bgcMain.getValue(), this.bgcSec.getValue()],
-            "linear" : this.bgcLinear.getValue(),
-            "opacity": this.bgcOpacity.getValue()
-        },
-        "border": {
-            "color"  : this.borderColor.getValue(),
-            "style"  : this.borderStyle.getValue(),
-            "width"  : this.borderWidth.getValue(),
-            "radius" : this.borderRadius.getValue(),
-            "opacity": this.borderOpacity.getValue()
-        },
-        "text": {
-            "color" : this.textColor.getValue(),
-            "font"  : this.fontFamily.getValue(),
-            "size"  : this.fontSize.getValue(),
-            "shadow": {
-                "offset": [this.textShadowOffsetX.getValue(), this.textShadowOffsetY.getValue()],
-                "blur"  : this.textShadowBlurRadius.getValue(),
-                "color" : this.textShadowColor.getValue()
-            }
-        },
-        "box": {
-            "padding"  : this.boxPadding.getValue(),
-            "maxWidth" : this.boxMaxWidth.getValue(),
-            "maxHeight": this.boxMaxHeight.getValue(),
-            "shadow": {
-                "color"  : this.boxShadowColor.getValue(),
-                "size"   : this.boxShadowSize.getValue(),
-                "opacity": this.boxShadowOpacity.getValue(),
-                "inner"  : this.boxShadowInner.getValue()
-            }
-        }
-    };
+        bgColor1         : this.bgcMain.getValue(),
+        bgColor2         : this.bgcSec.getValue(),
+        bgcLinear        : this.bgcLinear.getValue(),
+        bgcOpacity       : this.bgcOpacity.getValue(),
+        borderColor      : this.borderColor.getValue(),
+        borderStyle      : this.borderStyle.getValue(),
+        borderWidth      : this.borderWidth.getValue(),
+        borderRadius     : this.borderRadius.getValue(),
+        borderOpacity    : this.borderOpacity.getValue(),
+        textColor        : this.textColor.getValue(),
+        fontFamily       : this.fontFamily.getValue(),
+        fontSize         : this.fontSize.getValue(),
+        textShadowOffsetX: this.textShadowOffsetX.getValue(),
+        textShadowOffsetY: this.textShadowOffsetY.getValue(),
+        textShadowBlur   : this.textShadowBlurRadius.getValue(),
+        textShadowColor  : this.textShadowColor.getValue(),
+        padding          : this.boxPadding.getValue(),
+        maxWidth         : this.boxMaxWidth.getValue(),
+        maxHeight        : this.boxMaxHeight.getValue(),
+        boxShadowColor   : this.boxShadowColor.getValue(),
+        boxShadowSize    : this.boxShadowSize.getValue(),
+        boxShadowOpacity : this.boxShadowOpacity.getValue(),
+        boxShadowInner   : this.boxShadowInner.getValue()
+    }
 };
 
 /** @private */
@@ -340,34 +276,34 @@ SettingsPopupStyle.prototype.applyTheme = function (theme) {
 
     theme = theme || themes[activeTheme] || customTheme;
     if (!theme) return;
-    this.popup.$container.css(this.getThemeCSS(theme));
+    this.popup.$container.css(THEME.toCSS(theme));
 
-    this.bgcMain.setValue(theme.background.color[0], true);
-    this.bgcSec.setValue(theme.background.color[1], true);
-    this.bgcLinear.setValue(theme.background.linear, true);
-    this.bgcOpacity.setValue(theme.background.opacity, true);
+    this.bgcMain.setValue(theme.bgColor1, true);
+    this.bgcSec.setValue(theme.bgColor2, true);
+    this.bgcLinear.setValue(theme.bgcLinear, true);
+    this.bgcOpacity.setValue(theme.bgcOpacity, true);
 
-    this.borderColor.setValue(theme.border.color, true);
-    this.borderStyle.setValue(theme.border.style, true);
-    this.borderWidth.setValue(theme.border.width);
-    this.borderRadius.setValue(theme.border.radius, true);
-    this.borderOpacity.setValue(theme.border.opacity, true);
+    this.borderColor.setValue(theme.borderColor, true);
+    this.borderStyle.setValue(theme.borderStyle, true);
+    this.borderWidth.setValue(theme.borderWidth);
+    this.borderRadius.setValue(theme.borderRadius, true);
+    this.borderOpacity.setValue(theme.borderOpacity, true);
 
-    this.textColor.setValue(theme.text.color, true);
-    this.fontFamily.setValue(theme.text.font, true);
-    this.fontSize.setValue(theme.text.size);
-    this.textShadowOffsetX.setValue(theme.text.shadow.offset[0]);
-    this.textShadowOffsetY.setValue(theme.text.shadow.offset[1]);
-    this.textShadowBlurRadius.setValue(theme.text.shadow.blur);
-    this.textShadowColor.setValue(theme.text.shadow.color, true);
+    this.textColor.setValue(theme.textColor, true);
+    this.fontFamily.setValue(theme.fontFamily, true);
+    this.fontSize.setValue(theme.fontSize);
+    this.textShadowOffsetX.setValue(theme.textShadowOffsetX);
+    this.textShadowOffsetY.setValue(theme.textShadowOffsetY);
+    this.textShadowBlurRadius.setValue(theme.textShadowBlur);
+    this.textShadowColor.setValue(theme.textShadowColor, true);
 
-    this.boxPadding.setValue(theme.box.padding, true);
-    this.boxMaxWidth.setValue(theme.box.maxWidth, true);
-    this.boxMaxHeight.setValue(theme.box.maxHeight, true);
-    this.boxShadowColor.setValue(theme.box.shadow.color, true);
-    this.boxShadowSize.setValue(theme.box.shadow.size);
-    this.boxShadowOpacity.setValue(theme.box.shadow.opacity);
-    this.boxShadowInner.setValue(theme.box.shadow.inner, true);
+    this.boxPadding.setValue(theme.padding, true);
+    this.boxMaxWidth.setValue(theme.maxWidth, true);
+    this.boxMaxHeight.setValue(theme.maxHeight, true);
+    this.boxShadowColor.setValue(theme.boxShadowColor, true);
+    this.boxShadowSize.setValue(theme.boxShadowSize);
+    this.boxShadowOpacity.setValue(theme.boxShadowOpacity);
+    this.boxShadowInner.setValue(theme.boxShadowInner, true);
 };
 
 SettingsPopupStyle.prototype.saveTheme = function () {
@@ -442,23 +378,5 @@ SettingsPopupStyle.prototype.addTheme = function (themeName, theme) {
         removeTitle: __(29)
     }, true);
 };
-
-/** @const */
-var BORDER_STYLES = ["solid", "dotted", "dashed", "double", "groove", "ridge", "inset", "outset"];
-
-/** @const */
-var FONTS = [
-    "Arial",
-    "Tahoma",
-    "Verdana",
-    "Trebuchet MS",
-    "Myriad Pro",
-    "Courier New",
-    "Times New Roman",
-    "Meiryo UI",
-    "Hiragino Kaku Gothic Pro",
-    "MS UI Gothic",
-    "VL Gothic"
-];
 
 exports.SettingsPopupStyle = SettingsPopupStyle;
