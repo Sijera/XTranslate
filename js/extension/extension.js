@@ -14,15 +14,6 @@ var Extension = function (options) {
 inherit(Extension, EventDriven);
 
 /**
- * Make http request to get local or remote file (must be allowed in manifest.json)
- * @param options jQuery.ajax options
- * @returns {jQuery.Deferred}
- */
-Extension.prototype.makeRequest = function (options) {
-    return $.ajax(options);
-};
-
-/**
  * Get current state of the extension
  * @returns {jQuery.Deferred}
  */
