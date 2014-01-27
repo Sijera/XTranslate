@@ -15,14 +15,14 @@
 
     @include with-vendors(transition, background-color .35s);
 
-    &:not(.right) {
-      margin-right: $spacing;
-    }
-    &.right {
-      margin-left: $spacing;
-    }
-    &:hover {
-      border-color: rgba(255, 255, 255, .5);
+    &:not(.right) { margin-right: $spacing; }
+    &.right { margin-left: $spacing; }
+    &:hover { border-color: rgba(255, 255, 255, .5); }
+  }
+
+  &.disabled {
+    .colorBox {
+      background: none !important;
     }
   }
 

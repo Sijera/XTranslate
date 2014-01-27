@@ -56,8 +56,8 @@ SettingsPopupStyle.prototype.bindEvents = function () {
 
     this.bindChangeStyle(
         // background
-        this.bgcMain,
-        this.bgcSec,
+        this.bgColor1,
+        this.bgColor2,
         this.bgcLinear,
         this.bgcOpacity,
 
@@ -193,10 +193,12 @@ SettingsPopupStyle.prototype.addBackgroundStyle = function () {
     var $bgColor = this.createSubBlock(__(36), $background);
     var $opacity = this.createSubBlock(__(37), $background);
 
-    /** @type {ColorPicker} */ this.bgcMain = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
-    /** @type {ColorPicker} */ this.bgcSec = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
+    /** @type {ColorPicker} */ this.bgColor1 = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
+    /** @type {ColorPicker} */ this.bgColor2 = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
     /** @type {CheckBox} */ this.bgcLinear = new CheckBox({label: __(38)}).appendTo($bgColor);
     /** @type {Slider} */ this.bgcOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
+
+    this.bgcLinear.on('change', this.bgColor2.toggle.bind(this.bgColor2));
 };
 
 /** @private */
@@ -244,8 +246,8 @@ SettingsPopupStyle.prototype.addTextStyle = function () {
 /** @private */
 SettingsPopupStyle.prototype.createTheme = function () {
     return {
-        bgColor1         : this.bgcMain.getValue(),
-        bgColor2         : this.bgcSec.getValue(),
+        bgColor1         : this.bgColor1.getValue(),
+        bgColor2         : this.bgColor2.getValue(),
         bgcLinear        : this.bgcLinear.getValue(),
         bgcOpacity       : this.bgcOpacity.getValue(),
         borderColor      : this.borderColor.getValue(),
@@ -280,8 +282,9 @@ SettingsPopupStyle.prototype.applyTheme = function (theme) {
     if (!theme) return;
     this.popup.$container.css(THEME.toCSS(theme));
 
-    this.bgcMain.setValue(theme.bgColor1, true);
-    this.bgcSec.setValue(theme.bgColor2, true);
+    this.bgColor1.setValue(theme.bgColor1, true);
+    this.bgColor2.setValue(theme.bgColor2, true);
+    this.bgColor2.toggle(theme.bgcLinear);
     this.bgcLinear.setValue(theme.bgcLinear, true);
     this.bgcOpacity.setValue(theme.bgcOpacity, true);
 

@@ -12,7 +12,7 @@ var Google = function (options) {
     this.name = 'google';
     this.title = 'Google';
     this.url = 'http://translate.google.com';
-    this.langList = LANGUAGES;
+    this.langList = $.extend({}, this.langList, LANGUAGES);
     this.textToSpeech = true;
 };
 
@@ -92,7 +92,6 @@ Google.prototype.getAudioUrl = function (text) {
 
 /** @const */
 var LANGUAGES = {
-    "auto" : "Auto detect",
     "af"   : "Afrikaans",
     "sq"   : "Albanian",
     "ar"   : "Arabic",

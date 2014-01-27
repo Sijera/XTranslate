@@ -15,6 +15,8 @@ var EventDriven = function () {
  * @param {Object} [context]
  */
 EventDriven.prototype.on = function (eventName, callback, context) {
+    context = context || this;
+
     if (eventName.indexOf(' ') > -1) {
         eventName.trim().split(' ').forEach(function (eventName) {
             this.on(eventName, callback, context);
@@ -73,15 +75,15 @@ EventDriven.prototype.off = function (eventName, context) {
  * Fire an event with specific name
  * Extra arguments can be passed to callbacks
  * @param eventName
- * @param [args*]
+ * @param [params*]
  */
-EventDriven.prototype.trigger = function (eventName, args) {
-    var list = this.events[eventName] || [],
-        params = Array.prototype.slice.call(arguments, 1),
+EventDriven.prototype.trigger = function (eventName, params) {
+    var listeners = this.events[eventName] || [],
+        args = Array.prototype.slice.call(arguments, 1),
         results = [];
 
-    list.forEach(function (data) {
-        results.push(data.callback.apply(data.context, params));
+    listeners.forEach(function (listener) {
+        results.push(listener.callback.apply(listener.context, args));
     });
     return results;
 };

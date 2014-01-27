@@ -19,9 +19,9 @@ var App = function (options) {
     this.extension = new Chrome();
 
     this.vendors = {
-        'google': new Google(),
-        'yandex': new Yandex(),
-        'bing'  : new Bing()
+        'google': new Google(this),
+        'yandex': new Yandex(this),
+        'bing'  : new Bing(this)
     };
 
     /** @type {Google|Yandex|Bing} */
@@ -59,7 +59,7 @@ App.prototype.state = {
             langTo      : navigator.language.split('-')[0]
         },
         popupStyle: {
-            collapsed  : true,
+            collapsed  : false,
             activeTheme: Object.keys(THEMES)[0],
             themes     : THEMES,
             customTheme: null
@@ -182,6 +182,12 @@ App.prototype.clear = function (chain, silent) {
 /** @private */
 App.prototype.toJSON = function () {
     return JSON.parse(JSON.stringify(this.state));
+};
+
+/** @private */
+App.prototype.reset = function () {
+    this.state = {};
+    location.reload(true);
 };
 
 exports.App = App;

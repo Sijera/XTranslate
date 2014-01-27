@@ -7,12 +7,14 @@ var inherit = require('../utils').inherit,
  * Base class for all translation services
  * @constructor
  */
-var Vendor = function (options) {
-    Vendor.superclass.constructor.call(this, options);
+var Vendor = function (APP) {
+    Vendor.superclass.constructor.call(this);
 
     this.sourceText = '';
     this.autoDetect = 'auto';
     this.textToSpeech = false;
+    this.langList = {};
+    this.langList[this.autoDetect] = APP.extension.getText(64);
 };
 
 inherit(Vendor, EventDriven);

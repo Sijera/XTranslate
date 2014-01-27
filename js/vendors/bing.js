@@ -12,7 +12,7 @@ var Bing = function (options) {
     this.name = 'bing';
     this.title = 'Bing';
     this.url = 'http://bing.com/translator/';
-    this.langList = LANGUAGES;
+    this.langList = $.extend({}, this.langList, LANGUAGES);
     this.textToSpeech = true;
 };
 
@@ -20,7 +20,6 @@ inherit(Bing, Vendor);
 
 /** @const */
 var LANGUAGES = {
-    "auto"  : "Auto detect",
     "ar"    : "Arabic",
     "bg"    : "Bulgarian",
     "ca"    : "Catalan",

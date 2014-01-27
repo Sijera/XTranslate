@@ -254,5 +254,9 @@
     "63": {
         "message"    : "Start typing to get translation",
         "description": "Placeholder inside text area in the user input"
+    },
+    "64": {
+        "message"    : "Auto Detect",
+        "description": "An option for automatic detection language if the vendor supports this feature"
     }
 }
