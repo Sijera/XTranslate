@@ -17,11 +17,12 @@ var App = function (options) {
 
     /** @type {Chrome|Firefox|Opera} */
     this.extension = new Chrome();
+    this.localization = this.extension.getText.bind(this.extension);
 
     this.vendors = {
-        'google': new Google(this),
-        'yandex': new Yandex(this),
-        'bing'  : new Bing(this)
+        'google': new Google(this.localization),
+        'yandex': new Yandex(this.localization),
+        'bing'  : new Bing(this.localization)
     };
 
     /** @type {Google|Yandex|Bing} */

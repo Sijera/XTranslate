@@ -18,7 +18,7 @@ var __;
         AppView = require('./views/app_view').AppView;
 
     APP = new App().on('ready', function () {
-        __ = APP.extension.getText.bind(APP.extension);
+        __ = APP.localization;
         new AppView({container: '#app'}).init(APP);
     });
 })();

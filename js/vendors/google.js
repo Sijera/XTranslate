@@ -21,7 +21,7 @@ inherit(Google, Vendor);
 Google.prototype.translateText = function (text) {
     this.sourceText = text;
     this.swapped = false;
-    return this.loadData(text).done(this.onTranslationReady.bind(this));
+    return this.loadData(text);
 };
 
 /** @private */
@@ -59,30 +59,29 @@ Google.prototype.autoSwapLang = function (data) {
 /** @private */
 Google.prototype.parseData = function (response) {
     var data = Function('return ' + response)();
-    return {
-        sourceText  : this.sourceText,
+    var parentData = Google.superclass.parseData.call(this, data);
+    return $.extend(parentData, {
         translation : data[0][0][0].replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
         langDetected: data[8] && data[8][0] && data[8][0][0],
         spellCheck  : data[7] && data[7][0] ? data[7][1] : '',
-        dictionary  : (data[1] || []).map(function (wordData) {
+        dictionary  : (data[1] || []).map(function (dictData) {
             return {
-                partOfSpeech: wordData[0],
-                translation : wordData[1],
-                similarWords: wordData[2].map(function (data) {
+                partOfSpeech: dictData[0],
+                translation : dictData[1],
+                similarWords: dictData[2].map(function (syn) {
                     return {
-                        word    : data[0],
-                        meanings: data[1]
+                        word    : syn[0],
+                        meanings: syn[1]
                     }
                 })
             };
         })
-    };
+    });
 };
 
 Google.prototype.getAudioUrl = function (text) {
     var lang = this.getLangPair();
-
     return this.url + [
         '/translate_tts?ie=UTF-8',
         'q=' + text,

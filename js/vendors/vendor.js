@@ -7,14 +7,14 @@ var inherit = require('../utils').inherit,
  * Base class for all translation services
  * @constructor
  */
-var Vendor = function (APP) {
+var Vendor = function (__) {
     Vendor.superclass.constructor.call(this);
 
     this.sourceText = '';
     this.autoDetect = 'auto';
     this.textToSpeech = false;
     this.langList = {};
-    this.langList[this.autoDetect] = APP.extension.getText(64);
+    this.langList[this.autoDetect] = __(64);
 };
 
 inherit(Vendor, EventDriven);
@@ -38,15 +38,13 @@ Vendor.prototype.getAudioUrl = function (text) {
 /**
  * Parse response of the translation and convert it to internal format
  * @param {Object|Array} response
- * @return {*}
  */
 Vendor.prototype.parseData = function (response) {
-    return response; // override me!
-};
-
-/** @protected */
-Vendor.prototype.onTranslationReady = function (data) {
-    this.trigger('translationReady', data);
+    return {
+        // override me!
+        sourceText: this.sourceText,
+        response: response
+    };
 };
 
 /**

@@ -27,7 +27,7 @@ Popup.prototype.createDom = function () {
         .appendTo(this.$container);
 
     this.$main = $('<div class="main"/>').appendTo(this.$container);
-    this.$dictionaries = $('<div class="dictionaries"/>').appendTo(this.$container);
+    this.$dictionary = $('<dl class="dictionary"/>').appendTo(this.$container);
     this.scrollBar = new ScrollBar({$parent: this.$container});
 };
 
@@ -44,54 +44,40 @@ Popup.prototype.bindEvents = function () {
  * @param {Object} data
  */
 Popup.prototype.parseData = function (data) {
-    /** @type {String} */ this.sourceText = data['sourceText'];
-    /** @type {Boolean} */ this.showSimilar = data['showSimilar'];
-    /** @type {String} */ var lang = data['langDetected'];
-    /** @type {String} */ var translation = data['translation'];
-    /** @type {Array=} */ var dictionary = data['dictionary'] || [];
-    /** @type {String} */ var textCorrection = data['correction'];
+    this.sourceText = data.sourceText;
+    this.$container.attr('title', data.langSource ? __(49, [data.langSource, APP.vendor.title]) : '');
+    this.$main.text(data.translation);
+    this.$dictionary.empty();
 
-    this.$container.attr('title', lang ? __(49, [lang, APP.vendor.title]) : '');
-    this.$main.text(translation);
-    this.$dictionaries.empty();
-
-    dictionary.forEach(this.addDictionaryPart, this);
-    this.addTextCorrection(textCorrection);
-    this.scrollBar.scrollTo(0, true);
+    data.dictionary.forEach(this.addDictionary, this);
+    this.spellCorrection(data.spellCheck);
     this.scrollBar.update();
 
     return this;
 };
 
 /** @private */
-Popup.prototype.addDictionaryPart = function (data) {
-    /** @type {String} */ var partOfSpeech = data[0];
-    /** @type {Array.<Array(String, Array)>} */ var wordData = data[1];
-    /** @type {Array=} */ var wordMeanings = wordData.map(function (a) { return $.isArray(a) ? a[0] : a });
+Popup.prototype.addDictionary = function (dict) {
+    var $wordType = $('<dt class="partOfSpeech"/>').text(dict.partOfSpeech).appendTo(this.$dictionary);
+    var $wordMeanings = $('<dd class="wordMeanings"/>').appendTo(this.$dictionary);
 
-    var $dictionary = $('<div class="dictionary"/>').appendTo(this.$dictionaries);
-    var $wordType = $('<div class="wordType"/>').text(partOfSpeech).appendTo($dictionary);
-    var $wordMeanings = $('<div class="wordMeanings"/>').appendTo($dictionary);
-
-    if (!this.showSimilar) $wordMeanings.text(wordMeanings.join(', '));
+    if (!dict.similarWords) {
+        var links = dict.translation.map(this.wrapLink);
+        $wordMeanings.html(links.join(', '));
+    }
     else {
-        $wordMeanings.addClass('extended');
-        wordData.forEach(function (a, i) {
-            var wordMeaning = wordMeanings[i];
-            var wordSimilar = $.isArray(a[1]) ? a[1].map(this.wrapLink, this).join(', ') : '';
-            $wordMeanings.append(
-                '<div class="wordMeaning">' + wordMeaning + '</div>',
-                '<div class="wordSimilar">' + wordSimilar + '</div>'
-            );
+        dict.similarWords.forEach(function (translation) {
+            var $word = $(this.wrapLink(translation.word)).appendTo($wordMeanings);
+            $word.attr('title', translation.meanings.join(', '));
         }, this);
     }
 };
 
 /** @private */
-Popup.prototype.addTextCorrection = function (suggestedText) {
+Popup.prototype.spellCorrection = function (suggestedText) {
     if (!suggestedText) return;
     var text = __(47, [this.wrapLink(suggestedText)]);
-    $('<div class="correction"/>').text(text).appendTo(this.$dictionaries);
+    $('<div class="spellChecker"/>').text(text).appendTo(this.$dictionary);
 };
 
 /** @private */
@@ -108,7 +94,7 @@ Popup.prototype.onLinkTextClick = function (e) {
 /** @private */
 Popup.prototype.onPlayIconClick = function (e) {
     if (!this.sourceText) return;
-    this.trigger('play', this.sourceText);
+    APP.vendor.playText(this.sourceText);
 };
 
 /** @private */
