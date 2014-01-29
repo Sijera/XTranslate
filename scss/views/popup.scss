@@ -9,44 +9,4 @@
   overflow: hidden;
   white-space: pre-line;
   text-align: left;
-
-  .playIcon {
-    $iconSize: 22px;
-
-    position: relative;
-    width: $iconSize;
-    height: $iconSize;
-    margin-right: $spacing;
-    float: left;
-    border-radius: 50%;
-    cursor: pointer;
-    opacity: .5;
-    background: white no-repeat center;
-
-    &:not([hidden]) + * {
-      padding-top: .2em;
-    }
-
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  .main {
-    @include clearFix;
-  }
-
-  .dictionary {
-    &:empty {
-      display: none;
-    }
-  }
-
-  .partOfSpeech {
-    font-weight: bold;
-  }
-
-  .wordMeanings {
-    padding-left: $padding * 2;
-  }
 }

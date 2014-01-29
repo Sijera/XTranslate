@@ -15,7 +15,7 @@ html, body {
 
 body, table, textarea, input, button, select, a {
   font: 13px Verdana, sans-serif;
-  color: white;
+  color: $textColor;
 }
 
 a {
@@ -65,6 +65,7 @@ textarea {
 
 // app
 @import "views/popup";
+@import "views/translation_result";
 @import "views/app_header_bar";
 @import "views/app_footer_bar";
 @import "views/languages_pair_select";

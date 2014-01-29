@@ -8,4 +8,13 @@
   textarea {
     height: 75px;
   }
+
+  .partOfSpeech {
+    margin-top: $padding;
+    @include addSepLine;
+  }
+
+  .translationResult {
+    padding: $spacing;
+  }
 }

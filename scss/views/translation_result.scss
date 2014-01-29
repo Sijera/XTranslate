@@ -1,0 +1,86 @@
+@import "../vars", "../mixins";
+
+.translationResult {
+  .tableView {
+    display: table;
+    .rowView {
+      display: table-row;
+      > * {
+        display: table-cell;
+      }
+    }
+  }
+
+  .playIcon {
+    $iconSize: 22px;
+
+    position: relative;
+    width: $iconSize;
+    height: $iconSize;
+    margin-right: $spacing;
+    float: left;
+    border-radius: 50%;
+    cursor: pointer;
+    opacity: .5;
+    background: white no-repeat center;
+
+    &:not([hidden]) + * {
+      padding-top: .2em;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .translation {
+    @include clearFix;
+  }
+
+  .dictionary {
+    &:empty {
+      display: none;
+    }
+  }
+
+  .hint {
+    cursor: help;
+  }
+
+  .link {
+    $linkColor: silver;
+    color: $linkColor;
+    border-bottom: 1px dotted $linkColor;
+    cursor: pointer;
+
+    &:hover {
+      color: $textColor;
+      border-bottom-color: $textColor;
+    }
+  }
+
+  .spellChecker {
+    .link {
+      font-weight: bold;
+    }
+  }
+
+  .partOfSpeech {
+    font-weight: bold;
+  }
+
+  .wordMeanings {
+    padding-left: $padding * 2;
+  }
+
+  .rowView {
+    > * {
+      padding-bottom: $spacing;
+      &.wordMain {
+        width: 150px;
+        overflow: hidden;
+        padding-right: $spacing;
+      }
+    }
+  }
+}

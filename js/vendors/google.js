@@ -59,7 +59,7 @@ Google.prototype.autoSwapLang = function (data) {
 /** @private */
 Google.prototype.parseData = function (response) {
     var data = Function('return ' + response)();
-    var parentData = Google.superclass.parseData.call(this, data);
+    var parentData = Google.superclass.parseData.call(this);
     return $.extend(parentData, {
         translation : data[0][0][0].replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
@@ -69,10 +69,10 @@ Google.prototype.parseData = function (response) {
             return {
                 partOfSpeech: dictData[0],
                 translation : dictData[1],
-                similarWords: dictData[2].map(function (syn) {
+                similarWords: dictData[2].map(function (synData) {
                     return {
-                        word    : syn[0],
-                        meanings: syn[1]
+                        word    : synData[0],
+                        meanings: synData[1]
                     }
                 })
             };

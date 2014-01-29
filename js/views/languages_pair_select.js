@@ -10,6 +10,7 @@ var inherit = require('../utils').inherit,
 var LanguagesPairSelect = function (options) {
     LanguagesPairSelect.superclass.constructor.call(this, options);
 
+    this.state = APP.get('settingsContainer.vendorBlock');
     this.createDom();
     this.bindEvents();
     this.refresh();

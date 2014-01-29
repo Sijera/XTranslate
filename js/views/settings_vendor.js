@@ -24,7 +24,7 @@ SettingsVendor.prototype.createDom = function (state) {
         this.addVendor(APP.vendors[name]);
     }, this);
 
-    this.langPairSelect = new LanguagesPairSelect({state: state}).appendTo(this.$content);
+    this.langPairSelect = new LanguagesPairSelect().appendTo(this.$content);
 };
 
 /** @private */

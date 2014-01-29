@@ -90,6 +90,7 @@ App.prototype.onReady = function (state) {
     this.stateLastSync = JSON.stringify(state);
     this.initState('', state);
     this.trigger('ready');
+    this.ready = true;
 };
 
 /** @private */

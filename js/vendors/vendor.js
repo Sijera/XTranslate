@@ -37,13 +37,12 @@ Vendor.prototype.getAudioUrl = function (text) {
 
 /**
  * Parse response of the translation and convert it to internal format
- * @param {Object|Array} response
+ * @param {String} response Received data from the server
  */
 Vendor.prototype.parseData = function (response) {
     return {
         // override me!
-        sourceText: this.sourceText,
-        response: response
+        sourceText: this.sourceText
     };
 };
 

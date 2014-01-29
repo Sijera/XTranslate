@@ -36,8 +36,8 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
 
-    /** @type {jQuery} */ this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
-    /** @type {Popup} */ this.popup = new Popup().parseData(this.popupPreviewData).appendTo(this.$popupPreview);
+    this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
+    this.popup = new Popup({data: this.popupPreviewData}).appendTo(this.$popupPreview);
     this.popup.$container.show();
 
     this.addThemeBlock();
