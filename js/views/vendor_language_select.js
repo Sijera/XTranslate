@@ -7,8 +7,8 @@ var inherit = require('../utils').inherit,
 /**
  * @constructor
  */
-var LanguagesPairSelect = function (options) {
-    LanguagesPairSelect.superclass.constructor.call(this, options);
+var VendorLanguageSelect = function (options) {
+    VendorLanguageSelect.superclass.constructor.call(this, options);
 
     this.state = APP.get('settingsContainer.vendorBlock');
     this.createDom();
@@ -16,11 +16,11 @@ var LanguagesPairSelect = function (options) {
     this.refresh();
 };
 
-inherit(LanguagesPairSelect, UIComponent);
+inherit(VendorLanguageSelect, UIComponent);
 
 /** @private */
-LanguagesPairSelect.prototype.createDom = function () {
-    this.$container.addClass('languagesPairSelect');
+VendorLanguageSelect.prototype.createDom = function () {
+    this.$container.addClass('vendorLanguageSelect');
 
     this.$langFrom = $('<img class="flagFrom"/>').appendTo(this.$container);
     this.langFrom = new Select({className: 'langFrom', noBodyAppend: true}).appendTo(this.$container);
@@ -30,7 +30,7 @@ LanguagesPairSelect.prototype.createDom = function () {
 };
 
 /** @private */
-LanguagesPairSelect.prototype.bindEvents = function () {
+VendorLanguageSelect.prototype.bindEvents = function () {
     this.langFrom.on('change', this.setLangFrom.bind(this));
     this.langTo.on('change', this.setLangTo.bind(this));
     this.$swapLang.on('click', this.onSwapLangPair.bind(this));
@@ -43,7 +43,7 @@ LanguagesPairSelect.prototype.bindEvents = function () {
 /**
  * Refresh the select boxes from active translation vendor
  */
-LanguagesPairSelect.prototype.refresh = function () {
+VendorLanguageSelect.prototype.refresh = function () {
     var langList = APP.vendor.langList,
         langListFrom = Object.keys(langList),
         langListTo = langListFrom.slice(langListFrom[0] == APP.vendor.autoDetect ? 1 : 0),
@@ -69,14 +69,14 @@ LanguagesPairSelect.prototype.refresh = function () {
     this.setLangTo(langTo);
 };
 
-LanguagesPairSelect.prototype.setLangFrom = function (lang) {
+VendorLanguageSelect.prototype.setLangFrom = function (lang) {
     this.state.langFrom = lang;
     this.langFrom.selectByValue(lang, true);
     this.$langFrom.attr('src', this.getFlagUrl(lang));
     this.disableMirrorLang(this.langTo, lang);
 };
 
-LanguagesPairSelect.prototype.setLangTo = function (lang) {
+VendorLanguageSelect.prototype.setLangTo = function (lang) {
     this.state.langTo = lang;
     this.langTo.selectByValue(lang, true);
     this.$langTo.attr('src', this.getFlagUrl(lang));
@@ -88,7 +88,7 @@ LanguagesPairSelect.prototype.setLangTo = function (lang) {
  * @param {string} flag
  * @returns {string} URL relative to project root
  */
-LanguagesPairSelect.prototype.getFlagUrl = function (flag) {
+VendorLanguageSelect.prototype.getFlagUrl = function (flag) {
     return '/img/flags/' + flag.split('-')[0] + '.png';
 };
 
@@ -97,13 +97,13 @@ LanguagesPairSelect.prototype.getFlagUrl = function (flag) {
  * @param {Select} select
  * @param {String} lang
  */
-LanguagesPairSelect.prototype.disableMirrorLang = function (select, lang) {
+VendorLanguageSelect.prototype.disableMirrorLang = function (select, lang) {
     select.itemList.enable(select._getItemBy('disabled', true));
     select.itemList.disable(select._getItemBy('value', lang));
 };
 
 /** @private */
-LanguagesPairSelect.prototype.onSwapLangPair = function () {
+VendorLanguageSelect.prototype.onSwapLangPair = function () {
     var langFrom = this.state.langFrom,
         langTo = this.state.langTo,
         autoDetect = APP.vendor.autoDetect;
@@ -114,4 +114,4 @@ LanguagesPairSelect.prototype.onSwapLangPair = function () {
     this.setLangFrom(langTo);
 };
 
-exports.LanguagesPairSelect = LanguagesPairSelect;
+exports.VendorLanguageSelect = VendorLanguageSelect;

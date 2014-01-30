@@ -1,6 +1,6 @@
 @import "../vars", "../mixins";
 
-.translationResult {
+.vendorDataView {
   .tableView {
     display: table;
     .rowView {
@@ -81,6 +81,14 @@
         overflow: hidden;
         padding-right: $spacing;
       }
+    }
+  }
+
+  .userInputContainer & {
+    padding: $spacing;
+    .partOfSpeech {
+      margin-top: $padding;
+      @include addSepLine;
     }
   }
 }

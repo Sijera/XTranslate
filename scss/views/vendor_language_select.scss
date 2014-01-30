@@ -1,6 +1,6 @@
 @import "../vars", "../mixins";
 
-.languagesPairSelect {
+.vendorLanguageSelect {
   $iconSize: 16px;
 
   text-align: center;
@@ -68,5 +68,13 @@
 
   .select {
     width: 39%;
+  }
+
+  .settingsVendor & {
+    @include addSepLine;
+  }
+
+  .userInputContainer & {
+    @include addSepLine(bottom);
   }
 }

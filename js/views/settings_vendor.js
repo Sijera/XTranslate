@@ -2,7 +2,7 @@
 
 var inherit = require('../utils').inherit,
     Radio = require('../ui/radio').Radio,
-    LanguagesPairSelect = require('./languages_pair_select').LanguagesPairSelect,
+    VendorLanguageSelect = require('./vendor_language_select').VendorLanguageSelect,
     SettingsBlock = require('./settings_block').SettingsBlock;
 
 /**
@@ -24,7 +24,7 @@ SettingsVendor.prototype.createDom = function (state) {
         this.addVendor(APP.vendors[name]);
     }, this);
 
-    this.langPairSelect = new LanguagesPairSelect().appendTo(this.$content);
+    this.langSelect = new VendorLanguageSelect().appendTo(this.$content);
 };
 
 /** @private */

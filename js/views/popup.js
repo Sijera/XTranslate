@@ -3,7 +3,7 @@
 var inherit = require('../utils').inherit,
     ScrollBar = require('../ui/scroll_bar').ScrollBar,
     FlyingPanel = require('../ui/flying_panel').FlyingPanel,
-    TranslationResult = require('./translation_result').TranslationResult;
+    VendorDataView = require('./vendor_data_view').VendorDataView;
 
 /**
  * @constructor
@@ -19,7 +19,7 @@ inherit(Popup, FlyingPanel);
 /** @private */
 Popup.prototype.createDom = function () {
     this.$container.addClass('popup');
-    this.translationResult = new TranslationResult({showFullData: false}).appendTo(this);
+    this.translationResult = new VendorDataView({showFullData: false}).appendTo(this);
     this.scrollBar = new ScrollBar({$parent: this.$container});
 };
 

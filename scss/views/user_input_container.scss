@@ -1,20 +1,7 @@
 @import "../vars", '../mixins';
 
 .userInputContainer {
-  .languagesPairSelect {
-    @include addSepLine(bottom);
-  }
-
   textarea {
     height: 75px;
-  }
-
-  .partOfSpeech {
-    margin-top: $padding;
-    @include addSepLine;
-  }
-
-  .translationResult {
-    padding: $spacing;
   }
 }

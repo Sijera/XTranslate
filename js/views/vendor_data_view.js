@@ -6,9 +6,9 @@ var inherit = require('../utils').inherit,
 /**
  * @constructor
  */
-var TranslationResult = function (options) {
+var VendorDataView = function (options) {
     options = $.extend({showFullData: true}, options);
-    TranslationResult.superclass.constructor.call(this, options);
+    VendorDataView.superclass.constructor.call(this, options);
 
     this.showFullData = options.showFullData;
     this.createDom();
@@ -16,11 +16,11 @@ var TranslationResult = function (options) {
     this.refreshPlayIcon();
 };
 
-inherit(TranslationResult, UIComponent);
+inherit(VendorDataView, UIComponent);
 
 /** @private */
-TranslationResult.prototype.createDom = function () {
-    this.$container.addClass('translationResult');
+VendorDataView.prototype.createDom = function () {
+    this.$container.addClass('vendorDataView');
 
     this.$playSound = $('<i class="playIcon"/>')
         .css('backgroundImage', APP.extension.getImageURL('img/sound.png'))
@@ -32,7 +32,7 @@ TranslationResult.prototype.createDom = function () {
 };
 
 /** @private */
-TranslationResult.prototype.bindEvents = function () {
+VendorDataView.prototype.bindEvents = function () {
     this.$playSound.on('click', this.onPlayIconClick.bind(this));
     this.$container.on('click', '.link', this.onLinkTextClick.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
@@ -43,7 +43,7 @@ TranslationResult.prototype.bindEvents = function () {
  * Parse data response from the vendor and show results
  * @param {Object} data
  */
-TranslationResult.prototype.parseData = function (data) {
+VendorDataView.prototype.parseData = function (data) {
     var lang = data.langSource;
     var title = lang ? __(49, [APP.vendor.langList[lang], APP.vendor.title]) : '';
 
@@ -57,7 +57,7 @@ TranslationResult.prototype.parseData = function (data) {
 };
 
 /** @private */
-TranslationResult.prototype.addDictionary = function (dict) {
+VendorDataView.prototype.addDictionary = function (dict) {
     var links = [];
     var $wordType = $('<dt class="partOfSpeech"/>').text(dict.partOfSpeech).appendTo(this.$dictionary);
     var $wordMeanings = $('<dd class="wordMeanings"/>').appendTo(this.$dictionary);
@@ -86,40 +86,40 @@ TranslationResult.prototype.addDictionary = function (dict) {
 };
 
 /** @private */
-TranslationResult.prototype.spellCorrection = function (suggestedText) {
+VendorDataView.prototype.spellCorrection = function (suggestedText) {
     if (!suggestedText) return;
     var text = __(47, [this.wrapLink(suggestedText)]);
     $('<div class="spellChecker"/>').html(text).appendTo(this.$dictionary);
 };
 
 /** @private */
-TranslationResult.prototype.wrapLink = function (text) {
+VendorDataView.prototype.wrapLink = function (text) {
     return '<span class="link">' + text + '</span>';
 };
 
 /** @private */
-TranslationResult.prototype.wrapHint = function (text, title) {
+VendorDataView.prototype.wrapHint = function (text, title) {
     title = title || '';
     return '<span class="hint"' + (title ? 'title="' + title + '"' : '') + '>' + text + '</span>';
 };
 
 /** @private */
-TranslationResult.prototype.onLinkTextClick = function (e) {
+VendorDataView.prototype.onLinkTextClick = function (e) {
     this.trigger('linkClick', $(e.target).text());
 };
 
 /** @private */
-TranslationResult.prototype.onPlayIconClick = function (e) {
+VendorDataView.prototype.onPlayIconClick = function (e) {
     if (!this.sourceText) return;
     APP.vendor.playText(this.sourceText);
     this.trigger('playSound', this.sourceText);
 };
 
 /** @private */
-TranslationResult.prototype.refreshPlayIcon = function () {
+VendorDataView.prototype.refreshPlayIcon = function () {
     var showIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
     var featureAvail = APP.vendor.textToSpeech;
     this.$playSound.toggle(showIcon && featureAvail);
 };
 
-exports.TranslationResult = TranslationResult;
+exports.VendorDataView = VendorDataView;

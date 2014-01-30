@@ -2,8 +2,8 @@
 
 var UTILS = require('../utils'),
     inherit = require('../utils').inherit,
-    TranslationResult = require('./translation_result').TranslationResult,
-    LanguagesPairSelect = require('./languages_pair_select').LanguagesPairSelect,
+    VendorDataView = require('./vendor_data_view').VendorDataView,
+    VendorLanguageSelect = require('./vendor_language_select').VendorLanguageSelect,
     UIComponent = require('../ui/ui_component').UIComponent;
 
 /**
@@ -24,9 +24,9 @@ inherit(UserInputContainer, UIComponent);
 UserInputContainer.prototype.createDom = function () {
     this.$container.addClass('userInputContainer');
 
-    this.langPairSelect = new LanguagesPairSelect().appendTo(this.$container);
+    this.langSelect = new VendorLanguageSelect().appendTo(this.$container);
     this.$text = $('<textarea/>').attr('placeholder', __(63)).appendTo(this.$container);
-    this.result = new TranslationResult().hide().appendTo(this);
+    this.result = new VendorDataView().hide().appendTo(this);
 };
 
 /** @private */

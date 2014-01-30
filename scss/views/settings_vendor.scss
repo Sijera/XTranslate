@@ -1,10 +1,6 @@
 @import "../vars", '../mixins';
 
 .settingsVendor {
-  .languagesPairSelect {
-    @include addSepLine;
-  }
-
   .vendor {
     .title {
       padding: 0;

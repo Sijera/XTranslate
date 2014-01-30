@@ -65,10 +65,10 @@ textarea {
 
 // app
 @import "views/popup";
-@import "views/translation_result";
 @import "views/app_header_bar";
 @import "views/app_footer_bar";
-@import "views/languages_pair_select";
+@import "views/vendor_data_view";
+@import "views/vendor_language_select";
 @import "views/settings_container";
 @import "views/settings_block";
 @import "views/settings_popup_definitions";
