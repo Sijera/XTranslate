@@ -24,6 +24,12 @@
     opacity: .5;
     background: white no-repeat center;
 
+    &.disabled {
+      pointer-events: none;
+      cursor: default;
+      background-color: gray;
+    }
+
     &:not([hidden]) + * {
       padding-top: .2em;
     }
@@ -35,6 +41,9 @@
 
   .translation {
     @include clearFix;
+    .ts {
+      color: silver;
+    }
   }
 
   .dictionary {
@@ -71,6 +80,11 @@
 
   .wordMeanings {
     padding-left: $padding * 2;
+  }
+
+  .example {
+    color: gray;
+    cursor: help;
   }
 
   .rowView {

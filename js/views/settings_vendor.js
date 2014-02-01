@@ -27,7 +27,10 @@ SettingsVendor.prototype.createDom = function (state) {
     this.langSelect = new VendorLanguageSelect().appendTo(this.$content);
 };
 
-/** @private */
+/**
+ * @private
+ * @param {Vendor|Google|Yandex|Bing} vendor
+ */
 SettingsVendor.prototype.addVendor = function (vendor) {
     var $label = $('<span class="title"/>').text(vendor.title);
     var $url = $('<a class="url" target="_blank" tabIndex="-1"/>')

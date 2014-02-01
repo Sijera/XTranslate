@@ -6,6 +6,9 @@ var UTILS = require('../utils'),
     VendorLanguageSelect = require('./vendor_language_select').VendorLanguageSelect,
     UIComponent = require('../ui/ui_component').UIComponent;
 
+/** @const */
+var TRANSLATE_DELAY = 250;
+
 /**
  * @constructor
  */
@@ -14,8 +17,6 @@ var UserInputContainer = function (options) {
 
     this.createDom();
     this.bindEvents();
-    this.onTranslationDone = this.onTranslationDone.bind(this);
-    this.onTranslationFail = console.error.bind(console, 'Translation failed');
 };
 
 inherit(UserInputContainer, UIComponent);
@@ -31,10 +32,18 @@ UserInputContainer.prototype.createDom = function () {
 
 /** @private */
 UserInputContainer.prototype.bindEvents = function () {
-    this.$text.on('input', UTILS.debounce(this.onInput.bind(this), 250));
+    this.onDone = this.onTranslationDone.bind(this);
+    this.translateTextLazy = UTILS.debounce(this.translateText.bind(this), TRANSLATE_DELAY);
+
+    this.$text.on('input', this.onInput.bind(this));
     this.result
-        .on('playSound', this.focus.bind(this))
+        .on('playText', this.focus.bind(this))
         .on('linkClick', this.onLinkTextClick.bind(this));
+
+    var onVendorChange = this.onVendorChange.bind(this);
+    APP.on('change:settingsContainer.vendorBlock.activeVendor', onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langFrom', onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langTo', onVendorChange);
 };
 
 UserInputContainer.prototype.focus = function () {
@@ -42,25 +51,31 @@ UserInputContainer.prototype.focus = function () {
 };
 
 /** @private */
+UserInputContainer.prototype.onVendorChange = function () {
+    this.translateTextLazy();
+};
+
+/** @private */
 UserInputContainer.prototype.onLinkTextClick = function (text) {
-    var len = text.length;
     this.translateText(text);
-    this.$text.val(text)[0].setSelectionRange(len, len);
-    this.focus();
+    this.$text.val(text)[0].setSelectionRange(text.length, text.length);
+    window.scrollTo(0, 0);
+};
+
+/** @private */
+UserInputContainer.prototype.getText = function (text) {
+    return (text || this.$text.val()).trim();
 };
 
 /** @private */
 UserInputContainer.prototype.onInput = function (e) {
-    var text = this.$text.val().trim();
-    if (text) this.translateText(text);
-    else this.result.hide();
-
+    this.translateTextLazy();
+    if (!this.getText()) this.result.hide();
 };
 
 UserInputContainer.prototype.translateText = function (text) {
-    return APP.vendor.translateText(text)
-        .done(this.onTranslationDone)
-        .fail(this.onTranslationFail);
+    text = this.getText(text);
+    if (text) APP.vendor.translateText(text).done(this.onDone);
 };
 
 /** @private */

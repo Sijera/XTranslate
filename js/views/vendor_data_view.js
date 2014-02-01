@@ -45,14 +45,19 @@ VendorDataView.prototype.bindEvents = function () {
  */
 VendorDataView.prototype.parseData = function (data) {
     var lang = data.langSource;
+    var transcription = data.transcription;
     var title = lang ? __(49, [APP.vendor.langList[lang], APP.vendor.title]) : '';
 
-    this.sourceText = data.sourceText;
-    this.$translation.text(data.translation).attr('title', title);
-    this.$dictionary.empty();
+    this.$playSound.toggleClass('disabled', !data.ttsEnabled);
+    this.$translation
+        .text(data.translation)
+        .attr('title', title)
+        .append(transcription ? ' <i class="ts">[' + transcription + ']</i>' : undefined);
 
-    data.dictionary.forEach(this.addDictionary, this);
+    this.$dictionary.empty();
+    (data.dictionary || []).forEach(this.addDictionary, this);
     this.spellCorrection(data.spellCheck);
+
     return this;
 };
 
@@ -67,9 +72,11 @@ VendorDataView.prototype.addDictionary = function (dict) {
         if (this.showFullData) {
             $wordMeanings.addClass('tableView');
             links = dict.similarWords.map(function (translation) {
+                var ex = translation.examples;
+                var examples = (ex || '').length ? ' <span class="example" title="' + ex.join('\n') + '">*</span>' : '';
                 return [
                     '<div class="rowView">',
-                        '<span class="wordMain">' + translation.word + '</span>',
+                        '<span class="wordMain">' + translation.word + examples + '</span>',
                         '<span class="wordSimilar">' + translation.meanings.map(this.wrapLink).join(', ') + '</span>',
                     '</div>'
                 ].join('');
@@ -110,15 +117,14 @@ VendorDataView.prototype.onLinkTextClick = function (e) {
 
 /** @private */
 VendorDataView.prototype.onPlayIconClick = function (e) {
-    if (!this.sourceText) return;
-    APP.vendor.playText(this.sourceText);
-    this.trigger('playSound', this.sourceText);
+    APP.vendor.playText();
+    this.trigger('playText');
 };
 
 /** @private */
 VendorDataView.prototype.refreshPlayIcon = function () {
     var showIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
-    var featureAvail = APP.vendor.textToSpeech;
+    var featureAvail = !!APP.vendor.urlTextToSpeech;
     this.$playSound.toggle(showIcon && featureAvail);
 };
 

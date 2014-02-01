@@ -1,6 +1,7 @@
 'use strict';
 
-var inherit = require('../utils').inherit,
+var UTILS = require('../utils'),
+    inherit = require('../utils').inherit,
     Vendor = require('./vendor').Vendor;
 
 /**
@@ -12,55 +13,29 @@ var Google = function (options) {
     this.name = 'google';
     this.title = 'Google';
     this.url = 'http://translate.google.com';
+    this.urlTextToSpeech = this.url + '/translate_tts?ie=UTF-8&q={0}&tl={1}';
     this.langList = $.extend({}, this.langList, LANGUAGES);
-    this.textToSpeech = true;
 };
 
 inherit(Google, Vendor);
 
-Google.prototype.translateText = function (text) {
-    this.sourceText = text;
-    this.swapped = false;
-    return this.loadData(text);
-};
-
 /** @private */
-Google.prototype.loadData = function (text, lang) {
-    lang = $.extend(this.getLangPair(), lang);
-    var loadingReq = $.ajax({
-        url : this.url + '/translate_a/t?client=t&sc=1&ie=UTF-8',
+Google.prototype.makeRequest = function (data) {
+    return $.ajax({
+        url : this.url + '/translate_a/t?client=t&ie=UTF-8&sc=1',
         data: {
-            q : text,
-            sl: lang.from,
-            hl: lang.to,
-            tl: lang.to
+            q : data.text,
+            hl: data.langTo,   // header language for the part of speech in dictionary
+            sl: data.langFrom, // source language
+            tl: data.langTo   // translate to language
         }
     });
-    return loadingReq
-        .then(this.parseData.bind(this))
-        .then(this.autoSwapLang.bind(this));
-};
-
-/** @private */
-Google.prototype.autoSwapLang = function (data) {
-    var lang = this.getLangPair(),
-        langDetected = data.langDetected;
-
-    if (langDetected && lang.from !== this.autoDetect && !this.swapped) {
-        this.swapped = true;
-        return this.loadData(this.sourceText, {
-            from: langDetected,
-            to  : langDetected !== lang.from ? lang.from : lang.to
-        });
-    }
-    return data;
 };
 
 /** @private */
 Google.prototype.parseData = function (response) {
     var data = Function('return ' + response)();
-    var parentData = Google.superclass.parseData.call(this);
-    return $.extend(parentData, {
+    return Google.superclass.parseData.call(this, {
         translation : data[0][0][0].replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
         langDetected: data[8] && data[8][0] && data[8][0][0],
@@ -69,24 +44,15 @@ Google.prototype.parseData = function (response) {
             return {
                 partOfSpeech: dictData[0],
                 translation : dictData[1],
-                similarWords: dictData[2].map(function (synData) {
+                similarWords: dictData[2].map(function (simWord) {
                     return {
-                        word    : synData[0],
-                        meanings: synData[1]
+                        word    : simWord[0],
+                        meanings: simWord[1]
                     }
                 })
             };
         })
     });
-};
-
-Google.prototype.getAudioUrl = function (text) {
-    var lang = this.getLangPair();
-    return this.url + [
-        '/translate_tts?ie=UTF-8',
-        'q=' + text,
-        'tl=' + (lang.from !== this.autoDetect ? lang.from : '')
-    ].join('&');
 };
 
 /** @const */
