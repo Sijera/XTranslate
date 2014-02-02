@@ -17,6 +17,12 @@ var Bing = function (options) {
 
 inherit(Bing, Vendor);
 
+/** @private */
+Bing.prototype.makeRequest = function (data) {};
+
+/** @private */
+Bing.prototype.parseData = function (response) {};
+
 /** @const */
 var LANGUAGES = {
     "ar"    : "Arabic",

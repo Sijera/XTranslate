@@ -23,6 +23,7 @@ var SettingsPopupStyle = function (options) {
 
     this.popupPreviewData = {
         translation: __(22),
+        ttsEnabled: true,
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
     };
     SettingsPopupStyle.superclass.constructor.call(this, options);
