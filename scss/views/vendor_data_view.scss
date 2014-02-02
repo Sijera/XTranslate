@@ -1,6 +1,8 @@
 @import "../vars", "../mixins";
 
 .vendorDataView {
+  $linkColor: silver;
+
   .tableView {
     display: table;
     .rowView {
@@ -41,9 +43,6 @@
 
   .translation {
     @include clearFix;
-    .ts {
-      color: silver;
-    }
   }
 
   .dictionary {
@@ -57,7 +56,6 @@
   }
 
   .link {
-    $linkColor: silver;
     color: $linkColor;
     border-bottom: 1px dotted $linkColor;
     cursor: pointer;
@@ -83,8 +81,14 @@
   }
 
   .example {
-    color: gray;
+    color: $linkColor;
     cursor: help;
+  }
+
+  .ts {
+    color: $linkColor;
+    &:before { content: '['; }
+    &:after { content: ']'; }
   }
 
   .rowView {

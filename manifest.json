@@ -30,6 +30,6 @@
         "clipboardWrite",
         "http://translate.google.com/",
         "http://translate.yandex.com/",
-        "http://bing.com/translator/"
+        "http://api.microsofttranslator.com/"
     ]
 }

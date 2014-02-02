@@ -23,6 +23,8 @@ inherit(Google, Vendor);
 Google.prototype.makeRequest = function (data) {
     return $.ajax({
         url : this.url + '/translate_a/t?client=t&ie=UTF-8&sc=1',
+        dataType: 'json',
+        dataFilter: this.dataFilter,
         data: {
             q : data.text,
             hl: data.langTo,   // header language for the part of speech in dictionary
@@ -33,8 +35,13 @@ Google.prototype.makeRequest = function (data) {
 };
 
 /** @private */
-Google.prototype.parseData = function (response) {
-    var data = Function('return ' + response)();
+Google.prototype.dataFilter = function (data, type) {
+    // Make valid strict JSON-response
+    return JSON.stringify(Function('return ' + data)());
+};
+
+/** @private */
+Google.prototype.parseData = function (data) {
     return Google.superclass.parseData.call(this, {
         translation : data[0][0][0].replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
@@ -44,10 +51,10 @@ Google.prototype.parseData = function (response) {
             return {
                 partOfSpeech: dictData[0],
                 translation : dictData[1],
-                similarWords: dictData[2].map(function (simWord) {
+                similarWords: dictData[2].map(function (simData) {
                     return {
-                        word    : simWord[0],
-                        meanings: simWord[1]
+                        word    : simData[0],
+                        meanings: simData[1]
                     }
                 })
             };

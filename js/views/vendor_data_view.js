@@ -52,7 +52,7 @@ VendorDataView.prototype.parseData = function (data) {
     this.$translation
         .text(data.translation)
         .attr('title', title)
-        .append(transcription ? ' <i class="ts">[' + transcription + ']</i>' : undefined);
+        .append(transcription ? ' <i class="ts">' + transcription + '</i>' : undefined);
 
     this.$dictionary.empty();
     (data.dictionary || []).forEach(this.addDictionary, this);
