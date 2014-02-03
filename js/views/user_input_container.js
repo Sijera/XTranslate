@@ -75,11 +75,15 @@ UserInputContainer.prototype.onInput = function (e) {
 
 UserInputContainer.prototype.translateText = function (text) {
     text = this.getText(text);
-    if (text) APP.vendor.translateText(text).done(this.onDone);
+    if (text) {
+        this.sourceText = text;
+        APP.vendor.translateText(text).done(this.onDone);
+    }
 };
 
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
+    if (data.sourceText !== this.sourceText) return;
     this.result.parseData(data).show();
     this.$text.blur().focus(); // refresh page scrollbar (bugfix)
 };

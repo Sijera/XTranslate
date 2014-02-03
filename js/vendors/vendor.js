@@ -55,7 +55,7 @@ Vendor.prototype.loadData = function (data) {
 Vendor.prototype.parseData = function (response) {
     this.lastResData = response;
     var ttsEnabled = !!this.getAudioUrl(this.lastReqData.text, this.lastResData.langSource);
-    return $.extend({ttsEnabled: ttsEnabled}, response);
+    return $.extend({ttsEnabled: ttsEnabled, sourceText: this.lastReqData.text}, response);
 };
 
 /** @protected */
