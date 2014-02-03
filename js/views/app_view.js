@@ -9,24 +9,15 @@ var inherit = require('./../utils').inherit,
 
 /**
  * @constructor
- * @property {App} model
  */
 var AppView = function (options) {
     AppView.superclass.constructor.call(this, options);
+    this.$container.addClass('XTranslate');
 };
 
 inherit(AppView, UIComponent);
 
-AppView.prototype.init = function (appModel) {
-    this.model = appModel;
-    this.createDom(appModel.state);
-    this.bindEvents();
-};
-
-/** @private */
-AppView.prototype.createDom = function (state) {
-    this.$container.addClass('XTranslate');
-
+AppView.prototype.init = function (state) {
     this.headerBar = new AppHeaderBar({state: state.headerBar}).appendTo(this);
     this.settingsContainer = new SettingsContainer({state: state.settingsContainer}).appendTo(this);
     this.userInputContainer = new UserInputContainer().appendTo(this);
@@ -35,16 +26,6 @@ AppView.prototype.createDom = function (state) {
     this.headerBar.addTab(__(1), this.settingsContainer);
     this.headerBar.addTab(__(2), this.userInputContainer);
     this.headerBar.refresh();
-};
-
-/** @private */
-AppView.prototype.bindEvents = function () {
-    $(window).on('unload', this.onUnload.bind(this));
-};
-
-/** @private */
-AppView.prototype.onUnload = function () {
-    this.model.sync();
 };
 
 exports.AppView = AppView;

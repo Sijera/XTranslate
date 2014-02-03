@@ -19,6 +19,6 @@ var __;
 
     APP = new App().on('ready', function () {
         __ = APP.localization;
-        new AppView({container: '#app'}).init(APP);
+        new AppView({container: '#app'}).init(APP.state);
     });
 })();

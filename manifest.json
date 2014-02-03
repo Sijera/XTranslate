@@ -10,7 +10,7 @@
 
     "browser_action": {
         "default_icon": {},
-        "default_popup": ""
+        "default_popup": "popup.html"
     },
 
     "web_accessible_resources": ["img/*"],

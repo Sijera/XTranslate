@@ -1,12 +1,16 @@
 'use strict';
 
 var inherit = require('./utils').inherit,
+    debounce = require('./utils').debounce,
     THEMES = require('./theme').THEMES,
     EventDriven = require('./events').EventDriven,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
     Yandex = require('./vendors/yandex').Yandex,
     Chrome = require('./extension/chrome').Chrome;
+
+/** @const */
+var SYNC_DELAY = 250;
 
 /**
  * XTranslate (browser extension) - Easy translate text on web pages
@@ -87,10 +91,8 @@ App.prototype.onReady = function (state) {
     }
 
     this.state = state;
-    this.stateLastSync = JSON.stringify(state);
     this.initState('', state);
     this.trigger('ready');
-    this.ready = true;
 };
 
 /** @private */
@@ -104,12 +106,11 @@ App.prototype.initState = function (parentChain, stateObj) {
 };
 
 /**
- * Save the state on external resource (local storage, remote server, etc.)
+ * Save the current model state on external resource (e.x. local storage, remote server, etc)
  */
-App.prototype.sync = function () {
-    if (this.stateLastSync === JSON.stringify(this.state)) return;
+App.prototype.sync = debounce(function () {
     this.extension.saveState(this.toJSON());
-};
+}, SYNC_DELAY);
 
 /**
  * Set new value of property in the state
@@ -152,6 +153,7 @@ App.prototype.defineProp = function (chainArr, value) {
             if (value === val) return;
             oldValue = value;
             value = val;
+            this.sync();
             this.trigger('change:' + chain, value, oldValue);
         }.bind(this)
     });

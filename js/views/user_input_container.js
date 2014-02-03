@@ -81,6 +81,7 @@ UserInputContainer.prototype.translateText = function (text) {
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
     this.result.parseData(data).show();
+    this.$text.blur().focus(); // refresh page scrollbar (bugfix)
 };
 
 UserInputContainer.prototype.show = function () {

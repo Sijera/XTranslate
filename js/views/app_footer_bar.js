@@ -1,7 +1,7 @@
 'use strict';
 
-var inherit = require('../utils').inherit,
-    sprintf = require('../utils').sprintf,
+var UTILS = require('../utils'),
+    inherit = require('../utils').inherit,
     UIComponent = require('../ui/ui_component').UIComponent;
 
 /**
@@ -19,15 +19,18 @@ var AppFooterBar = function (options) {
 inherit(AppFooterBar, UIComponent);
 
 /** @private */
+AppFooterBar.prototype.getHtmlLink = function (url, text) {
+    return UTILS.sprintf('<a href="{0}">{1}</a>', url, text);
+};
+
+/** @private */
 AppFooterBar.prototype.createDom = function () {
     this.$container.addClass('appFooterBar');
 
-    this.text = sprintf.apply(null, [__(60),
-        sprintf('<a href="{0}">{1}</a>', this.rateLink, __(61)),
-        sprintf('<a href="{0}">{1}</a>', this.donateLink, __(62))
-    ]);
-
-    this.$container.append(this.text);
+    this.$container.append(UTILS.sprintf(__(60),
+        this.getHtmlLink(this.rateLink, __(61)),
+        this.getHtmlLink(this.donateLink, __(62))
+    ));
 };
 
 exports.AppFooterBar = AppFooterBar;

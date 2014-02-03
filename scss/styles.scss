@@ -6,6 +6,24 @@ html, body {
   height: 100%;
 }
 
+#app {
+  $width: 420px;
+  $height: 550px;
+  $padding: 15px;
+
+  position: relative;
+  width: $width + $padding * 2;
+  min-height: $height;
+  padding: $padding;
+  margin: auto;
+
+  .popupView & {
+    width: $width;
+    margin: 0 $padding;
+    padding: $padding 0;
+  }
+}
+
 * {
   @include with-vendors(box-sizing, border-box);
   margin: 0;
@@ -39,13 +57,6 @@ textarea {
     border-color: silver;
     @include formControlFocus;
   }
-}
-
-#app {
-  position: relative;
-  width: 425px;
-  margin: auto;
-  padding: $padding;
 }
 
 // common
