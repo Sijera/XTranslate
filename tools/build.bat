@@ -20,7 +20,7 @@ echo ===== compiling sass
     call sass --no-cache --update -f --style compressed ../scss/styles.scss:../css/c.css
 
 echo ===== packing js files
-    call browserify ../js/entry.js > ../js/c.js
+    call browserify ../js/options.js > ../js/c.js
 
 echo ===== compressing js files
     call java -jar compiler.jar --js ../js/c.js --js_output_file ../js/c.js

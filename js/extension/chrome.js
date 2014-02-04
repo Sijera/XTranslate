@@ -29,11 +29,7 @@ Chrome.prototype.getText = function (messageName, substitutions) {
  * @returns String
  */
 Chrome.prototype.getURL = function (path) {
-    return chrome.extension.getURL(path);
-};
-
-Chrome.prototype.getImageURL = function (path) {
-    return 'url(' + this.getURL(path) + ')';
+    return chrome.runtime.getURL(path);
 };
 
 /**
@@ -49,22 +45,33 @@ Chrome.prototype.getInfo = function () {
     };
 };
 
-/** @protected */
+/**
+ * Get window object from background page
+ * @param {Function} callback
+ */
+Chrome.prototype.getBackgroundPage = function (callback) {
+    chrome.runtime.getBackgroundPage(callback);
+};
+
+/**
+ * Save current state of the app
+ * @param {Object} state
+ */
+Chrome.prototype.setState = function (state) {
+    var items = {};
+    items[this.stateName] = state;
+    chrome.storage.local.set(items);
+};
+
+/**
+ * Get last saved state of the app (async)
+ * @param callback
+ */
 Chrome.prototype.getState = function (callback) {
     var itemName = this.stateName;
     chrome.storage.local.get(itemName, function (items) {
         callback(items[itemName]);
     });
-};
-
-Chrome.prototype.saveState = function (state) {
-    var items = {};
-    items[this.stateName] = state;
-    chrome.storage.local.set(items, this.onSaveState.bind(this));
-};
-
-Chrome.prototype.removeState = function () {
-    chrome.storage.local.remove(this.stateName);
 };
 
 exports.Chrome = Chrome;

@@ -19,9 +19,9 @@ var SYNC_DELAY = 250;
 var App = function (options) {
     App.superclass.constructor.call(this, options);
 
-    /** @type {Chrome|Firefox|Opera} */
-    this.extension = new Chrome();
-    this.localization = this.extension.getText.bind(this.extension);
+    /** @type {Chrome|Firefox|Opera} */ this.extension = new Chrome();
+    /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
+    /** @type {jQuery.Deferred} */ this.loading = $.Deferred();
 
     this.vendors = {
         'google': new Google(this.localization),
@@ -77,7 +77,7 @@ App.prototype.state = {
 };
 
 App.prototype.init = function () {
-    this.extension.loadState().done(this.onReady.bind(this));
+    this.extension.getState(this.onReady.bind(this));
 };
 
 /** @private */
@@ -92,7 +92,8 @@ App.prototype.onReady = function (state) {
 
     this.state = state;
     this.initState('', state);
-    this.trigger('ready');
+    this.trigger('ready', state);
+    this.loading.resolve(state);
 };
 
 /** @private */
@@ -109,7 +110,7 @@ App.prototype.initState = function (parentChain, stateObj) {
  * Save the current model state on external resource (e.x. local storage, remote server, etc)
  */
 App.prototype.sync = debounce(function () {
-    this.extension.saveState(this.toJSON());
+    this.extension.setState(this.toJSON());
 }, SYNC_DELAY);
 
 /**
@@ -195,3 +196,4 @@ App.prototype.reset = function () {
 };
 
 exports.App = App;
+exports.create = function (options) { return new App(options) };

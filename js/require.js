@@ -3,14 +3,11 @@
 /**
  * A trivial implementation of CommonJS pattern
  * To be used in development mode *only*!
- *
  * @public
- * @param {string} path
- * @return {*}
  */
-var require = function (path) {
+var require = function (pathRel) {
     var modulePath = require.modulePath;
-    var filePath = path.split('/');
+    var filePath = (pathRel || require.entryFile).split('/');
     var fileName = filePath.slice(-1)[0];
 
     if (filePath[0] == '.') filePath.shift();
@@ -21,12 +18,10 @@ var require = function (path) {
     var i; while ((i = filePath.indexOf('..')) > -1) filePath.splice(i - 1, 2);
     require.modulePath = filePath;
 
-    // load module with blocking (like <script> tags)
+    // load module with blocking
     var fileUrl = require.moduleRoot + filePath.concat(fileName).join('/');
     var module = require.modules[fileUrl];
     if (!module) {
-        if (require.debug) console.info('Start loading: ', fileUrl);
-
         var xhr = new XMLHttpRequest();
         xhr.open('GET', fileUrl + require.noCacheQuery, false);
         xhr.send();
@@ -38,9 +33,9 @@ var require = function (path) {
         if (status === 200 || status === 0) {
             module = {exports: {}};
             try {
-                // fix for firebug - if put the string directly in eval() -> sourceURL doesn't work
-                var evilCode_lol = '(function (module, exports) { ' + source + '})(module, module.exports);\n\n//@ sourceURL=' + fileUrl;
-                eval(evilCode_lol);
+                // fix for firebug - if put a code directly in eval(), @sourceURL doesn't work
+                var moduleCode = '(function (module, exports, global) { ' + source + '})(module, module.exports, window);\n\n//@ sourceURL=' + fileUrl;
+                eval(moduleCode);
             } catch (e) {
                 console.error('Error within file ' + fileUrl + ': ', e['stack']);
             }
@@ -54,27 +49,15 @@ var require = function (path) {
     return module.exports;
 };
 
-/**
- * URL-path to folder with JS modules.
- * By default, it has the same path where located require.js (this file)
- * @type {String}
- */
 require.moduleRoot = function () {
-    var url = Array.prototype.slice.call(document.querySelectorAll('script'), -1)[0].src;
-    return url.substr(0, url.lastIndexOf('/') + 1);
+    var script = Array.prototype.slice.call(document.querySelectorAll('script'), -1)[0];
+    var requirePath = script.src.substr(0, script.src.lastIndexOf('/') + 1);
+    require.entryFile = script.getAttribute('data-entry');
+    return requirePath;
 }();
 
-/**
- * Actual path to the module inside itself (relative to the module root)
- * @type {Array}
- */
 require.modulePath = [];
-
-/**
- * A hash object with loaded modules
- * @type {Object}
- */
 require.modules = {};
-
-require.debug = false;
 require.noCacheQuery = '?'+ Date.now();
+
+if (require.entryFile) require();

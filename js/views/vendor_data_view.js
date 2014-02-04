@@ -23,7 +23,7 @@ VendorDataView.prototype.createDom = function () {
     this.$container.addClass('vendorDataView');
 
     this.$playSound = $('<i class="playIcon"/>')
-        .css('backgroundImage', APP.extension.getImageURL('img/sound.png'))
+        .css('background-image', 'url(' + APP.extension.getURL('img/sound.png') + ')')
         .appendTo(this.$container);
 
     this.$translation = $('<div class="translation"/>').appendTo(this.$container);
