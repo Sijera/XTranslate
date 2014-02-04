@@ -24,7 +24,6 @@ VendorDataView.prototype.createDom = function () {
 
     this.$playSound = $('<i class="playIcon"/>')
         .css('backgroundImage', APP.extension.getImageURL('img/sound.png'))
-        .attr('title', __(48))
         .appendTo(this.$container);
 
     this.$translation = $('<div class="translation"/>').appendTo(this.$container);
@@ -48,7 +47,10 @@ VendorDataView.prototype.parseData = function (data) {
     var transcription = data.transcription;
     var title = lang ? __(49, [APP.vendor.langList[lang], APP.vendor.title]) : '';
 
-    this.$playSound.toggleClass('disabled', !data.ttsEnabled);
+    this.$playSound
+        .attr('title', __(48) + ': ' + data.sourceText)
+        .toggleClass('disabled', !data.ttsEnabled);
+
     this.$translation
         .text(data.translation)
         .attr('title', title)

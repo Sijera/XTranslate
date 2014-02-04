@@ -42,6 +42,7 @@
   }
 
   .translation {
+    white-space: pre-line;
     @include clearFix;
   }
 
