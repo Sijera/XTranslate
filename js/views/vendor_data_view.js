@@ -41,6 +41,7 @@ VendorDataView.prototype.bindEvents = function () {
 /**
  * Parse data response from the vendor and show results
  * @param {Object} data
+ * @return VendorDataView
  */
 VendorDataView.prototype.parseData = function (data) {
     var lang = data.langSource;

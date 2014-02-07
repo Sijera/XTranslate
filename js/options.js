@@ -1,18 +1,23 @@
 'use strict';
 
 /**
- * XTranslate - options page
+ * XTranslate - the options page (entry point)
  * @url https://github.com/ixrock/XTranslate
  */
+
 var AppView = require('./views/app_view').AppView;
 
 /**
  * @public
- * @type {App}
+ * @type App
  */
-var APP = require('./app').create().on('ready', function (state) {
-    new AppView({container: '#app'}).init(state);
-});
+var APP = require('./app').create()
+    .on('ready', function (state) {
+        this.view = new AppView({container: '#app'}).init(state);
+    })
+    .on('change', function () {
+        this.extension.broadcastMessage({action : 'settings', payload: this.state})
+    });
 
-global.APP = APP;
-global.__ = APP.localization;
+/** @public */ global.APP = APP;
+/** @public */ global.__ = APP.localization;

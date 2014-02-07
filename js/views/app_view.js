@@ -26,6 +26,7 @@ AppView.prototype.init = function (state) {
     this.headerBar.addTab(__(1), this.settingsContainer);
     this.headerBar.addTab(__(2), this.userInputContainer);
     this.headerBar.refresh();
+    return this;
 };
 
 exports.AppView = AppView;

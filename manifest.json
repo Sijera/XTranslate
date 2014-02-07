@@ -31,8 +31,7 @@
     ],
 
     "permissions": [
-        "storage",
-        "clipboardWrite",
+        "tabs", "storage", "clipboardWrite",
         "http://translate.google.com/",
         "http://translate.yandex.com/",
         "http://api.microsofttranslator.com/"

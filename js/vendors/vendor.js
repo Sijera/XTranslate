@@ -4,8 +4,6 @@ var UTILS = require('../utils'),
     inherit = require('../utils').inherit,
     EventDriven = require('../events').EventDriven;
 
-// TODO: add errors handling!
-
 /**
  * Base class for all translation services
  * @constructor
@@ -40,9 +38,16 @@ Vendor.prototype.makeRequest = function (data) {
 
 /** @protected */
 Vendor.prototype.loadData = function (data) {
-    data = $.extend(this.lastReqData, this.getLangPair(), data);
+    var lastReq = this.lastReqData;
+    data = $.extend(this.getLang(), data);
 
-    return this.makeRequest(data)
+    if (data.text === lastReq.text &&
+        data.langFrom == lastReq.langFrom &&
+        data.langTo == lastReq.langTo) {
+        return $.Deferred().resolve(this.lastResData);
+    }
+
+    return this.makeRequest($.extend(this.lastReqData, data))
         .then(this.parseData.bind(this))
         .then(this.autoSwapLang.bind(this));
 };
@@ -53,16 +58,16 @@ Vendor.prototype.loadData = function (data) {
  * @param {Object} response
  */
 Vendor.prototype.parseData = function (response) {
-    this.lastResData = response;
-    var ttsEnabled = !!this.getAudioUrl(this.lastReqData.text, this.lastResData.langSource);
-    return $.extend({ttsEnabled: ttsEnabled, sourceText: this.lastReqData.text}, response);
+    var ttsEnabled = !!this.getAudioUrl(this.lastReqData.text, response.langSource);
+    this.lastResData = $.extend({ttsEnabled: ttsEnabled, sourceText: this.lastReqData.text}, response);
+    return this.lastResData;
 };
 
 /** @protected */
 Vendor.prototype.autoSwapLang = function (parsedData) {
     if (this.swapped) return parsedData;
 
-    var langPair = this.getLangPair(),
+    var langPair = this.getLang(),
         langFrom = langPair.langFrom,
         langTo = langPair.langTo,
         langSource = parsedData.langSource,
@@ -78,9 +83,9 @@ Vendor.prototype.autoSwapLang = function (parsedData) {
     return parsedData;
 };
 
-Vendor.prototype.playText = function (text, lang) {
+Vendor.prototype.playText = function (text) {
     text = text || this.lastReqData.text;
-    lang = lang || this.lastResData.langSource || this.lastReqData.langFrom;
+    var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
     var url = this.getAudioUrl(text, lang);
     if (url) this.audio = new Audio(url).play();
@@ -102,7 +107,7 @@ Vendor.prototype.getAudioUrl = function (text, lang) {
  * Get current selected languages
  * @return {{langFrom: String, langTo: String}}
  */
-Vendor.prototype.getLangPair = function () {
+Vendor.prototype.getLang = function () {
     var vendorBlock = APP.get('settingsContainer.vendorBlock');
     return {
         langFrom: vendorBlock.langFrom,

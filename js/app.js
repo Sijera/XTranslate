@@ -21,7 +21,6 @@ var App = function (options) {
 
     /** @type {Chrome|Firefox|Opera} */ this.extension = new Chrome();
     /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
-    /** @type {jQuery.Deferred} */ this.loading = $.Deferred();
 
     this.vendors = {
         'google': new Google(this.localization),
@@ -93,7 +92,6 @@ App.prototype.onReady = function (state) {
     this.state = state;
     this.initState('', state);
     this.trigger('ready', state);
-    this.loading.resolve(state);
 };
 
 /** @private */
@@ -156,6 +154,7 @@ App.prototype.defineProp = function (chainArr, value) {
             value = val;
             this.sync();
             this.trigger('change:' + chain, value, oldValue);
+            this.trigger('change', {chain: chain, value: value, prev: oldValue});
         }.bind(this)
     });
 };
