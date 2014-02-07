@@ -4,6 +4,7 @@ var inherit = require('../utils').inherit,
     Extension = require('./extension').Extension;
 
 /**
+ * Google Chrome Extensions API
  * @constructor
  */
 var Chrome = function (options) {

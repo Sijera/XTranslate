@@ -1,10 +1,9 @@
 'use strict';
 
 /**
- * XTranslate
- * @file background.js
- * @source https://github.com/ixrock/XTranslate
+ * XTranslate - background process page
+ * @url https://github.com/ixrock/XTranslate
+ * @public
+ * @type {App}
  */
-
-var jQuery = require('./libs/jquery.min'),
-    APP = require('./app').create();
+var APP = require('./app').create();

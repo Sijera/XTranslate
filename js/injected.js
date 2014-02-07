@@ -1,10 +1,21 @@
 'use strict';
 
 /**
- * XTranslate
- * @file injected.js
- * @source https://github.com/ixrock/XTranslate
+ * XTranslate - injected script on website page
+ * @url https://github.com/ixrock/XTranslate
  */
+require.moduleRoot = chrome.runtime.getURL('js/');
 
-var xxx = 123;
-console.info(xxx);
+// load modules
+var toCSS = require('./theme').toCSS,
+    Popup = require('./views/popup').Popup,
+    Chrome = require('./extension/chrome').Chrome;
+
+// run
+//new Chrome().getBackgroundPage(function (bgcPage) {
+//    console.info(bgcPage);
+//});
+
+chrome.runtime.onConnect.addListener(function (port) {
+    console.info(port, chrome.runtime.getBackgroundPage);
+});

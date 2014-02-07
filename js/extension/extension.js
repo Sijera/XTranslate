@@ -4,7 +4,7 @@ var inherit = require('../utils').inherit,
     EventDriven = require('../events').EventDriven;
 
 /**
- * @interface
+ * @constructor
  */
 var Extension = function (options) {
     Extension.superclass.constructor.call(this, options);

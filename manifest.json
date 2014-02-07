@@ -14,11 +14,11 @@
     },
 
     "background": {
-        "scripts"   : ["js/require.js", "js/background.js"],
+        "scripts"   : ["js/require.js", "js/libs/jquery.min.js", "js/background.js"],
         "persistent": false
     },
 
-    "web_accessible_resources": ["img/*"],
+    "web_accessible_resources": ["img/*", "css/*", "js/*"],
 
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 
@@ -26,7 +26,7 @@
         {
             "matches": ["http://*/*", "https://*/*", "file://*/*"],
             "css"    : ["css/injected.css"],
-            "js"     : ["js/require.js", "js/injected.js"]
+            "js"     : ["js/require.js", "js/libs/jquery.min.js", "js/injected.js"]
         }
     ],
 

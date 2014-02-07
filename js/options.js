@@ -1,13 +1,10 @@
 'use strict';
 
 /**
- * XTranslate
- * @file options.js
- * @source https://github.com/ixrock/XTranslate
+ * XTranslate - options page
+ * @url https://github.com/ixrock/XTranslate
  */
-
-var jQuery = require('./libs/jquery.min'),
-    AppView = require('./views/app_view').AppView;
+var AppView = require('./views/app_view').AppView;
 
 /**
  * @public

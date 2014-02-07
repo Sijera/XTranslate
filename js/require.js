@@ -51,6 +51,7 @@ var require = function (pathRel) {
 
 require.moduleRoot = function () {
     var script = Array.prototype.slice.call(document.querySelectorAll('script'), -1)[0];
+    if (!script) return '';
     var requirePath = script.src.substr(0, script.src.lastIndexOf('/') + 1);
     require.entryFile = script.getAttribute('data-entry');
     return requirePath;
@@ -59,5 +60,6 @@ require.moduleRoot = function () {
 require.modulePath = [];
 require.modules = {};
 require.noCacheQuery = '?'+ Date.now();
+require.location = location.href;
 
 if (require.entryFile) require();
