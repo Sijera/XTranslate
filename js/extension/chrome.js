@@ -29,17 +29,11 @@ Chrome.prototype.getURL = function (path) {
 };
 
 Chrome.prototype.getInfo = function () {
-    var info = chrome.runtime.getManifest();
-    return {
-        name       : info.name,
-        version    : info.version,
-        description: info.description
-    };
+    return chrome.runtime.getManifest();
 };
 
 Chrome.prototype.getBackgroundPage = function (callback) {
     chrome.runtime.getBackgroundPage(callback);
-    return this;
 };
 
 /**
@@ -74,13 +68,11 @@ Chrome.prototype.createChannel = function (port) {
 /** @private */
 Chrome.prototype.sendMessage = function (channel, msg) {
     channel.port.postMessage(msg);
-    return channel;
 };
 
 /** @private */
 Chrome.prototype.onChannelMessage = function (channel, callback) {
     channel.port.onMessage.addListener(callback.bind(channel));
-    return channel;
 };
 
 /** @private */

@@ -26,7 +26,6 @@ UserScript.prototype.bindEvents = function () {
 /** @private */
 UserScript.prototype.registerAction = function (name, callback) {
     this.actions[name] = callback.bind(this);
-    return this;
 };
 
 /** @private */
