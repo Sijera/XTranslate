@@ -26,22 +26,18 @@ var require = function (pathRel) {
         xhr.open('GET', fileUrl + require.noCacheQuery, false);
         xhr.send();
 
-        // because it is synchronous loading we don't use callbacks
-        // status - 0, for files loaded locally (i.e. cordova, etc.)
-        var source = xhr.responseText;
-        var status = xhr.status;
+        var source = xhr.responseText,
+            status = xhr.status, // 0, for files loaded locally (i.e. cordova, etc.)
+            script = '(function (module, exports, global) {' + source + '\n})(module, module.exports, window);\n\n//@ sourceURL=' + fileUrl;
         if (status === 200 || status === 0) {
-            module = {exports: {}};
             try {
-                // fix for firebug - if put a code directly in eval(), @sourceURL doesn't work
-                var moduleCode = '(function (module, exports, global) { ' + source + '})(module, module.exports, window);\n\n//@ sourceURL=' + fileUrl;
-                eval(moduleCode);
+                module = {exports: {}};
+                eval(script);
+                require.modules[fileUrl] = module;
             } catch (e) {
-                console.error('Error within file ' + fileUrl + ': ', e['stack']);
+                console.error('Error in file "' + fileName + '"', e);
+                console.info('File content: ', script);
             }
-
-            // cache loaded module
-            require.modules[fileUrl] = module;
         }
     }
 
