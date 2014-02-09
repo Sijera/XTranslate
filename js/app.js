@@ -17,10 +17,8 @@ var SYNC_DELAY = 250;
  * @constructor
  */
 var App = function (options) {
-    options = $.extend({autoSync: true}, options);
     App.superclass.constructor.call(this, options);
 
-    /** @type {Boolean} */ this.autoSync = options.autoSync;
     /** @type {Chrome|Firefox|Opera} */ this.extension = new Chrome();
     /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
 
@@ -155,7 +153,6 @@ App.prototype.defineProp = function (chainArr, value) {
             if (value === val) return;
             oldValue = value;
             value = val;
-            if (this.autoSync) this.sync();
             this.trigger('change:' + chain, value, oldValue);
             this.trigger('change', {chain: chain, value: value, prev: oldValue});
         }.bind(this)
