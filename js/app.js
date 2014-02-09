@@ -1,13 +1,13 @@
 'use strict';
 
-var inherit = require('./utils').inherit,
-    debounce = require('./utils').debounce,
-    THEMES = require('./theme').THEMES,
-    EventDriven = require('./events').EventDriven,
+var UTILS = require('./utils'),
+    THEME = require('./theme'),
+    inherit = UTILS.inherit,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
     Yandex = require('./vendors/yandex').Yandex,
-    Chrome = require('./extension/chrome').Chrome;
+    Chrome = require('./extension/chrome').Chrome,
+    EventDriven = require('./events').EventDriven;
 
 /** @const */
 var SYNC_DELAY = 250;
@@ -17,8 +17,10 @@ var SYNC_DELAY = 250;
  * @constructor
  */
 var App = function (options) {
+    options = $.extend({autoSync: true}, options);
     App.superclass.constructor.call(this, options);
 
+    /** @type {Boolean} */ this.autoSync = options.autoSync;
     /** @type {Chrome|Firefox|Opera} */ this.extension = new Chrome();
     /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
 
@@ -64,8 +66,8 @@ App.prototype.state = {
         },
         popupStyle: {
             collapsed  : false,
-            activeTheme: Object.keys(THEMES)[0],
-            themes     : THEMES,
+            activeTheme: Object.keys(THEME.THEMES)[0],
+            themes     : THEME.THEMES,
             customTheme: null
         },
         siteExclusions: {
@@ -106,8 +108,9 @@ App.prototype.initState = function (parentChain, stateObj) {
 
 /**
  * Save the current model state on external resource (e.x. local storage, remote server, etc)
+ * @type Function
  */
-App.prototype.sync = debounce(function () {
+App.prototype.sync = UTILS.debounce(function () {
     this.extension.setState(this.toJSON());
 }, SYNC_DELAY);
 
@@ -152,7 +155,7 @@ App.prototype.defineProp = function (chainArr, value) {
             if (value === val) return;
             oldValue = value;
             value = val;
-            this.sync();
+            if (this.autoSync) this.sync();
             this.trigger('change:' + chain, value, oldValue);
             this.trigger('change', {chain: chain, value: value, prev: oldValue});
         }.bind(this)
@@ -195,4 +198,6 @@ App.prototype.reset = function () {
 };
 
 exports.App = App;
-exports.create = function (options) { return new App(options) };
+
+/** @return {App} */
+exports.create = function (params) { return new App(params) };
