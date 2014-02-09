@@ -59,34 +59,33 @@ Chrome.prototype.onConnect = function (callback) {
 /** @private */
 Chrome.prototype.createChannel = function (port) {
     var channel = {port: port};
-    channel.sendMessage = this.sendMessage.bind(this, channel);
-    channel.onMessage = this.onChannelMessage.bind(this, channel);
-    channel.onDisconnect = this.onChannelDisconnect.bind(this, channel);
+    channel.sendMessage = this.sendMessage;
+    channel.onMessage = this.onChannelMessage;
+    channel.onDisconnect = this.onChannelDisconnect;
     return channel;
 };
 
 /** @private */
-Chrome.prototype.sendMessage = function (channel, msg) {
-    channel.port.postMessage(msg);
+Chrome.prototype.sendMessage = function (msg) {
+    this.port.postMessage(msg);
 };
 
 /** @private */
-Chrome.prototype.onChannelMessage = function (channel, callback) {
-    channel.port.onMessage.addListener(callback.bind(channel));
+Chrome.prototype.onChannelMessage = function (callback) {
+    this.port.onMessage.addListener(callback);
 };
 
 /** @private */
-Chrome.prototype.onChannelDisconnect = function (channel, callback) {
-    channel.port.onDisconnect.addListener(callback.bind(channel));
+Chrome.prototype.onChannelDisconnect = function (callback) {
+    this.port.onDisconnect.addListener(callback);
 };
 
 Chrome.prototype.onMessage = function (callback) {
     chrome.runtime.onMessage.addListener(callback);
 };
 
-Chrome.prototype.broadcastMessage = function (msg, query) {
-    query = query || {};
-    chrome.tabs.query(query, function (tabs) {
+Chrome.prototype.broadcastMessage = function (msg) {
+    chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
             chrome.tabs.sendMessage(tab.id, msg);
         });

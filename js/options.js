@@ -11,14 +11,17 @@ var AppView = require('./views/app_view').AppView;
  * @public
  * @type App
  */
-var APP = global.APP = require('./app').create()
+var APP = require('./app').create()
     .on('ready', function (state) {
         this.view = new AppView({container: '#app'}).init(state);
     })
     .on('change', function (data) {
-        data.type = 'modelChange';
+        data = $.extend({action: 'sync'}, data);
         APP.extension.broadcastMessage(data);
     });
 
 /** @public */
-var __ = global.__ = APP.localization;
+var __;
+
+global.APP = APP;
+global.__ = APP.localization;

@@ -120,7 +120,6 @@ VendorDataView.prototype.onLinkTextClick = function (e) {
 
 /** @private */
 VendorDataView.prototype.onPlayIconClick = function (e) {
-    APP.vendor.playText();
     this.trigger('playText');
 };
 

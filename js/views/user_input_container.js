@@ -37,7 +37,7 @@ UserInputContainer.prototype.bindEvents = function () {
 
     this.$text.on('input', this.onInput.bind(this));
     this.result
-        .on('playText', this.focus.bind(this))
+        .on('playText', this.onPlayText.bind(this))
         .on('linkClick', this.onLinkTextClick.bind(this));
 
     var onVendorChange = this.onVendorChange.bind(this);
@@ -46,7 +46,8 @@ UserInputContainer.prototype.bindEvents = function () {
     APP.on('change:settingsContainer.vendorBlock.langTo', onVendorChange);
 };
 
-UserInputContainer.prototype.focus = function () {
+UserInputContainer.prototype.onPlayText = function () {
+    APP.vendor.playText();
     this.$text.focus();
 };
 
