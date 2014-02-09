@@ -20,8 +20,20 @@ Background.prototype.onConnect = function (channel) {
 
 /** @private */
 Background.prototype.onMessage = function (channel, msg) {
-    if (msg.action == 'tts') APP.vendor.playText(msg.payload);
+    var payload = msg.payload;
+    switch (msg.action) {
+        case 'tts':
+            APP.vendor.playText(payload);
+            break;
+
+        case 'translate':
+            APP.vendor.translateText(payload).done(function (data) {
+                msg.payload = data;
+                channel.sendMessage(msg);
+            });
+            break;
+    }
 };
 
 // run
-new Background();
+var bgProcess = new Background();

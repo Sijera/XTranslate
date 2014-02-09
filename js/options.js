@@ -16,12 +16,8 @@ var APP = require('./app').create()
         this.view = new AppView({container: '#app'}).init(state);
     })
     .on('change', function (data) {
-        data = $.extend({action: 'sync'}, data);
-        APP.extension.broadcastMessage(data);
+        APP.extension.broadcastMessage({action: 'sync', payload: data});
     });
 
-/** @public */
-var __;
-
-global.APP = APP;
-global.__ = APP.localization;
+/** @public */ global.APP = APP;
+/** @public */ global.__ = APP.localization;

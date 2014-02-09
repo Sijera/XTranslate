@@ -8,12 +8,16 @@ var APP = require('./app').create({autoSave: false}),
  */
 var UserScript = function () {
     this.channel = APP.extension.connect();
+    this.payloadId = 0;
+    this.actions = {};
+    this.sync = this.registerAction('sync', this.onSync);
+    this.playText = this.registerAction('tts');
+    this.translateText = this.registerAction('translate', this.onTranslateText);
     this.bindEvents();
 };
 
 /** @private */
 UserScript.prototype.bindEvents = function () {
-    APP.on('ready', this.onReady.bind(this));
     APP.extension.onMessage(this.onMessage.bind(this));
     this.channel.onMessage(this.onMessage.bind(this));
 };
@@ -21,14 +25,35 @@ UserScript.prototype.bindEvents = function () {
 /** @private */
 UserScript.prototype.onMessage = function (msg) {
     var action = msg.action;
-    if (action == 'sync') APP.set(msg.chain, msg.value);
+    if (this.actions[action]) this.actions[action].call(this, msg.payload);
 };
 
 /** @private */
-UserScript.prototype.onReady = function (state) {
+UserScript.prototype.registerAction = function (name, handler) {
+    this.actions[name] = handler;
+    return this.sendAction.bind(this, name);
+};
+
+/** @private */
+UserScript.prototype.sendAction = function (action, payload) {
+    this.channel.sendMessage({
+        id     : this.payloadId++,
+        action : action,
+        payload: payload
+    });
+};
+
+/** @private */
+UserScript.prototype.onSync = function (data) {
+    APP.set(data.chain, data.value);
+};
+
+/** @private */
+UserScript.prototype.onTranslateText = function (data) {
+    console.info(data);
 };
 
 // run
-new UserScript();
+var userScript = new UserScript();
 global.APP = APP;
 global.__ = APP.localization;
