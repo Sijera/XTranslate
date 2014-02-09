@@ -20,8 +20,5 @@ var APP = require('./app').create()
         APP.extension.broadcastMessage(data);
     });
 
-/** @public */
-var __;
-
-global.APP = APP;
-global.__ = APP.localization;
+/** @public */ global.APP = APP;
+/** @public */ global.__ = APP.localization;

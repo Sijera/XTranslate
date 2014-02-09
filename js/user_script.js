@@ -25,10 +25,15 @@ UserScript.prototype.onMessage = function (msg) {
 };
 
 /** @private */
+UserScript.prototype.playText = function (text) {
+    this.channel.sendMessage({action: 'tts', payload: text});
+};
+
+/** @private */
 UserScript.prototype.onReady = function (state) {
 };
 
 // run
-new UserScript();
+var userScript = new UserScript();
 global.APP = APP;
 global.__ = APP.localization;

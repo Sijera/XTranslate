@@ -24,4 +24,4 @@ Background.prototype.onMessage = function (channel, msg) {
 };
 
 // run
-new Background();
+var bgProcess = new Background();
