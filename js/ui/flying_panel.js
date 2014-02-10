@@ -64,8 +64,8 @@ FlyingPanel.prototype.hide = function () {
 FlyingPanel.prototype.update = function () {
     this.refreshDimensions();
 
-    var prevPos = this.position;
-    var positions = this.positions;
+    var prevPos = this.position,
+        positions = this.positions;
 
     for (var i = 0; i < positions.length; i++) {
         this.setPosition(positions[i]);
@@ -95,9 +95,9 @@ FlyingPanel.prototype.setAnchor = function (anchor) {
 };
 
 /**
- * Set new position relative to the anchor
+ * Set a new position (relative to the anchor)
  * @private
- * @param {{left?, top?, right?, bottom?}} position
+ * @param {{left, top, right, bottom}} position
  */
 FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
@@ -105,7 +105,7 @@ FlyingPanel.prototype.setPosition = function (position) {
 
     this.position = this.prepareClassName(Object.keys(position).join(' '));
     this.$container.css(pos).toggleClass('large', this.containerRect.width > pos.minWidth);
-    this.refreshContainerRect();
+    this.containerRect = this.getElementRect(this.$container);
 };
 
 /** @private */
@@ -179,19 +179,14 @@ FlyingPanel.prototype.getViewPortRect = function () {
     return rect;
 };
 
-/** @private */
+/** @protected */
 FlyingPanel.prototype.refreshDimensions = function () {
-    this.refreshContainerRect();
+    this.containerRect = this.getElementRect(this.$container);
     this.anchorRect = this.getElementRect(this.anchor);
     this.borderRect = this.getElementRect(this.borderElem);
     this.viewScroll = this.getViewPortScroll();
     this.viewRect = this.getViewPortRect();
     this.maxWidth = parseInt(this.$container.css('max-width')) || Infinity;
-};
-
-/** @private */
-FlyingPanel.prototype.refreshContainerRect = function () {
-    this.containerRect = this.getElementRect(this.$container);
 };
 
 /** @private */
@@ -216,22 +211,21 @@ FlyingPanel.prototype.bindAutoHide = function () {
         this.$container.on('click', false);
     }
 
-    this.$window.on('keydown click focusin', this.autoHideHandler);
+    this.$window.on('keydown click', this.autoHideHandler);
 };
 
 /** @private */
 FlyingPanel.prototype.unbindAutoHide = function () {
     if (!this.autoHideInited) return;
-    this.$window.off('keydown click focusin', this.autoHideHandler);
+    this.$window.off('keydown click', this.autoHideHandler);
 };
 
 /** @private */
 FlyingPanel.prototype.autoHideHandler = function (e) {
     switch (e.type) {
-        case 'focusin':
         case 'click':
-            var clickedElem = e.target;
-            if (this.$container[0].contains(clickedElem) || this.$anchor[0].contains(clickedElem)) return;
+            var elem = e.target;
+            if (this.$container[0].contains(elem) || this.$anchor[0].contains(elem)) return;
             this.hide();
             break;
 

@@ -17,6 +17,9 @@ var APP = require('./app').create()
     })
     .on('change', function (data) {
         APP.extension.broadcastMessage({action: 'sync', payload: data});
+        APP.extension.getBackgroundPage(function (bgcPage) {
+            bgcPage.APP.set(data.chain, data.value);
+        });
     });
 
 /** @public */ global.APP = APP;

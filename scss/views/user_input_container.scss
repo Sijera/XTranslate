@@ -4,4 +4,12 @@
   textarea {
     height: 75px;
   }
+
+  .vendorDataView {
+    padding: $spacing;
+    .partOfSpeech {
+      margin-top: $padding;
+      @include addSepLine;
+    }
+  }
 }

@@ -14,7 +14,6 @@
   &.left { margin-right: auto; }
   &.right { margin-left: auto; }
 
-  // draggable bar
   .bar {
     position: absolute;
     top: 0;
@@ -25,13 +24,15 @@
     border-radius: $scrollBarSize;
     background-color: white;
     opacity: .7;
+    cursor: default;
+
     &:hover {
       opacity: 1;
     }
   }
 }
 
-// block that contains the scroll
+// .scrollBar parent container
 .scrollable {
   position: relative;
   overflow: hidden;

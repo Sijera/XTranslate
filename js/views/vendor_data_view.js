@@ -33,13 +33,13 @@ VendorDataView.prototype.createDom = function () {
 /** @private */
 VendorDataView.prototype.bindEvents = function () {
     this.$playSound.on('click', this.onPlayIconClick.bind(this));
-    this.$container.on('click', '.link', this.onLinkTextClick.bind(this));
+    this.$container.on('click', '.link', this.onLinkClick.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
     APP.on('change:settingsContainer.vendorBlock.activeVendor', this.refreshPlayIcon, this);
 };
 
 /**
- * Parse data response from the vendor and show results
+ * Parse the translation data into HTML-layout
  * @param {Object} data
  * @return VendorDataView
  */
@@ -114,7 +114,7 @@ VendorDataView.prototype.wrapHint = function (text, title) {
 };
 
 /** @private */
-VendorDataView.prototype.onLinkTextClick = function (e) {
+VendorDataView.prototype.onLinkClick = function (e) {
     this.trigger('linkClick', $(e.target).text());
 };
 

@@ -31,14 +31,14 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
 
-    /** @type {Popup} */
     this.popup = new Popup().parseData({
         translation: __(22),
         ttsEnabled : true,
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
-    }).appendTo($('<div class="popupPreview"/>').appendTo(this.$content));
+    });
 
-    this.popup.$container.show();
+    var $preview = $('<div class="popupPreview"/>').appendTo(this.$content);
+    this.popup.$container.appendTo($preview).show();
 
     this.addThemeBlock();
     this.addBackgroundStyle();

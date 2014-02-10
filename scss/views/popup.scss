@@ -9,4 +9,21 @@
   overflow: hidden;
   white-space: pre-line;
   text-align: left;
+
+  .vendorDataView {
+    padding-right: $padding;
+  }
+
+  .scrollBar {
+    $offset: 7px;
+    left: $offset;
+    right: $offset;
+    top: $offset;
+    bottom: $offset;
+    overflow: visible;
+
+    .bar {
+      box-shadow: gray 0px 0px 5px -1px;
+    }
+  }
 }

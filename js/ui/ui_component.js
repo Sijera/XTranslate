@@ -1,13 +1,13 @@
 'use strict';
 
-var UTILS = require('../utils'),
-    inherit = UTILS.inherit,
+var inherit = require('../utils').inherit,
+    spawnElement = require('../utils').spawnElement,
     EventDriven = require('../events').EventDriven;
 
 /**
  * Base class for all UI components
  * @constructor
- * @param {{container: jQuery, className: String, nodeType: String, name: String, state: Object=}} options
+ * @param {{container: jQuery, className: String, nodeType: String, name: String, state: Object}} [options]
  */
 var UIComponent = function (options) {
     options = $.extend({nodeType: 'div'}, options);
@@ -15,7 +15,7 @@ var UIComponent = function (options) {
 
     this.name = options.name || '';
     this.state = options.state || {};
-    this.$container = options.container !== undefined ? $(options.container) : UTILS.spawnElement('<' + options.nodeType + '>');
+    this.$container = options.container !== undefined ? $(options.container) : spawnElement('<' + options.nodeType + '>');
     this.$container.addClass(options.className);
 };
 
@@ -32,9 +32,7 @@ UIComponent.prototype.append = function (element) {
     }
 
     var $el = element instanceof jQuery ? element : $(element);
-    this.$container.append($el);
-
-    return $el;
+    return $el.appendTo(this.$container);
 };
 
 /**
@@ -76,10 +74,6 @@ UIComponent.prototype.toggle = function (condition) {
         if (this.hidden) this.show();
         else this.hide();
     }
-};
-
-UIComponent.prototype.destroy = function () {
-    this.$container.remove();
 };
 
 exports.UIComponent = UIComponent;

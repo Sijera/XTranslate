@@ -38,12 +38,31 @@ UserInputContainer.prototype.bindEvents = function () {
     this.$text.on('input', this.onInput.bind(this));
     this.result
         .on('playText', this.onPlayText.bind(this))
-        .on('linkClick', this.onLinkTextClick.bind(this));
+        .on('linkClick', this.onLinkClick.bind(this));
 
     var onVendorChange = this.onVendorChange.bind(this);
     APP.on('change:settingsContainer.vendorBlock.activeVendor', onVendorChange);
     APP.on('change:settingsContainer.vendorBlock.langFrom', onVendorChange);
     APP.on('change:settingsContainer.vendorBlock.langTo', onVendorChange);
+};
+
+/** @private */
+UserInputContainer.prototype.getText = function (text) {
+    return (text || this.$text.val()).trim();
+};
+
+/** @private */
+UserInputContainer.prototype.setText = function (text) {
+    this.$text.val(text)[0].setSelectionRange(text.length, text.length);
+    this.translateText(text);
+};
+
+UserInputContainer.prototype.translateText = function (text) {
+    text = this.getText(text);
+    if (text) {
+        this.sourceText = text;
+        APP.vendor.translateText(text).done(this.onDone);
+    }
 };
 
 UserInputContainer.prototype.onPlayText = function () {
@@ -57,15 +76,9 @@ UserInputContainer.prototype.onVendorChange = function () {
 };
 
 /** @private */
-UserInputContainer.prototype.onLinkTextClick = function (text) {
-    this.translateText(text);
-    this.$text.val(text)[0].setSelectionRange(text.length, text.length);
+UserInputContainer.prototype.onLinkClick = function (text) {
+    this.setText(text);
     window.scrollTo(0, 0);
-};
-
-/** @private */
-UserInputContainer.prototype.getText = function (text) {
-    return (text || this.$text.val()).trim();
 };
 
 /** @private */
@@ -74,19 +87,11 @@ UserInputContainer.prototype.onInput = function (e) {
     if (!this.getText()) this.result.hide();
 };
 
-UserInputContainer.prototype.translateText = function (text) {
-    text = this.getText(text);
-    if (text) {
-        this.sourceText = text;
-        APP.vendor.translateText(text).done(this.onDone);
-    }
-};
-
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
     if (data.sourceText !== this.sourceText) return;
     this.result.parseData(data).show();
-    this.$text.blur().focus(); // refresh page scrollbar (bugfix)
+    this.$text.blur().focus(); // scrollbar visual bugfix
 };
 
 UserInputContainer.prototype.show = function () {

@@ -1,21 +1,10 @@
 @import "../vars", "../mixins";
 
 .vendorDataView {
+  $iconSize: 22px;
   $linkColor: silver;
 
-  .tableView {
-    display: table;
-    .rowView {
-      display: table-row;
-      > * {
-        display: table-cell;
-      }
-    }
-  }
-
   .playIcon {
-    $iconSize: 22px;
-
     position: relative;
     width: $iconSize;
     height: $iconSize;
@@ -42,17 +31,18 @@
   }
 
   .translation {
+    overflow: hidden;
     white-space: pre-line;
-    @include clearFix;
   }
 
   .dictionary {
+    clear: both;
     &:empty {
       display: none;
     }
   }
 
-  .hint {
+  .hint[title] {
     cursor: help;
   }
 
@@ -68,12 +58,14 @@
   }
 
   .spellChecker {
+    clear: both;
     .link {
       font-weight: bold;
     }
   }
 
   .partOfSpeech {
+    margin-top: $spacing;
     font-weight: bold;
   }
 
@@ -92,6 +84,16 @@
     &:after { content: ']'; }
   }
 
+  .tableView {
+    display: table;
+    .rowView {
+      display: table-row;
+      > * {
+        display: table-cell;
+      }
+    }
+  }
+
   .rowView {
     > * {
       padding-bottom: $spacing;
@@ -100,14 +102,6 @@
         overflow: hidden;
         padding-right: $spacing;
       }
-    }
-  }
-
-  .userInputContainer & {
-    padding: $spacing;
-    .partOfSpeech {
-      margin-top: $padding;
-      @include addSepLine;
     }
   }
 }

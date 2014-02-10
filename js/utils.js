@@ -22,20 +22,21 @@ exports.inherit = function (Child, Parent) {
 };
 
 /**
- * Creates a HTML-element and puts it inside invisible DOM-container (aka spawning pool, hello StarCraft!:)
- * We must keep the element attached in the DOM to make possible calculate its dimensions (padding, width, height, etc.)
+ * Create a HTML-element and put it inside invisible container.
+ * Keeping the element attached in DOM needs to make possible calculate its dimensions before inserting it in appropriate place
+ * @param {String} html
  * @return {jQuery}
  */
-exports.spawnElement = function __(htmlText) {
+exports.spawnElement = function __(html) {
     if (!__.$pool) {
-        __.$pool = $('<div id="spawningPool"/>').css({
+        __.$pool = $('<div id="spawning_pool"/>').css({
             position: 'relative',
             width   : 0,
             height  : 0,
             overflow: 'hidden'
         }).appendTo(document.body);
     }
-    return $(htmlText).appendTo(__.$pool);
+    return $(html).appendTo(__.$pool);
 };
 
 exports.sprintf = function () {
@@ -71,7 +72,7 @@ exports.debounce = function (func, wait, immediate) {
     return fn;
 };
 
-exports.isControlKey = function (e) {
+exports.isCtrlKey = function (e) {
     var isAppleDevice = navigator.appVersion.indexOf('Mac') !== -1;
     var keyCode = e.which;
     if (isAppleDevice) {

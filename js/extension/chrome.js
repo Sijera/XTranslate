@@ -9,6 +9,7 @@ var inherit = require('../utils').inherit,
  */
 var Chrome = function (options) {
     Chrome.superclass.constructor.call(this, options);
+    this.url = 'chrome://extensions?id=' + chrome.runtime.id;
 };
 
 inherit(Chrome, Extension);

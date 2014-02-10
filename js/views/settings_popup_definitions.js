@@ -1,7 +1,7 @@
 'use strict';
 
-var inherit = require('../utils').inherit,
-    isControlKey = require('../utils').isControlKey,
+var UTILS = require('../utils'),
+    inherit = require('../utils').inherit,
     CheckBox = require('../ui/check_box').CheckBox,
     TextInput = require('../ui/text_input').TextInput,
     Select = require('../ui/select').Select,
@@ -66,7 +66,7 @@ SettingsPopupDefinitions.prototype.bindEvents = function () {
 SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
     var keyCode = e.which,
         char = String.fromCharCode(keyCode),
-        ctrlKey = isControlKey(e),
+        ctrlKey = UTILS.isCtrlKey(e),
         tabKey = keyCode === 9,
         escapeKey = keyCode === 27,
         shiftKey = e.shiftKey,

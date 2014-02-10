@@ -77,7 +77,9 @@ App.prototype.state = {
     }
 };
 
+/** @private */
 App.prototype.init = function () {
+    this.sync = UTILS.debounce(this.sync.bind(this), SYNC_DELAY);
     this.extension.getState(this.onReady.bind(this));
 };
 
@@ -108,17 +110,19 @@ App.prototype.initState = function (parentChain, stateObj) {
 
 /**
  * Save the current model state on external resource (e.x. local storage, remote server, etc)
- * @type Function
+ * @return {App}
  */
-App.prototype.sync = UTILS.debounce(function () {
+App.prototype.sync = function () {
     this.extension.setState(this.state);
-}, SYNC_DELAY);
+    return this;
+};
 
 /**
  * Set new value of property in the state
  * @param {String} chain One or more property names, separated by dot
  * @param {Number|String|Boolean|Array|Object} [value]
  * @param {Boolean} [silent] Don't emit the change event
+ * @return {App}
  */
 App.prototype.set = function (chain, value, silent) {
     var chainArr = String(chain).split('.'),
@@ -135,6 +139,7 @@ App.prototype.set = function (chain, value, silent) {
             state[prop] = value;
         }
     }, this);
+    return this;
 };
 
 /** @private */

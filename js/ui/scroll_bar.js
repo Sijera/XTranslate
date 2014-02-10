@@ -12,8 +12,6 @@ var UTILS = require('../utils'),
 /** @const */ var SCROLL_SIDES = ['right', 'left'];
 /** @const */ var IS_SCROLLABLE = 'scrollable';
 
-// TODO: make support of horizontal scroll bar
-
 /**
  * @constructor
  * @param {{$parent: (String|HTMLElement|jQuery), pos: Number, side: ("right"|"left")}} options
@@ -24,13 +22,10 @@ var ScrollBar = function (options) {
 
     this.$window = $(window);
     this.realPos = options.pos;
-    this.mouseMove = this.onMouseMove.bind(this);
-    this.onResize = UTILS.debounce(this.onResize.bind(this), UPDATE_DELAY);
 
     this.createDom(options);
     this.bindEvents();
     this.hide();
-
 };
 
 inherit(ScrollBar, UIComponent);
@@ -45,6 +40,9 @@ ScrollBar.prototype.createDom = function (options) {
 
 /** @protected */
 ScrollBar.prototype.bindEvents = function () {
+    this.mouseMove = this.onMouseMove.bind(this);
+    this.onResize = UTILS.debounce(this.onResize.bind(this), UPDATE_DELAY);
+
     this.$container.on('mousedown', this.onClick.bind(this));
     this.$bar.on('mousedown', this.onMouseDown.bind(this));
 
@@ -91,14 +89,14 @@ ScrollBar.prototype.scrollBy = function (step, silent) {
 };
 
 ScrollBar.prototype.update = function () {
-    this.cacheDimensions();
+    this.hide().cacheDimensions();
     this.toggle(this.pVisibleHeight < this.pScrollHeight);
     this.$parent.toggleClass(this.side, !this.hidden);
 
     if (!this.hidden) {
         this.height = this.$container.height();
         this.padding = this.pVisibleHeight - this.height;
-        this.barHeight = Math.round(this.height * this.kDiff) - this.padding;
+        this.barHeight = Math.round(this.pVisibleHeight * this.kDiff) - this.padding;
         this.$bar.css('height', this.barHeight);
         this.barHeightDiff = this.barHeight - this.$bar.height();
         if (this.barHeightDiff) this.kDiff = (this.pVisibleHeight + this.barHeightDiff) / this.pScrollHeight;
@@ -175,8 +173,6 @@ ScrollBar.prototype.onMouseMove = function (e) {
 
     this.scrollBy(offset / this.kDiff);
     if (barPos !== this.barPos) this.mouse = mouse;
-
-    // avoid total crap with selection (when "user-select: none" doesn't work)
     window.getSelection().removeAllRanges();
 };
 
