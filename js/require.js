@@ -34,9 +34,8 @@ var require = function (pathRel) {
                 module = {exports: {}};
                 eval(script);
                 require.modules[fileUrl] = module;
-            } catch (e) {
-                console.error('Error in file "' + fileName + '"', e);
-                console.info('File content: ', script);
+            } catch (error) {
+                console.error('Error in file "' + fileName + '":', error.stack);
             }
         }
     }

@@ -10,7 +10,7 @@ var CSS_THEMES = {
         bgColor1         : '#000000',
         bgColor2         : '#7f7f7f',
         bgcLinear        : true,
-        bgcOpacity       : 80,
+        bgcOpacity       : 90,
         borderColor      : '#000000',
         borderStyle      : 'solid',
         borderWidth      : 1,
@@ -92,6 +92,8 @@ var FONTS = [
  * @return Object Object-hash with CSS properties in the keys and their values
  */
 var toCSS = function (theme) {
+    if (!theme) return {};
+
     // background
     var bgcMain = theme.bgColor1,
         bgcSec = theme.bgColor2,

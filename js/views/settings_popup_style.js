@@ -20,12 +20,6 @@ var UTILS = require('../utils'),
  */
 var SettingsPopupStyle = function (options) {
     this.customThemeName = '--';
-
-    this.popupPreviewData = {
-        translation: __(22),
-        ttsEnabled: true,
-        dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
-    };
     SettingsPopupStyle.superclass.constructor.call(this, options);
     this.setTitle(__(5));
 };
@@ -37,8 +31,13 @@ SettingsPopupStyle.prototype.createDom = function (state) {
     SettingsPopupStyle.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsPopupStyle');
 
-    this.$popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content);
-    this.popup = new Popup({data: this.popupPreviewData}).appendTo(this.$popupPreview);
+    /** @type {Popup} */
+    this.popup = new Popup().parseData({
+        translation: __(22),
+        ttsEnabled : true,
+        dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
+    }).appendTo($('<div class="popupPreview"/>').appendTo(this.$content));
+
     this.popup.$container.show();
 
     this.addThemeBlock();
@@ -167,7 +166,7 @@ SettingsPopupStyle.prototype.addThemeBlock = function () {
 
     var themes = this.state.themes;
     Object.keys(themes).forEach(function (name) {
-        this.addTheme(name, themes[name]);
+        this.addTheme(name, themes[name], true);
     }, this);
 };
 
@@ -275,13 +274,7 @@ SettingsPopupStyle.prototype.createTheme = function () {
 
 /** @private */
 SettingsPopupStyle.prototype.applyTheme = function (theme) {
-    var themes = this.state.themes,
-        activeTheme = this.state.activeTheme,
-        customTheme = this.state.customTheme;
-
-    theme = theme || themes[activeTheme] || customTheme;
-    if (!theme) return;
-    this.popup.$container.css(THEME.toCSS(theme));
+    theme = this.popup.applyTheme(theme);
 
     this.bgColor1.setValue(theme.bgColor1, true);
     this.bgColor2.setValue(theme.bgColor2, true);
@@ -350,10 +343,25 @@ SettingsPopupStyle.prototype.onSaveTheme = function (e) {
 };
 
 /** @private */
+SettingsPopupStyle.prototype.addTheme = function (name, theme, silent) {
+    theme = theme || this.createTheme();
+    this.theme.add({title: name, value: name, data: theme, removeTitle: __(29)}, silent);
+    this.modifyTheme(name, theme, silent);
+};
+
+/** @private */
 SettingsPopupStyle.prototype.onRemoveTheme = function (itemObj) {
     var themeName = itemObj.value;
     if (itemObj.selected) this.setCustomTheme();
-    delete this.state.themes[themeName];
+    this.modifyTheme(themeName, null);
+};
+
+/** @private */
+SettingsPopupStyle.prototype.modifyTheme = function (name, theme, silent) {
+    var themes = silent ? this.state.themes : $.extend({}, this.state.themes);
+    if (theme) themes[name] = theme;
+    if (!theme) delete themes[name];
+    this.state.themes = themes;
 };
 
 /** @private */
@@ -370,19 +378,6 @@ SettingsPopupStyle.prototype.themeNameValidator = function (value, validObj) {
     if (tooltip) validObj.tooltipData = tooltip;
 
     return !tooltip;
-};
-
-/** @private */
-SettingsPopupStyle.prototype.addTheme = function (themeName, theme) {
-    theme = theme || this.createTheme();
-
-    this.state.themes[themeName] = theme;
-    this.theme.add({
-        title      : themeName,
-        value      : themeName,
-        data       : theme,
-        removeTitle: __(29)
-    }, true);
 };
 
 exports.SettingsPopupStyle = SettingsPopupStyle;

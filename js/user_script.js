@@ -1,27 +1,45 @@
 'use strict';
 
-var APP = require('./app').create({autoSave: false}),
+var UTILS = require('./utils'),
+    APP = require('./app').create({autoSave: false}),
     Popup = require('./views/popup').Popup;
+
+// run here
+APP.on('ready', function () {});
 
 /**
  * @constructor
  */
 var UserScript = function () {
-    console.info(document.URL);
-};
-
-UserScript.prototype.init = function () {
     this.channel = APP.extension.connect();
     this.payloadId = 0;
     this.actions = {};
+    this.createDom();
     this.bindEvents();
     this.registerActions();
 };
 
 /** @private */
+UserScript.prototype.createDom = function () {
+    this.$app = $('<div id="XTranslate"/>').appendTo(document.body);
+    this.popup = new Popup({borderElem: this.$app});
+    this.refreshTheme();
+    UTILS.spawnElement.$pool.remove();
+};
+
+/** @private */
+UserScript.prototype.refreshTheme = function () {
+    this.popup.applyTheme();
+};
+
+/** @private */
 UserScript.prototype.bindEvents = function () {
-    APP.extension.onMessage(this.onMessage.bind(this));
+    this.refreshTheme = UTILS.debounce(this.refreshTheme.bind(this), 100);
+
     this.channel.onMessage(this.onMessage.bind(this));
+    APP.extension.onMessage(this.onMessage.bind(this));
+    APP.on('change:settingsContainer.popupStyle.activeTheme', this.refreshTheme);
+    APP.on('change:settingsContainer.popupStyle.customTheme', this.refreshTheme);
 };
 
 /** @private */
@@ -62,7 +80,5 @@ UserScript.prototype.onTranslateText = function (data) {
     console.info(data);
 };
 
-// run
-var userScript = new UserScript();
 global.APP = APP;
 global.__ = APP.localization;

@@ -111,7 +111,7 @@ App.prototype.initState = function (parentChain, stateObj) {
  * @type Function
  */
 App.prototype.sync = UTILS.debounce(function () {
-    this.extension.setState(this.toJSON());
+    this.extension.setState(this.state);
 }, SYNC_DELAY);
 
 /**
@@ -187,17 +187,9 @@ App.prototype.clear = function (chain, silent) {
 };
 
 /** @private */
-App.prototype.toJSON = function () {
-    return JSON.parse(JSON.stringify(this.state));
-};
-
-/** @private */
 App.prototype.reset = function () {
-    this.state = {};
-    location.reload(true);
+    this.extension.setState({}, location.reload.bind(location, true));
 };
-
-exports.App = App;
 
 /** @return {App} */
-exports.create = function (params) { return new App(params) };
+exports.create = function (o) { return new App(o) };

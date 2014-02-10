@@ -95,11 +95,12 @@ Chrome.prototype.broadcastMessage = function (msg) {
 /**
  * Save current state of the app
  * @param {Object} state
+ * @param {Function} [onDone]
  */
-Chrome.prototype.setState = function (state) {
+Chrome.prototype.setState = function (state, onDone) {
     var items = {};
     items[this.stateName] = state;
-    chrome.storage.local.set(items);
+    chrome.storage.local.set(items, onDone);
 };
 
 /**

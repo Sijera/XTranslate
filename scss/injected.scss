@@ -1,7 +1,16 @@
 @import "vars", 'mixins';
 
 // wrap the user css into single class name
-.XTranslate {
+#XTranslate {
+  // reset
+  * {
+    @include with-vendors(box-sizing, border-box);
+    margin: 0;
+    padding: 0;
+    outline: none;
+  }
+
+  // include dependencies
   @import "ui/flying_panel";
   @import "ui/scroll_bar";
   @import "views/popup";

@@ -26,7 +26,7 @@ exports.inherit = function (Child, Parent) {
  * We must keep the element attached in the DOM to make possible calculate its dimensions (padding, width, height, etc.)
  * @return {jQuery}
  */
-exports.spawnElement = function __(htmlStr) {
+exports.spawnElement = function __(htmlText) {
     if (!__.$pool) {
         __.$pool = $('<div id="spawningPool"/>').css({
             position: 'relative',
@@ -35,7 +35,7 @@ exports.spawnElement = function __(htmlStr) {
             overflow: 'hidden'
         }).appendTo(document.body);
     }
-    return $(htmlStr).appendTo(__.$pool);
+    return $(htmlText).appendTo(__.$pool);
 };
 
 exports.sprintf = function () {

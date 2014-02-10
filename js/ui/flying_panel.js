@@ -13,6 +13,7 @@ var FlyingPanel = function (options) {
     /** @type {HTMLElement} */ this.borderElem = options.borderElem || document.body;
     /** @type {HTMLElement} */ this.anchor = options.anchor || document.body;
     /** @type {Boolean} */ this.autoUpdate = options.autoUpdate !== false;
+    /** @type {Boolean} */ this.autoSize = options.autoSize !== false;
     /** @type {Boolean} */ this.autoHide = !!options.autoHide;
     /** @type {Boolean} */ this.noBodyAppend = !!options.noBodyAppend;
 
@@ -100,7 +101,7 @@ FlyingPanel.prototype.setAnchor = function (anchor) {
  */
 FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
-    pos.minWidth = Math.min(this.anchorRect.width, this.maxWidth);
+    if (this.autoSize) pos.minWidth = Math.min(this.anchorRect.width, this.maxWidth);
 
     this.position = this.prepareClassName(Object.keys(position).join(' '));
     this.$container.css(pos).toggleClass('large', this.containerRect.width > pos.minWidth);

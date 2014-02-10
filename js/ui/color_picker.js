@@ -50,6 +50,16 @@ ColorPicker.prototype.createDom = function () {
     }
 };
 
+ColorPicker.prototype.disable = function () {
+    if (this.useInput) this.input.disable();
+    return ColorPicker.superclass.disable.apply(this, arguments);
+};
+
+ColorPicker.prototype.enable = function () {
+    if (this.useInput) this.input.enable();
+    return ColorPicker.superclass.enable.apply(this, arguments);
+};
+
 /** @private */
 ColorPicker.prototype.createPalette = function () {
     if (!this.palette) {
