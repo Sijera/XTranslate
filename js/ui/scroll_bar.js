@@ -3,7 +3,7 @@
 var UTILS = require('../utils'),
     inherit = require('../utils').inherit,
     UIComponent = require('./ui_component').UIComponent,
-    jQueryMouseWheel = require('../libs/jquery-mousewheel');
+    jQueryExtra = require('../libs/jquery-extra');
 
 /** @const */ var UPDATE_DELAY = 0;   // update scroll timeout
 /** @const */ var SCROLL_STEP = 5;    // percents, related to block's dimensions

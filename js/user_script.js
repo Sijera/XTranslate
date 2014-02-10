@@ -7,6 +7,10 @@ var APP = require('./app').create({autoSave: false}),
  * @constructor
  */
 var UserScript = function () {
+    console.info(document.URL);
+};
+
+UserScript.prototype.init = function () {
     this.channel = APP.extension.connect();
     this.payloadId = 0;
     this.actions = {};

@@ -4,7 +4,7 @@ var UTILS = require('../utils'),
     inherit = UTILS.inherit,
     DragAndDrop = require('./drag_and_drop').DragAndDrop,
     FormControl = require('./form_control').FormControl,
-    jQueryMouseWheel = require('../libs/jquery-mousewheel');
+    jQueryExtra = require('../libs/jquery-extra');
 
 /**
  * Slider (range) form control

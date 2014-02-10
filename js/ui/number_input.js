@@ -2,7 +2,7 @@
 
 var inherit = require('../utils').inherit,
     TextInput = require('./text_input').TextInput,
-    jQueryMouseWheel = require('../libs/jquery-mousewheel');
+    jQueryExtra = require('../libs/jquery-extra');
 
 /** @const */ var TIMER_DELAY = 500;
 /** @const */ var TIMER_SPEED = 30;

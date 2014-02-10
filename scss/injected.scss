@@ -1,0 +1,9 @@
+@import "vars", 'mixins';
+
+// wrap the user css into single class name
+.XTranslate {
+  @import "ui/flying_panel";
+  @import "ui/scroll_bar";
+  @import "views/popup";
+  @import "views/vendor_data_view";
+}

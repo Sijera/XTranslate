@@ -6,7 +6,7 @@ var UTILS = require('../utils'),
     TextInput = require('./text_input').TextInput,
     ItemList = require('./item_list').ItemList,
     FlyingPanel = require('./flying_panel').FlyingPanel,
-    jQueryMouseWheel = require('../libs/jquery-mousewheel');
+    jQueryExtra = require('../libs/jquery-extra');
 
 /** @const */ var IS_OPEN = 'open';
 /** @const */ var IS_CLOSED = 'closed';
