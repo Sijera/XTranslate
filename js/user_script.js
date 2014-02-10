@@ -10,10 +10,8 @@ var UserScript = function () {
     this.channel = APP.extension.connect();
     this.payloadId = 0;
     this.actions = {};
-    this.sync = this.registerAction('sync', this.onSync);
-    this.playText = this.registerAction('tts');
-    this.translateText = this.registerAction('translate', this.onTranslateText);
     this.bindEvents();
+    this.registerActions();
 };
 
 /** @private */
@@ -23,9 +21,10 @@ UserScript.prototype.bindEvents = function () {
 };
 
 /** @private */
-UserScript.prototype.onMessage = function (msg) {
-    var action = msg.action;
-    if (this.actions[action]) this.actions[action].call(this, msg.payload);
+UserScript.prototype.registerActions = function () {
+    this.sync = this.registerAction('sync', this.onSync);
+    this.playText = this.registerAction('tts');
+    this.translateText = this.registerAction('translate', this.onTranslateText);
 };
 
 /** @private */
@@ -41,6 +40,12 @@ UserScript.prototype.sendAction = function (action, payload) {
         action : action,
         payload: payload
     });
+};
+
+/** @private */
+UserScript.prototype.onMessage = function (msg) {
+    var action = msg.action;
+    if (this.actions[action]) this.actions[action].call(this, msg.payload);
 };
 
 /** @private */
