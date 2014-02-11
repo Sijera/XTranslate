@@ -16,6 +16,7 @@ var APP = require('./app').create()
         this.view = new AppView({container: '#app'}).init(state);
     })
     .on('change', function (data) {
+        // sync the data with the background process page and opened window tabs
         APP.extension.broadcastMessage({action: 'sync', payload: data});
         APP.extension.getBackgroundPage(function (bgcPage) {
             bgcPage.APP.set(data.chain, data.value);

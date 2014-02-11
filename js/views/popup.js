@@ -6,9 +6,6 @@ var inherit = require('../utils').inherit,
     FlyingPanel = require('../ui/flying_panel').FlyingPanel,
     VendorDataView = require('./vendor_data_view').VendorDataView;
 
-/** @const */
-var RANGE_OFFSET = 5;
-
 /**
  * @constructor
  */
@@ -56,26 +53,21 @@ Popup.prototype.applyTheme = function (theme) {
     return theme;
 };
 
-/** @protected */
+/** @private */
 Popup.prototype.refreshDimensions = function () {
+    var selection = window.getSelection(),
+        useActiveElem = selection.isCollapsed && selection.toString().trim();
+
+    if (useActiveElem) this.setAnchor(document.activeElement);
     Popup.superclass.refreshDimensions.apply(this, arguments);
-    var selection = window.getSelection();
-    if (!selection.isCollapsed) {
-        var rect = $.extend({}, selection.getRangeAt(0).getBoundingClientRect());
-        rect.left -= RANGE_OFFSET;
-        rect.right -= RANGE_OFFSET;
-        rect.top -= RANGE_OFFSET;
-        rect.bottom -= RANGE_OFFSET;
-        rect.width += RANGE_OFFSET * 2;
-        rect.height += RANGE_OFFSET * 2;
-        this.anchorRect = rect;
-    }
+    if (!selection.isCollapsed) this.anchorRect = selection.getRangeAt(0).getBoundingClientRect();
 };
 
 Popup.prototype.show = function () {
     Popup.superclass.show.apply(this, arguments);
     this.scrollBar.scrollTo(0);
     this.scrollBar.update();
+    this.$container.focus();
     return this;
 };
 

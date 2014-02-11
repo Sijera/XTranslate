@@ -79,7 +79,7 @@ FlyingPanel.prototype.update = function () {
 };
 
 /**
- * @param {HTMLElement|jQuery} anchor
+ * @param {HTMLElement|jQuery|*} anchor
  */
 FlyingPanel.prototype.setAnchor = function (anchor) {
     if (!anchor) return this;

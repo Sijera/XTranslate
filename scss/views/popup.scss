@@ -2,13 +2,15 @@
 
 .popup {
   position: absolute;
+  margin: $spacing 0;
   width: auto;
   height: auto;
-  z-index: 100000;
   display: inline-block;
   overflow: hidden;
   white-space: pre-line;
   text-align: left;
+  line-height: 130%;
+  z-index: 100000;
 
   .vendorDataView {
     padding-right: $padding;
@@ -17,15 +19,26 @@
     }
   }
 
+  &:hover {
+    .scrollBar {
+      margin-right: 0;
+    }
+  }
+
   .scrollBar {
+    @include with-vendors(transition, margin-right .25s);
     $offset: 7px;
     left: $offset;
     right: $offset;
     top: $offset;
     bottom: $offset;
+    margin-right: -$padding * 2;
     overflow: visible;
+    width: 8px;
+    border-radius: inherit;
 
     .bar {
+      border-radius: inherit;
       box-shadow: gray 0px 0px 5px -1px;
     }
   }

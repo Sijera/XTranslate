@@ -8,25 +8,20 @@ var UTILS = require('./utils'),
  * @constructor
  */
 var UserScript = function () {
+    this.settings = APP.get('settingsContainer.popupDefinitions');
     this.channel = APP.extension.connect();
+    this.selection = window.getSelection();
     this.payloadId = 0;
     this.actions = {};
 
-    this.sync = this.registerAction('sync', this.onSync);
-    this.playText = this.registerAction('tts');
-    this.translateText = this.registerAction('translate', this.onTranslateText);
+    this.syncAction = this.registerAction('sync', this.onSync);
+    this.playTextAction = this.registerAction('tts');
+    this.translateAction = this.registerAction('translate', this.onTranslateText);
 
     this.createDom();
     this.bindEvents();
     this.applyTheme();
 };
-
-/** @private */
-Object.defineProperty(UserScript.prototype, 'settings', {
-    get: function () {
-        return APP.get('settingsContainer.popupDefinitions');
-    }
-});
 
 /** @private */
 UserScript.prototype.createDom = function () {
@@ -45,8 +40,9 @@ UserScript.prototype.bindEvents = function () {
     APP.on('change:settingsContainer.popupStyle.customTheme', applyTheme);
 
     this.popup
-        .on('linkClick', this.translateText)
-        .on('playText', this.playText);
+        .on('hide', this.cleanUpRanges.bind(this))
+        .on('linkClick', this.onLinkClick.bind(this))
+        .on('playText', this.playTextAction);
 
     $(window)
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
@@ -67,14 +63,11 @@ UserScript.prototype.registerAction = function (name, handler) {
 
 /** @private */
 UserScript.prototype.sendAction = function (action, payload) {
-    // TODO: handle responses with accurate id
-    var id = this.payloadId++;
     this.channel.sendMessage({
-        id     : id,
+        id     : this.payloadId++,
         action : action,
         payload: payload
     });
-    return id;
 };
 
 /** @private */
@@ -90,13 +83,14 @@ UserScript.prototype.onSync = function (data) {
 
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
-    if (this.settings.autoPlay) this.playText();
+    if (this.settings.autoPlay) this.playTextAction();
     this.popup.parseData(data).show();
+    this.reselectText();
 };
 
 /** @private */
 UserScript.prototype.getText = function () {
-    return window.getSelection().toString().trim();
+    return this.selection.toString().trim();
 };
 
 /** @private */
@@ -106,30 +100,45 @@ UserScript.prototype.onKeyDown = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseUp = function (e) {
-    if (this.clickAction) {
-        delete this.clickAction;
-        return;
-    }
-    if (this.settings.selectAction) {
-        this.translateSelection(e);
-    }
+    if (this.clickActionUsed) return (delete this.clickActionUsed);
+    if (this.settings.selectAction) this.translateText(e);
+    return true;
 };
 
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
     if (this.settings.clickAction) {
-        if (this.translateSelection(e)) this.clickAction = true;
+        this.clickActionUsed = true;
+        this.translateText(e);
     }
 };
 
 /** @private */
-UserScript.prototype.translateSelection = function (e) {
+UserScript.prototype.onLinkClick = function (text) {
+    this.translateAction(text);
+    this.reselectText();
+};
+
+/** @private */
+UserScript.prototype.translateText = function (e) {
     var text = this.getText();
-    if (text && !this.popup.$container[0].contains(e.target)) {
-        this.translateText(text);
-        return true;
+    var outOfPopup = !this.popup.$container[0].contains(e.target);
+    if (text && outOfPopup) {
+        this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
+        this.translateAction(text);
     }
-    return false;
+};
+
+/** @private */
+UserScript.prototype.cleanUpRanges = function () {
+    this.selection.removeAllRanges();
+};
+
+/** @private */
+UserScript.prototype.reselectText = function () {
+    if (!this.lastRange) return;
+    this.cleanUpRanges();
+    this.selection.addRange(this.lastRange);
 };
 
 // run
