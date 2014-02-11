@@ -1,7 +1,7 @@
 'use strict';
 
-var UTILS = require('../utils'),
-    inherit = require('../utils').inherit,
+var inherit = require('../utils').inherit,
+    findObjByProp = require('../utils').findObjByProp,
     FormControl = require('./form_control').FormControl,
     TextInput = require('./text_input').TextInput,
     ItemList = require('./item_list').ItemList,
@@ -307,7 +307,7 @@ Select.prototype._onKeyPress = function (e) {
         this._setSelectedItem(item);
     }
     else {
-        this._searchList = UTILS.objLookup(this.itemList.getList(), 'title', this._searchText);
+        this._searchList = findObjByProp(this.itemList.getList(), 'title', this._searchText);
         this._searchList = this._searchList.filter(function (item) { return !item.disabled });
         this._setSelectedItem(this._searchList[0]);
     }

@@ -72,18 +72,6 @@ exports.debounce = function (func, wait, immediate) {
     return fn;
 };
 
-exports.isCtrlKey = function (e) {
-    var isAppleDevice = navigator.appVersion.indexOf('Mac') !== -1;
-    var keyCode = e.which;
-    if (isAppleDevice) {
-        return e.metaKey ||
-            keyCode === 91 || // (Left Cmd)
-            keyCode === 93;  // (Right Cmd)
-    } else {
-        return e.ctrlKey || keyCode === 17;
-    }
-};
-
 exports.hex2Rgba = function (color, opacity) {
     if (color[0] != '#') return color;
 
@@ -133,27 +121,51 @@ exports.parseUrl = function (url) {
 };
 
 /**
- * Find objects in array by its property
- * @param {Array.<Object>} itemList List with items
- * @param {String} field Name of property in the item
- * @param {RegExp|String} subject Regular expression or string to test the field
+ * Find object(s) in array by specific property name
+ * @param {Array.<Object>} objectsList
+ * @param {String} propName
+ * @param {RegExp|String} testValue Regular expression or string to test the field
  * @param {Boolean=} onlyFirst If it is true, don't search all matches, only one!
  * @return Array List of matched objects
  */
-exports.objLookup = function (itemList, field, subject, onlyFirst) {
+exports.findObjByProp = function (objectsList, propName, testValue, onlyFirst) {
     var item, value, matched,
         searchResult = [],
-        isRegExp = subject instanceof RegExp;
+        isRegExp = testValue instanceof RegExp;
 
-    for (var i = 0, len = itemList.length; i < len; i++) {
-        item = itemList[i];
-        value = item[field];
-        matched = isRegExp && subject.test(value);
-        matched = matched || (!isRegExp && value.toLowerCase().indexOf(subject.toLowerCase()) === 0);
+    for (var i = 0, len = objectsList.length; i < len; i++) {
+        item = objectsList[i];
+        value = item[propName];
+        matched = isRegExp && testValue.test(value);
+        matched = matched || (!isRegExp && value.toLowerCase().indexOf(testValue.toLowerCase()) === 0);
         if (matched) {
             searchResult.push(item);
             if (onlyFirst) break;
         }
     }
     return searchResult;
+};
+
+/**
+ * Get pressed hotkey from keyboard event
+ * @param {KeyboardEvent} e Usually it should be keyDown-event
+ * @param {RegExp} [charPattern] Regular expression to check matched char
+ * @return {Array} List of pressed keys in text representation
+ */
+exports.getHotkey = function (e, charPattern) {
+    charPattern = charPattern || /[A-Z0-9]/;
+
+    var key = e.which,
+        isAppleDevice = navigator.appVersion.indexOf('Mac') !== -1,
+        char = String.fromCharCode(Number(key)),
+        shiftKey = e.shiftKey,
+        altKey = e.altKey,
+        ctrlKey = isAppleDevice ? (e.metaKey || key === 91 || key === 93) : (e.ctrlKey || key === 17),
+        hotKey = [];
+
+    if (ctrlKey) hotKey.push('Ctrl');
+    if (shiftKey) hotKey.push('Shift');
+    if (altKey) hotKey.push('Alt');
+    if (charPattern.test(char)) hotKey.push(char);
+    return hotKey;
 };

@@ -30,10 +30,6 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
 
-    this.showOnToolbar = new CheckBox({label: __(17), checked: state.showOnToolbar})
-        .on('change', function (value) { state.showOnToolbar = value; })
-        .appendTo(this.$content);
-
     this.clickAction = new CheckBox({label: __(7), checked: state.clickAction, className: 'sep'})
         .on('change', function (value) { state.clickAction = value; })
         .appendTo(this.$content);
@@ -59,28 +55,17 @@ SettingsPopupDefinitions.prototype.bindEvents = function () {
     SettingsPopupDefinitions.superclass.bindEvents.apply(this, arguments);
 
     this.keyAction.on('change', this.hotKey.toggle.bind(this.hotKey));
-    this.hotKey.on('keydown', this.onDefineKey, this);
+    this.hotKey.on('keydown', this.onDefineKey.bind(this));
 };
 
 /** @private */
 SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
     var keyCode = e.which,
-        char = String.fromCharCode(keyCode),
-        ctrlKey = UTILS.isCtrlKey(e),
+        hotKey = UTILS.getHotkey(e),
         tabKey = keyCode === 9,
-        escapeKey = keyCode === 27,
-        shiftKey = e.shiftKey,
-        altKey = e.altKey;
+        escapeKey = keyCode === 27;
 
-    if (char.match(/[A-Z0-9]/) && (ctrlKey || shiftKey || altKey)) {
-        var hotKey = [];
-        ctrlKey && hotKey.push('Ctrl');
-        shiftKey && hotKey.push('Shift');
-        altKey && hotKey.push('Alt');
-        hotKey.push(char);
-        this.hotKey.setValue(hotKey.join('+'), true);
-    }
-
+    if (hotKey.length >= 2) this.hotKey.setValue(hotKey.join('+'), true);
     if (!tabKey && !escapeKey) e.preventDefault();
 };
 

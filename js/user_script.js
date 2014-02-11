@@ -40,11 +40,12 @@ UserScript.prototype.bindEvents = function () {
     APP.on('change:settingsContainer.popupStyle.customTheme', applyTheme);
 
     this.popup
-        .on('hide', this.cleanUpRanges.bind(this))
+        .on('hide', this.onHidePopup.bind(this))
         .on('linkClick', this.onLinkClick.bind(this))
         .on('playText', this.playTextAction);
 
     $(window)
+        .on('mouseover', UTILS.debounce(this.onMouseOver.bind(this), 100))
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
         .on('dblclick', this.onDblClick.bind(this))
         .on('keydown', this.onKeyDown.bind(this));
@@ -89,13 +90,42 @@ UserScript.prototype.onTranslateText = function (data) {
 };
 
 /** @private */
-UserScript.prototype.getText = function () {
-    return this.selection.toString().trim();
+UserScript.prototype.getText = function (text) {
+    return (text || this.selection.toString()).trim();
 };
 
 /** @private */
 UserScript.prototype.onKeyDown = function (e) {
+    if (this.settings.keyAction) {
+        var keyMatch = this.settings.hotKey == UTILS.getHotkey(e).join('+');
+        if (keyMatch) {
+            var overNode = this.overNode,
+                text = this.getText();
 
+            // Auto-select node if no text was selected
+            if (!text && overNode && this.outOfPopup(overNode)) {
+                if (overNode == document.documentElement || overNode == document.body) return;
+                var nodeName = overNode.nodeName.toLowerCase();
+                if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
+                else if (nodeName === 'img') text = overNode.title || overNode.alt;
+                else text = overNode.innerText;
+
+                var range = new Range();
+                range.selectNode(overNode);
+                this.selection.removeAllRanges();
+                this.selection.addRange(range);
+                this.popup.setAnchor(overNode);
+            }
+
+            // Make translation
+            this.translateText(e, text);
+        }
+    }
+};
+
+/** @private */
+UserScript.prototype.onMouseOver = function (e) {
+    this.overNode = e.target;
 };
 
 /** @private */
@@ -120,24 +150,28 @@ UserScript.prototype.onLinkClick = function (text) {
 };
 
 /** @private */
-UserScript.prototype.translateText = function (e) {
-    var text = this.getText();
-    var outOfPopup = !this.popup.$container[0].contains(e.target);
-    if (text && outOfPopup) {
+UserScript.prototype.onHidePopup = function () {
+    this.selection.removeAllRanges();
+};
+
+/** @private */
+UserScript.prototype.outOfPopup = function (targetElem) {
+    return !this.popup.$container[0].contains(targetElem);
+};
+
+/** @private */
+UserScript.prototype.translateText = function (e, text) {
+    text = this.getText(text);
+    if (text && this.outOfPopup(e.target)) {
         this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
         this.translateAction(text);
     }
 };
 
 /** @private */
-UserScript.prototype.cleanUpRanges = function () {
-    this.selection.removeAllRanges();
-};
-
-/** @private */
 UserScript.prototype.reselectText = function () {
     if (!this.lastRange) return;
-    this.cleanUpRanges();
+    this.selection.removeAllRanges();
     this.selection.addRange(this.lastRange);
 };
 

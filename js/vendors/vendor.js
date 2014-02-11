@@ -49,7 +49,7 @@ Vendor.prototype.loadData = function (data) {
 
     return this.makeRequest($.extend(this.lastReqData, data))
         .then(this.parseData.bind(this))
-        .then(this.autoSwapLang.bind(this));
+        .then(this.swapLang.bind(this));
 };
 
 /**
@@ -64,7 +64,7 @@ Vendor.prototype.parseData = function (response) {
 };
 
 /** @protected */
-Vendor.prototype.autoSwapLang = function (parsedData) {
+Vendor.prototype.swapLang = function (parsedData) {
     if (this.swapped) return parsedData;
 
     var langPair = this.getLang(),

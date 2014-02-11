@@ -29,16 +29,17 @@
 
   .scrollBar {
     $animSpeed: .25s;
+    $offset: 7px;
+    $width: 9px;
 
     @include with-vendors(transition, margin-right $animSpeed);
-    $offset: 7px;
+    margin-right: -$padding * 2;
+    width: $width;
     left: $offset;
     right: $offset;
     top: $offset;
     bottom: $offset;
-    margin-right: -$padding * 2;
     overflow: visible;
-    width: 8px;
     border-radius: inherit;
 
     .bar {

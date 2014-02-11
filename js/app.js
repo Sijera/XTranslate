@@ -52,7 +52,6 @@ App.prototype.state = {
             collapsed    : true,
             autoPlay     : false,
             showPlayIcon : true,
-            showOnToolbar: true,
             clickAction  : true,
             selectAction : false,
             keyAction    : true,
