@@ -12,6 +12,9 @@
 
   .vendorDataView {
     padding-right: $padding;
+    .link {
+      color: inherit !important;
+    }
   }
 
   .scrollBar {

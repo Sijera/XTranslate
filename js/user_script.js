@@ -67,11 +67,14 @@ UserScript.prototype.registerAction = function (name, handler) {
 
 /** @private */
 UserScript.prototype.sendAction = function (action, payload) {
+    // TODO: handle responses with accurate id
+    var id = this.payloadId++;
     this.channel.sendMessage({
-        id     : this.payloadId++,
+        id     : id,
         action : action,
         payload: payload
     });
+    return id;
 };
 
 /** @private */
@@ -103,19 +106,30 @@ UserScript.prototype.onKeyDown = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseUp = function (e) {
-    this.translateSelection(e, this.settings.selectAction);
+    if (this.clickAction) {
+        delete this.clickAction;
+        return;
+    }
+    if (this.settings.selectAction) {
+        this.translateSelection(e);
+    }
 };
 
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
-    this.translateSelection(e, this.settings.clickAction);
+    if (this.settings.clickAction) {
+        if (this.translateSelection(e)) this.clickAction = true;
+    }
 };
 
 /** @private */
-UserScript.prototype.translateSelection = function (e, condition) {
-    if (!condition || this.popup.$container[0].contains(e.target)) return;
+UserScript.prototype.translateSelection = function (e) {
     var text = this.getText();
-    if (text) this.translateText(text);
+    if (text && !this.popup.$container[0].contains(e.target)) {
+        this.translateText(text);
+        return true;
+    }
+    return false;
 };
 
 // run

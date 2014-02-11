@@ -25,7 +25,7 @@ var CSS_THEMES = {
         textShadowColor  : '#000000',
         padding          : 1, // em
         maxWidth         : 300,
-        maxHeight        : 200,
+        maxHeight        : 250,
         boxShadowColor   : '#ffffff',
         boxShadowSize    : 10,
         boxShadowOpacity : 100,
@@ -51,7 +51,7 @@ var CSS_THEMES = {
         textShadowColor  : '#000000',
         padding          : 0.8, // em
         maxWidth         : 300,
-        maxHeight        : 200,
+        maxHeight        : 250,
         boxShadowColor   : '#000000',
         boxShadowSize    : 11,
         boxShadowOpacity : 50,
