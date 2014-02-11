@@ -49,21 +49,18 @@ Yandex.prototype.makeRequest = function (data) {
     });
 };
 
-/** @const */
-var getText = function (obj) { return obj.text };
+/** @private */
+var parserHelpers = {
+    getText: function (obj) { return obj.text }
+};
 
-/**
- * @private
- * @param {Object} translation ({"code":200,"detected":{"lang":"en"},"lang":"en-ru","text":["образец"]})
- * @param {Object} dictionary ({"head":{},"def":[{"text":"cat","pos":"существительное","ts":"kæt","tr":[{"text":"кошка","pos":"существительное","syn":[{"text":"кот"},{"text":"котенок"},{"text":"котик"}],"mean":[{"text":"feline"},{"text":"puss"},{"text":"kitten"}],"ex":[{"text":"pedigreed cats","tr":[{"text":"породистые кошки"}]},{"text":"Cheshire cat","tr":[{"text":"Чеширский кот"}]}]},{"text":"кошечка","pos":"существительное","mean":[{"text":"kitty"}],"ex":[{"text":"white cat","tr":[{"text":"белая кошечка"}]}]}]},{"text":"cat","pos":"прилагательное","ts":"kæt","tr":[{"text":"кошачий","pos":"прилагательное","mean":[{"text":"feline"}],"ex":[{"text":"cat's claw","tr":[{"text":"кошачий коготь"}]}]}]}]})
- * @return {Object}
- */
+/** @private */
 Yandex.prototype.parseData = function (translation, dictionary) {
     var response = {};
     translation = translation[0];
     dictionary = dictionary[0];
 
-    // basic translation
+    // base translation
     if (translation.code === 200) {
         $.extend(response, {
             translation : translation.text.join(' '),
@@ -71,19 +68,19 @@ Yandex.prototype.parseData = function (translation, dictionary) {
             langDetected: translation.detected.lang
         });
     }
-    // dictionary data
+    // parse dictionary
     if (Array.isArray(dictionary.def)) {
         response.dictionary = dictionary.def.map(function (dictData) {
             if (!response.transcription && dictData.ts) response.transcription = dictData.ts;
             return {
                 partOfSpeech: dictData.pos,
-                translation : dictData.tr.map(getText),
+                translation : dictData.tr.map(parserHelpers.getText),
                 similarWords: dictData.tr.map(function (translation) {
                     return {
                         word: translation.text,
-                        meanings: (translation.mean || []).map(getText),
+                        meanings: (translation.mean || []).map(parserHelpers.getText),
                         examples: (translation.ex || []).map(function (ex) {
-                            return [ex.text, ex.tr.map(getText).join(', ')].join(' - ');
+                            return [ex.text, ex.tr.map(parserHelpers.getText).join(', ')].join(' - ');
                         })
                     };
                 })
