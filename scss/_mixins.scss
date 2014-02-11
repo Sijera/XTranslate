@@ -138,3 +138,18 @@
   @include with-vendors(transition, box-shadow .3s);
   @content;
 }
+
+@mixin flyingPanelOffset($offset: $spacing) {
+  &.bottomLeft, &.bottomRight {
+    margin-top: $offset;
+  }
+  &.topLeft, &.topRight {
+    margin-bottom: $offset;
+  }
+  &.rightTop, &.rightBottom {
+    margin-left: $offset;
+  }
+  &.leftTop, &.leftBottom {
+    margin-right: $offset;
+  }
+}

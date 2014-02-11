@@ -2,8 +2,15 @@
 
 // wrap the user css into single class name
 #XTranslate {
-  // reset
-  * {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+
+  // reset user and page styles for the inner elements
+  *, *:after, *:before {
     @include with-vendors(box-sizing, border-box);
     margin: 0;
     padding: 0;

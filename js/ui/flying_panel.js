@@ -27,13 +27,18 @@ inherit(FlyingPanel, UIComponent);
 
 /**
  * Default positions in order of priority (relative to the anchor)
- * @type {Array}
+ * Extra margin in pixels can be defined in CSS
+ * @private
  */
 var POSITIONS = [
-    {left: 0, top: '100%'},     // left-bottom (6 o'clock, outside)
-    {left: 0, bottom: '100%'},  // left-top (12 o'clock, outside)
-    {left: '100%', top: 0},     // right-top (3 o'clock, outside)
-    {right: '100%', top: 0}     // left-top (9 o'clock, outside)
+    {top: '100%', left: 0, className: 'bottomLeft'},
+    {top: '100%', right: 0,  className: 'bottomRight'},
+    {bottom: '100%', left: 0, className: 'topLeft'},
+    {bottom: '100%', right: 0, className: 'topRight'},
+    {left: '100%', top: 0, className: 'rightTop'},
+    {left: '100%', bottom: 0, className: 'rightBottom'},
+    {right: '100%', top: 0, className: 'leftTop'},
+    {right: '100%', bottom: 0, className: 'leftBottom'}
 ];
 
 /** @const */
@@ -103,16 +108,17 @@ FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
     if (this.autoSize) pos.minWidth = Math.min(this.anchorRect.width, this.maxWidth);
 
-    this.position = this.prepareClassName(Object.keys(position).join(' '));
+    this.position = this.getPositionClassName(position);
     this.$container.css(pos).toggleClass('large', this.containerRect.width > pos.minWidth);
     this.containerRect = this.getElementRect(this.$container);
 };
 
 /** @private */
-FlyingPanel.prototype.prepareClassName = function (className) {
-    var prefix = 'fp-';
-    className = String(className || '');
-    return className.indexOf(' ') > -1 ? prefix + className.split(' ').join(' ' + prefix) : className;
+FlyingPanel.prototype.getPositionClassName = function (pos) {
+    return Object.keys(pos).map(function (param) {
+        if (param == 'className') return pos[param];
+        return 'fp-' + param;
+    }).join(' ');
 };
 
 /**
@@ -123,6 +129,7 @@ FlyingPanel.prototype.prepareClassName = function (className) {
  */
 FlyingPanel.prototype.preparePosition = function (position) {
     var pos = $.extend({}, position);
+    if (pos.className) delete pos.className;
 
     if (this.noBodyAppend) {
         this.$anchor.css('position', 'relative');
