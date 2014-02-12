@@ -63,7 +63,7 @@ Chrome.prototype.createChannel = function (port) {
     channel.sendMessage = this.sendMessage;
     channel.onMessage = this.onChannelMessage;
     channel.onDisconnect = this.onChannelDisconnect;
-    channel.close = port.disconnect.bind(port);
+    channel.disconnect = port.disconnect.bind(port);
     return channel;
 };
 

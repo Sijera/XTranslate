@@ -14,15 +14,26 @@ var UserScript = function () {
         return new RegExp(urlMask, 'i').test(document.URL);
     });
     if (!excluded) this.init();
+
 };
+
+Object.defineProperty(UserScript.prototype, 'channel', {
+    get: function () {
+        if (this._channel) return this._channel;
+        this._channel = APP.extension.connect();
+        this._channel.onMessage(this.onMessage.bind(this));
+        this._channel.onDisconnect(function () { delete this._channel }.bind(this));
+        return this._channel;
+    }
+});
 
 /** @private */
 UserScript.prototype.init = function () {
     this.settings = APP.get('settingsContainer.popupDefinitions');
-    this.channel = APP.extension.connect();
     this.selection = window.getSelection();
     this.payloadId = 0;
     this.actions = {};
+    this._channel = null;
 
     this.playTextAction = this.registerAction('play');
     this.stopPlayingAction = this.registerAction('stop');
@@ -37,7 +48,7 @@ UserScript.prototype.init = function () {
 /** @private */
 UserScript.prototype.createDom = function () {
     this.$app = $('<div id="XTranslate" data-url="' + APP.extension.url + '"></div>').appendTo(document.body);
-    this.popup = new Popup({borderElem: this.$app, anchor: this.$app});
+    this.popup = new Popup({borderElem: this.$app});
     UTILS.spawnElement.$pool.detach();
 };
 
@@ -45,7 +56,6 @@ UserScript.prototype.createDom = function () {
 UserScript.prototype.bindEvents = function () {
     var applyTheme = UTILS.debounce(this.applyTheme.bind(this), 200);
 
-    this.channel.onMessage(this.onMessage.bind(this));
     APP.extension.onMessage(this.onMessage.bind(this));
     APP.on('change:settingsContainer.popupStyle.activeTheme', applyTheme);
     APP.on('change:settingsContainer.popupStyle.customTheme', applyTheme);
@@ -97,8 +107,12 @@ UserScript.prototype.onSync = function (data) {
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
-    this.popup.parseData(data).show();
+    this.popup
+        .parseData(data)
+        .setAnchor(this.$app)
+        .show();
     this.reselectText();
+
 };
 
 /** @private */

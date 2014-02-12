@@ -171,7 +171,7 @@ FlyingPanel.prototype.getElementRect = function (elem) {
 };
 
 /** @private */
-FlyingPanel.prototype.getViewPortScroll = function () {
+FlyingPanel.prototype.getGlobalScroll = function () {
     return {
         top : window.pageYOffset,
         left: window.pageXOffset
@@ -179,7 +179,7 @@ FlyingPanel.prototype.getViewPortScroll = function () {
 };
 
 /** @private */
-FlyingPanel.prototype.getViewPortRect = function () {
+FlyingPanel.prototype.getGlobalRect = function () {
     var rect = {left: 0, top: 0};
     rect.width = rect.right = window.innerWidth;
     rect.height = rect.bottom = window.innerHeight;
@@ -191,8 +191,8 @@ FlyingPanel.prototype.refreshDimensions = function () {
     this.containerRect = this.getElementRect(this.$container);
     this.anchorRect = this.getElementRect(this.anchor);
     this.borderRect = this.getElementRect(this.borderElem);
-    this.viewScroll = this.getViewPortScroll();
-    this.viewRect = this.getViewPortRect();
+    this.viewScroll = this.getGlobalScroll();
+    this.viewRect = this.getGlobalRect();
     this.maxWidth = parseInt(this.$container.css('max-width')) || Infinity;
 };
 
