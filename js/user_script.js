@@ -107,12 +107,8 @@ UserScript.prototype.onSync = function (data) {
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
-    this.popup
-        .parseData(data)
-        .setAnchor(this.$app)
-        .show();
+    this.popup.parseData(data).setAnchor(this.$app).show();
     this.reselectText();
-
 };
 
 /** @private */
@@ -166,15 +162,19 @@ UserScript.prototype.onMouseOver = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseUp = function (e) {
-    if (this.clickActionUsed) return (delete this.clickActionUsed);
-    if (this.settings.selectAction) this.translateText(e);
-    return true;
+    if (this.mouseActionUsed) {
+        delete this.mouseActionUsed;
+        return;
+    }
+    if (this.settings.selectAction && !this.isEditableElem(e)) {
+        this.translateText(e);
+    }
 };
 
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
-    if (this.settings.clickAction) {
-        this.clickActionUsed = true;
+    if (this.settings.clickAction && !this.isEditableElem(e)) {
+        this.mouseActionUsed = true;
         this.translateText(e);
     }
 };
@@ -194,6 +194,11 @@ UserScript.prototype.onHidePopup = function () {
 /** @private */
 UserScript.prototype.outOfPopup = function (targetElem) {
     return !this.popup.$container[0].contains(targetElem);
+};
+
+/** @private */
+UserScript.prototype.isEditableElem = function (e) {
+    return e.target === document.activeElement;
 };
 
 /** @private */
