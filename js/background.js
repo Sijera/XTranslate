@@ -22,8 +22,12 @@ Background.prototype.onConnect = function (channel) {
 Background.prototype.onMessage = function (channel, msg) {
     var payload = msg.payload;
     switch (msg.action) {
-        case 'tts':
+        case 'play':
             APP.vendor.playText(payload);
+            break;
+
+        case 'stop':
+            APP.vendor.stopPlaying();
             break;
 
         case 'translate':

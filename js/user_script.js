@@ -24,8 +24,9 @@ UserScript.prototype.init = function () {
     this.payloadId = 0;
     this.actions = {};
 
+    this.playTextAction = this.registerAction('play');
+    this.stopPlayingAction = this.registerAction('stop');
     this.syncAction = this.registerAction('sync', this.onSync);
-    this.playTextAction = this.registerAction('tts');
     this.translateAction = this.registerAction('translate', this.onTranslateText);
 
     this.createDom();
@@ -173,6 +174,7 @@ UserScript.prototype.onLinkClick = function (text) {
 /** @private */
 UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
+    this.stopPlayingAction();
 };
 
 /** @private */

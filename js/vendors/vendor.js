@@ -88,7 +88,16 @@ Vendor.prototype.playText = function (text) {
     var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
     var url = this.getAudioUrl(text, lang);
-    if (url) this.audio = new Audio(url).play();
+    if (url) {
+        this.audio = new Audio(url);
+        this.audio.play();
+    }
+};
+
+Vendor.prototype.stopPlaying = function () {
+    if (!this.audio) return;
+    this.audio.pause();
+    delete this.audio;
 };
 
 /**

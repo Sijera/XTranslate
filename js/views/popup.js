@@ -55,10 +55,11 @@ Popup.prototype.applyTheme = function (theme) {
 
 /** @private */
 Popup.prototype.refreshDimensions = function () {
-    var selection = window.getSelection(),
-        useActiveElem = selection.isCollapsed && selection.toString().trim();
+    var selection = window.getSelection();
 
-    if (useActiveElem) this.setAnchor(document.activeElement);
+    // A case, when the text has selected inside a form element, like <textarea> or <input>
+    if (selection.isCollapsed && selection.toString()) this.setAnchor(document.activeElement);
+
     Popup.superclass.refreshDimensions.apply(this, arguments);
     if (!selection.isCollapsed) this.anchorRect = selection.getRangeAt(0).getBoundingClientRect();
 };
