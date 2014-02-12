@@ -8,6 +8,16 @@ var UTILS = require('./utils'),
  * @constructor
  */
 var UserScript = function () {
+    var links = APP.get('settingsContainer.siteExclusions.links') || [];
+    var excluded = links.some(function (urlMask) {
+        urlMask = UTILS.escapeReg(urlMask, '*').replace(/\*/g, '[^/]+');
+        return new RegExp(urlMask, 'i').test(document.URL);
+    });
+    if (!excluded) this.init();
+};
+
+/** @private */
+UserScript.prototype.init = function () {
     this.settings = APP.get('settingsContainer.popupDefinitions');
     this.channel = APP.extension.connect();
     this.selection = window.getSelection();
@@ -32,7 +42,7 @@ UserScript.prototype.createDom = function () {
 
 /** @private */
 UserScript.prototype.bindEvents = function () {
-    var applyTheme = UTILS.debounce(this.applyTheme.bind(this), 250);
+    var applyTheme = UTILS.debounce(this.applyTheme.bind(this), 200);
 
     this.channel.onMessage(this.onMessage.bind(this));
     APP.extension.onMessage(this.onMessage.bind(this));
@@ -45,6 +55,7 @@ UserScript.prototype.bindEvents = function () {
         .on('playText', this.playTextAction);
 
     $(window)
+        .on('resize', UTILS.debounce(this.onResize.bind(this), 300))
         .on('mouseover', UTILS.debounce(this.onMouseOver.bind(this), 100))
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
         .on('dblclick', this.onDblClick.bind(this))
@@ -99,19 +110,24 @@ UserScript.prototype.onKeyDown = function (e) {
     if (this.settings.keyAction) {
         var keyMatch = this.settings.hotKey == UTILS.getHotkey(e).join('+');
         if (keyMatch) {
-            var overNode = this.overNode,
-                text = this.getText();
+            var text = this.getText(),
+                overNode = this.overNode,
+                isTopLevel = overNode == document.documentElement || overNode == document.body;
 
-            // Auto-select node if no text was selected
-            if (!text && overNode && this.outOfPopup(overNode)) {
-                if (overNode == document.documentElement || overNode == document.body) return;
+            // Auto-select (when no text was selected)
+            if (!text && !isTopLevel && overNode && this.outOfPopup(overNode)) {
                 var nodeName = overNode.nodeName.toLowerCase();
                 if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
                 else if (nodeName === 'img') text = overNode.title || overNode.alt;
                 else text = overNode.innerText;
 
                 var range = new Range();
-                range.selectNode(overNode);
+                var texts = UTILS.evalXPath(overNode, './/text()');
+                if (!texts.length) range.selectNode(overNode);
+                else texts.forEach(function (textNode) {
+                    range.selectNode(textNode);
+                });
+
                 this.selection.removeAllRanges();
                 this.selection.addRange(range);
                 this.popup.setAnchor(overNode);
@@ -121,6 +137,11 @@ UserScript.prototype.onKeyDown = function (e) {
             this.translateText(e, text);
         }
     }
+};
+
+/** @private */
+UserScript.prototype.onResize = function (e) {
+    this.popup.update();
 };
 
 /** @private */

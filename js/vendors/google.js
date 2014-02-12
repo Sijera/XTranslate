@@ -43,7 +43,10 @@ Google.prototype.dataFilter = function (data, type) {
 /** @private */
 Google.prototype.parseData = function (data) {
     return Google.superclass.parseData.call(this, {
-        translation: data[0].map(function (text) { return text[0] }).join(' ').replace(/\s+([:;,.!?])/gi, '$1'),
+        translation: data[0].map(function (text) { return text[0] }).join(' ')
+            .replace(/([<\(\{\[])\s+/g, '$1')
+            .replace(/\s+([\)\}\]>])/g, '$1')
+            .replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
         langDetected: data[8] && data[8][0] && data[8][0][0],
         spellCheck  : data[7] && data[7][0] ? data[7][1] : '',

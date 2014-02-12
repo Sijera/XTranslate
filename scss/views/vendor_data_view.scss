@@ -58,9 +58,15 @@
   }
 
   .spellChecker {
+    margin-top: $padding;
     clear: both;
+
     .link {
       font-weight: bold;
+      opacity: .9;
+      &:hover {
+        opacity: 1;
+      }
     }
   }
 

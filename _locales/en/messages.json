@@ -75,10 +75,6 @@
         "message"    : "If you don't want activate the extension on some pages, just list the URLs in text area below.",
         "description": "Some extra info for URL exclusions block"
     },
-    "19": {
-        "message"    : "Use [Enter]-key for separation URLs.",
-        "description": "Some extra info for URL exclusions block"
-    },
     "20": {
         "message"    : "Don't forget to reload the page(s) to apply changes.",
         "description": "Some extra info for URL exclusions block"

@@ -63,10 +63,15 @@ Popup.prototype.refreshDimensions = function () {
     if (!selection.isCollapsed) this.anchorRect = selection.getRangeAt(0).getBoundingClientRect();
 };
 
-Popup.prototype.show = function () {
-    Popup.superclass.show.apply(this, arguments);
+Popup.prototype.update = function () {
+    if (this.hidden) return;
+    Popup.superclass.update.apply(this, arguments);
     this.scrollBar.scrollTo(0);
     this.scrollBar.update();
+};
+
+Popup.prototype.show = function () {
+    Popup.superclass.show.apply(this, arguments);
     this.$container.focus();
     return this;
 };

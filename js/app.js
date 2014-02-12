@@ -1,16 +1,13 @@
 'use strict';
 
-var UTILS = require('./utils'),
-    THEME = require('./theme'),
-    inherit = UTILS.inherit,
+var inherit = require('./utils').inherit,
+    debounce = require('./utils').debounce,
+    themes = require('./theme').THEMES,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
     Yandex = require('./vendors/yandex').Yandex,
     Chrome = require('./extension/chrome').Chrome,
     EventDriven = require('./events').EventDriven;
-
-/** @const */
-var SYNC_DELAY = 250;
 
 /**
  * XTranslate (browser extension) - Easy translate text on web pages
@@ -65,20 +62,20 @@ App.prototype.state = {
         },
         popupStyle: {
             collapsed  : false,
-            activeTheme: Object.keys(THEME.THEMES)[0],
-            themes     : THEME.THEMES,
+            activeTheme: Object.keys(themes)[0],
+            themes     : themes,
             customTheme: null
         },
         siteExclusions: {
             collapsed: true,
-            links    : 'acid3.acidtests.org'
+            links    : ['acid3.acidtests.org']
         }
     }
 };
 
 /** @private */
 App.prototype.init = function () {
-    this.sync = UTILS.debounce(this.sync.bind(this), SYNC_DELAY);
+    this.sync = debounce(this.sync.bind(this), 250);
     this.extension.getState(this.onReady.bind(this));
 };
 
