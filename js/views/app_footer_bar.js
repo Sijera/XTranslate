@@ -12,7 +12,6 @@ var AppFooterBar = function (options) {
 
     this.rateLink = '';
     this.donateLink = '';
-
     this.createDom();
 };
 
@@ -27,10 +26,9 @@ AppFooterBar.prototype.getHtmlLink = function (url, text) {
 AppFooterBar.prototype.createDom = function () {
     this.$container.addClass('appFooterBar');
 
-    this.$container.append(UTILS.sprintf(__(60),
-        this.getHtmlLink(this.rateLink, __(61)),
-        this.getHtmlLink(this.donateLink, __(62))
-    ));
+    var rateLink = this.getHtmlLink(this.rateLink, __(61));
+    var donateLink = this.getHtmlLink(this.donateLink, __(62));
+    this.$container.append(__(60, [rateLink, donateLink]));
 };
 
 exports.AppFooterBar = AppFooterBar;

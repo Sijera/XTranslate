@@ -19,6 +19,7 @@ SettingsExclusions.prototype.createDom = function (state) {
     this.$container.addClass('settingsExclusions');
     this.$content.append(
         '<p>' + __(18) + '</p>',
+        '<p>' + __(19) + '</p>',
         '<p>' + __(20) + '</p>'
     );
 };

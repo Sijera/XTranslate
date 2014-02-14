@@ -178,13 +178,13 @@ SettingsPopupStyle.prototype.addCommonStyle = function () {
     var $maxHeight = this.createSubBlock(__(53), $common);
     var $boxShadow = this.createSubBlock(__(50), $common);
 
-    /** @type {Slider} */ this.boxPadding = new Slider({min: 0, max: 5, step: 0.1, suffix: 'em'}).appendTo($padding);
-    /** @type {Slider} */ this.boxMaxWidth = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxWidth);
-    /** @type {Slider} */ this.boxMaxHeight = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxHeight);
+    /** @type {Slider} */      this.boxPadding = new Slider({min: 0, max: 5, step: 0.1, suffix: 'em'}).appendTo($padding);
+    /** @type {Slider} */      this.boxMaxWidth = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxWidth);
+    /** @type {Slider} */      this.boxMaxHeight = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxHeight);
     /** @type {ColorPicker} */ this.boxShadowColor = new ColorPicker({useInput: true, title: __(36), titleHint: __(59)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowSize = new NumberInput({minValue: 0, maxValue: 100, title: __(41)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowOpacity = new NumberInput({minValue: 0, maxValue: 100, title: __(37)}).appendTo($boxShadow);
-    /** @type {CheckBox} */ this.boxShadowInner = new CheckBox({label: __(43)}).appendTo($boxShadow);
+    /** @type {CheckBox} */    this.boxShadowInner = new CheckBox({label: __(43)}).appendTo($boxShadow);
 };
 
 /** @private */
@@ -195,8 +195,8 @@ SettingsPopupStyle.prototype.addBackgroundStyle = function () {
 
     /** @type {ColorPicker} */ this.bgColor1 = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
     /** @type {ColorPicker} */ this.bgColor2 = new ColorPicker({useInput: true, titleHint: __(59)}).appendTo($bgColor);
-    /** @type {CheckBox} */ this.bgcLinear = new CheckBox({label: __(38)}).appendTo($bgColor);
-    /** @type {Slider} */ this.bgcOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
+    /** @type {CheckBox} */    this.bgcLinear = new CheckBox({label: __(38)}).appendTo($bgColor);
+    /** @type {Slider} */      this.bgcOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
 
     this.bgcLinear.on('change', this.bgColor2.toggle.bind(this.bgColor2));
 };
@@ -208,10 +208,10 @@ SettingsPopupStyle.prototype.addBorderStyle = function () {
     var $opacity = this.createSubBlock(__(37), $border);
     var $style = this.createSubBlock(__(54), $border);
 
-    /** @type {Slider} */ this.borderRadius = new Slider({min: 0, max: 25, step: 1}).appendTo($radius);
-    /** @type {Slider} */ this.borderOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
+    /** @type {Slider} */      this.borderRadius = new Slider({min: 0, max: 25, step: 1}).appendTo($radius);
+    /** @type {Slider} */      this.borderOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
     /** @type {ColorPicker} */ this.borderColor = new ColorPicker({useInput: true, title: __(36), titleHint: __(59)}).appendTo($style);
-    /** @type {Select} */ this.borderStyle = new Select({className: 'borderStyle', title: __(54)}).appendTo($style);
+    /** @type {Select} */      this.borderStyle = new Select({className: 'borderStyle', title: __(54)}).appendTo($style);
     /** @type {NumberInput} */ this.borderWidth = new NumberInput({minValue: 0, maxValue: 25, title: __(39)}).appendTo($style);
 
     THEME.BORDER_STYLES.forEach(function (style) {
@@ -221,14 +221,14 @@ SettingsPopupStyle.prototype.addBorderStyle = function () {
 
 /** @private */
 SettingsPopupStyle.prototype.addTextStyle = function () {
-    var $text = this.createBlock(__(55), 'textBlock');
+    var $text = this.createBlock(__(33), 'textBlock');
     var $font = this.createSubBlock(__(42), $text);
     var $color = this.createSubBlock(__(36), $text);
     var $shadow = this.createSubBlock(__(50), $text).addClass('textShadow');
 
-    /** @type {Select} */ this.fontFamily = new Select({className: 'fontFamily', title: __(58)}).appendTo($font);
+    /** @type {Select} */      this.fontFamily = new Select({className: 'fontFamily'}).appendTo($font);
     /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 10, maxValue: 25, title: __(41)}).appendTo($font);
-    /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(55), titleHint: __(59)}).appendTo($color);
+    /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(33), titleHint: __(59)}).appendTo($color);
     /** @type {ColorPicker} */ this.textShadowColor = new ColorPicker({useInput: true, title: __(50), titleHint: __(59)}).appendTo($color);
     /** @type {NumberInput} */ this.textShadowOffsetX = new NumberInput({value: 0, title: __(57)}).appendTo($shadow);
     /** @type {NumberInput} */ this.textShadowOffsetY = new NumberInput({value: 0, title: __(57)}).appendTo($shadow);
@@ -374,7 +374,7 @@ SettingsPopupStyle.prototype.themeNameValidator = function (value, validObj) {
 
     if (emptyName) tooltip = __(13);
     if (reservedName) tooltip = __(27);
-    if (themeExists) tooltip = UTILS.sprintf(__(11), '&laquo;' + value + '&raquo;');
+    if (themeExists) tooltip = __(11, ['&laquo;' + value + '&raquo;']);
     if (tooltip) validObj.tooltipData = tooltip;
 
     return !tooltip;

@@ -8,15 +8,14 @@ var UTILS = require('../utils'),
  * Base class for all translation services
  * @constructor
  */
-var Vendor = function (__) {
+var Vendor = function () {
     Vendor.superclass.constructor.call(this);
 
     this.autoDetect = 'auto';
     this.urlTextToSpeech = '';
+    this.langList = {};
     this.lastResData = {};
     this.lastReqData = {text: '', langFrom: '', langTo: ''};
-    this.langList = {};
-    this.langList[this.autoDetect] = __(64);
 };
 
 inherit(Vendor, EventDriven);

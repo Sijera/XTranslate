@@ -22,9 +22,9 @@ var App = function (options) {
     /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
 
     this.vendors = {
-        'google': new Google(this.localization),
-        'yandex': new Yandex(this.localization),
-        'bing'  : new Bing(this.localization)
+        'google': new Google(),
+        'yandex': new Yandex(),
+        'bing'  : new Bing()
     };
 
     /** @type {Google|Yandex|Bing} */

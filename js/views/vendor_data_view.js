@@ -98,8 +98,8 @@ VendorDataView.prototype.addDictionary = function (dict) {
 /** @private */
 VendorDataView.prototype.spellCorrection = function (suggestedText) {
     if (!suggestedText) return;
-    var text = __(47, [this.wrapLink(suggestedText)]);
-    $('<div class="spellChecker"/>').html(text).appendTo(this.$dictionary);
+    var text = this.wrapLink(suggestedText);
+    $('<div class="spellChecker"/>').html(__(47, [text])).appendTo(this.$dictionary);
 };
 
 /** @private */
