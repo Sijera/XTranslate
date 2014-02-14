@@ -171,28 +171,6 @@ exports.getHotkey = function (e, charPattern) {
 };
 
 /**
- * Evaluate XPath expression in provided node context
- * @param {Document|Node|HTMLElement} elem
- * @param {String} expr XPath expression
- * @param {String|null} [namespace]
- * @return {Array|Boolean|Number|String}
- */
-exports.evalXPath = function (elem, expr, namespace) {
-    namespace = namespace || null;
-
-    var doc = elem.ownerDocument || document,
-        xpath = doc.evaluate(expr, elem, namespace, XPathResult.ANY_TYPE, null),
-        results = [];
-
-    switch( xpath.resultType ) {
-        case XPathResult.BOOLEAN_TYPE: return xpath.booleanValue;
-        case XPathResult.NUMBER_TYPE: return xpath.numberValue;
-        case XPathResult.STRING_TYPE: return xpath.stringValue;
-        default: while (elem = xpath.iterateNext()) results.push(elem); return results;
-    }
-};
-
-/**
  * Escape special characters of regular expressions
  * @param {String} text
  * @param {String} [exceptChars]

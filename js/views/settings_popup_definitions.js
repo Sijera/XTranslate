@@ -29,7 +29,7 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
 
-    this.autoDetection = new CheckBox({label: __(64), title: __(65), checked: state.autoDetection})
+    this.autoDetection = new CheckBox({label: __(64), title: __(65), checked: state.autoDetection, className: 'autoDetection'})
         .toggle(state.keyAction)
         .on('change', function (value) { state.autoDetection = value; })
         .appendTo(this.$content);

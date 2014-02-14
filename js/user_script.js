@@ -118,27 +118,21 @@ UserScript.prototype.getText = function (text) {
 /** @private */
 UserScript.prototype.autoDetectText= function (e) {
     var overNode = this.overNode,
-        text = this.getText(),
-        isTopLevel = overNode == document.documentElement || overNode == document.body;
+        text = this.getText();
 
-    // Receive the text from element under the mouse cursor (if not text selected)
-    if (!text && !isTopLevel && overNode && this.outOfPopup(overNode)) {
+    // Retrieve a text from element under the mouse cursor (in case when nothing selected)
+    if (!text && overNode && this.outOfPopup(overNode)) {
         var nodeName = overNode.nodeName.toLowerCase();
         if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
         else if (nodeName === 'img') text = overNode.title || overNode.alt;
         else text = overNode.innerText;
 
         var range = new Range();
-        var texts = UTILS.evalXPath(overNode, './/text()');
-        if (!texts.length) range.selectNode(overNode);
-        else texts.forEach(function (textNode) {
-            range.selectNode(textNode);
-        });
-
-        this.selection.removeAllRanges();
-        this.selection.addRange(range);
+        overNode.childNodes.length ? range.selectNodeContents(overNode) : range.selectNode(overNode);
+        if (text) this.selection.addRange(range);
         this.popup.setAnchor(overNode);
     }
+
     return text;
 };
 

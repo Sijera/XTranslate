@@ -4,12 +4,17 @@
   .hotKey {
     vertical-align: middle;
     text-transform: lowercase;
-    font-style: italic;
-    cursor: text;
+    color: silver;
+    cursor: help;
 
     &:focus {
-      font-weight: bold;
+      color: white;
+      cursor: text;
     }
+  }
+
+  .autoDetection .label {
+    cursor: help;
   }
 
   .sep {
