@@ -3,7 +3,6 @@
 var UTILS = require('../utils'),
     inherit = require('../utils').inherit,
     CheckBox = require('../ui/check_box').CheckBox,
-    TextInput = require('../ui/text_input').TextInput,
     Select = require('../ui/select').Select,
     SettingsBlock = require('./settings_block').SettingsBlock;
 
@@ -30,32 +29,35 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
 
-    this.clickAction = new CheckBox({label: __(7), checked: state.clickAction, className: 'sep'})
-        .on('change', function (value) { state.clickAction = value; })
+    this.autoDetection = new CheckBox({label: __(64), title: __(65), checked: state.autoDetection})
+        .toggle(state.keyAction)
+        .on('change', function (value) { state.autoDetection = value; })
         .appendTo(this.$content);
 
-    this.selectAction = new CheckBox({label: __(8), checked: state.selectAction})
+    this.selectAction = new CheckBox({label: __(8), checked: state.selectAction, className: 'sep'})
         .on('change', function (value) { state.selectAction = value; })
+        .appendTo(this.$content);
+
+    this.clickAction = new CheckBox({label: __(7), checked: state.clickAction})
+        .on('change', function (value) { state.clickAction = value; })
         .appendTo(this.$content);
 
     this.keyAction = new CheckBox({label: __(9), checked: state.keyAction})
         .on('change', function (value) { state.keyAction = value; })
         .appendTo(this.$content);
 
-    this.hotKey = new TextInput({className: 'hotKey', value: state.hotKey})
-        .on('change', function (value) { state.hotKey = value; })
-        .appendTo(this.$content);
-
-    this.hotKey.$container.attr('title', __(10));
-    this.hotKey.toggle(this.keyAction.getValue());
+    this.$hotKey = $('<span class="hotKey" contenteditable="true"/>')
+        .text(state.hotKey)
+        .attr('title', __(10))
+        .on('keydown', this.onDefineKey.bind(this))
+        .appendTo(this.keyAction.$container);
 };
 
-/** @private */
 SettingsPopupDefinitions.prototype.bindEvents = function () {
     SettingsPopupDefinitions.superclass.bindEvents.apply(this, arguments);
-
-    this.keyAction.on('change', this.hotKey.toggle.bind(this.hotKey));
-    this.hotKey.on('keydown', this.onDefineKey.bind(this));
+    this.keyAction.on('change', function (checked) {
+        this.autoDetection.setValue(checked).toggle(checked);
+    }, this);
 };
 
 /** @private */
@@ -65,8 +67,14 @@ SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
         tabKey = keyCode === 9,
         escapeKey = keyCode === 27;
 
-    if (hotKey.length >= 2) this.hotKey.setValue(hotKey.join('+'), true);
-    if (!tabKey && !escapeKey) e.preventDefault();
+    if (hotKey.length >= 2) {
+        hotKey = hotKey.join('+');
+        this.state.hotKey = hotKey;
+        this.$hotKey.text(hotKey);
+    }
+
+    if (escapeKey) this.$hotKey.blur();
+    if (!tabKey) e.preventDefault();
 };
 
 exports.SettingsPopupDefinitions = SettingsPopupDefinitions;

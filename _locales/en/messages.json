@@ -36,11 +36,11 @@
         "description": "A label for checkbox in settings"
     },
     "9" : {
-        "message"    : "Display pop-up when I press a hotkey",
+        "message"    : "Display pop-up when I press $1",
         "description": "A label for checkbox in settings"
     },
     "10": {
-        "message"    : "To define a hotkey put the focus inside and press at least two keys: Ctrl, Alt, Shift, letters (A-Z), numbers (0-9)",
+        "message"    : "To define a hotkey put the focus inside and press at least two keys from: ctrl, alt, shift, letters A-Z, numbers 0-9",
         "description": "Help how to define hotkey to make translation"
     },
     "11": {
@@ -222,5 +222,13 @@
     "63": {
         "message"    : "Start typing to get translation",
         "description": "Placeholder inside text area in the user input"
+    },
+    "64": {
+        "message"    : "Use a feature for text auto-detection",
+        "description": "Block of text in the popup definitions settings"
+    },
+    "65": {
+        "message"    : "Every time, when there is no selected text on the page, you can can press the hotkey and get translation from element on the page, which is lying under the mouse cursor. In addition, it makes possible to get translation from editable fields, like textarea and input, translate a text from non-selectable or hard-selectable elements, like links and buttons and even more - get translation from the title / alternative text of the images.",
+        "description": "A title for the text above"
     }
 }

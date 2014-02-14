@@ -13,7 +13,7 @@ var CheckBox = function (options) {
     this.$input = $('<input type="hidden">').attr('name', this.name).appendTo(this.$container);
     this.$checkbox = $('<span class="box"/>')
         .attr('tabIndex', options.tabIndex || 0)
-        .on('click', this.toggle.bind(this))
+        .on('click', this.toggleCheck.bind(this))
         .appendTo(this.$container);
 
     this.value = options.value;
@@ -24,18 +24,9 @@ var CheckBox = function (options) {
 
 inherit(CheckBox, FormControl);
 
-CheckBox.prototype.toggle = function () {
-    if (!this.enabled) return;
-    if (this.checked) {
-        this.unCheck();
-    } else {
-        this.check();
-    }
-};
-
 CheckBox.prototype.setValue = function (value, silent) {
     value = !!value;
-    if (!this.enabled || this.checked == value) return this;
+    if (this.checked == value) return this;
     this.checked = value;
     this.$input.val(this.getValue());
     this.$checkbox.toggleClass('checked', value);
@@ -48,6 +39,13 @@ CheckBox.prototype.getValue = function () {
     return this.checked;
 };
 
+/** @private */
+CheckBox.prototype.toggleCheck = function () {
+    if (!this.enabled) return;
+    if (this.checked) this.unCheck();
+    else this.check();
+};
+
 /**
  * Creates a label if not exists and set new content
  * @param {jQuery|String|*} label
@@ -58,7 +56,7 @@ CheckBox.prototype.setLabel = function (label) {
     if (!this.$label) {
         if (label instanceof jQuery) this.$label = label;
         else this.$label = $('<span class="label"/>').appendTo(this.$container);
-        this.$label.on('click', this.toggle.bind(this));
+        this.$label.on('click', this.toggleCheck.bind(this));
     }
 
     if (this.$label !== label) this.$label.html(label);
@@ -76,7 +74,7 @@ CheckBox.prototype.unCheck = function (silent) {
 CheckBox.prototype.onKeyDown = function (e) {
     var keyCode = e.which;
     if (keyCode == 13 || keyCode == 32) {
-        this.toggle();
+        this.toggleCheck();
         e.preventDefault();
     }
 };

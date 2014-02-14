@@ -20,7 +20,7 @@ inherit(AppView, UIComponent);
 AppView.prototype.init = function (state) {
     this.headerBar = new AppHeaderBar({state: state.headerBar}).appendTo(this);
     this.settingsContainer = new SettingsContainer({state: state.settingsContainer}).appendTo(this);
-    this.userInputContainer = new UserInputContainer().appendTo(this);
+    this.userInputContainer = new UserInputContainer({state: state.userInputContainer}).appendTo(this);
     this.footerBar = new AppFooterBar().appendTo(this);
 
     this.headerBar.addTab(__(1), this.settingsContainer);

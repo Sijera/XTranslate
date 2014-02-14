@@ -2,17 +2,13 @@
 
 .settingsPopupDefinitions {
   .hotKey {
-    border-radius: $padding;
-    text-align: center;
-    display: block;
-    width: 125px;
-    margin: auto;
+    vertical-align: middle;
+    text-transform: lowercase;
+    font-style: italic;
+    cursor: text;
 
-    input {
-      cursor: help;
-      &:focus {
-        cursor: text;
-      }
+    &:focus {
+      font-weight: bold;
     }
   }
 

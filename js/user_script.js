@@ -14,7 +14,6 @@ var UserScript = function () {
         return new RegExp(urlMask, 'i').test(document.URL);
     });
     if (!excluded) this.init();
-
 };
 
 Object.defineProperty(UserScript.prototype, 'channel', {
@@ -117,36 +116,59 @@ UserScript.prototype.getText = function (text) {
 };
 
 /** @private */
+UserScript.prototype.autoDetectText= function (e) {
+    var overNode = this.overNode,
+        text = this.getText(),
+        isTopLevel = overNode == document.documentElement || overNode == document.body;
+
+    // Receive the text from element under the mouse cursor (if not text selected)
+    if (!text && !isTopLevel && overNode && this.outOfPopup(overNode)) {
+        var nodeName = overNode.nodeName.toLowerCase();
+        if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
+        else if (nodeName === 'img') text = overNode.title || overNode.alt;
+        else text = overNode.innerText;
+
+        var range = new Range();
+        var texts = UTILS.evalXPath(overNode, './/text()');
+        if (!texts.length) range.selectNode(overNode);
+        else texts.forEach(function (textNode) {
+            range.selectNode(textNode);
+        });
+
+        this.selection.removeAllRanges();
+        this.selection.addRange(range);
+        this.popup.setAnchor(overNode);
+    }
+    return text;
+};
+
+/** @private */
 UserScript.prototype.onKeyDown = function (e) {
     if (this.settings.keyAction) {
         var keyMatch = this.settings.hotKey == UTILS.getHotkey(e).join('+');
         if (keyMatch) {
-            var text = this.getText(),
-                overNode = this.overNode,
-                isTopLevel = overNode == document.documentElement || overNode == document.body;
-
-            // Auto-select (when no text was selected)
-            if (!text && !isTopLevel && overNode && this.outOfPopup(overNode)) {
-                var nodeName = overNode.nodeName.toLowerCase();
-                if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
-                else if (nodeName === 'img') text = overNode.title || overNode.alt;
-                else text = overNode.innerText;
-
-                var range = new Range();
-                var texts = UTILS.evalXPath(overNode, './/text()');
-                if (!texts.length) range.selectNode(overNode);
-                else texts.forEach(function (textNode) {
-                    range.selectNode(textNode);
-                });
-
-                this.selection.removeAllRanges();
-                this.selection.addRange(range);
-                this.popup.setAnchor(overNode);
-            }
-
-            // Make translation
+            var text = this.settings.autoDetection ? this.autoDetectText(e) : this.getText();
             this.translateText(e, text);
         }
+    }
+};
+
+/** @private */
+UserScript.prototype.onMouseUp = function (e) {
+    if (this.mouseActionUsed) {
+        delete this.mouseActionUsed;
+        return;
+    }
+    if (this.settings.selectAction && !this.isActiveElem(e.target)) {
+        this.translateText(e);
+    }
+};
+
+/** @private */
+UserScript.prototype.onDblClick = function (e) {
+    if (this.settings.clickAction && !this.isActiveElem(e.target)) {
+        this.mouseActionUsed = true;
+        this.translateText(e);
     }
 };
 
@@ -158,25 +180,6 @@ UserScript.prototype.onResize = function (e) {
 /** @private */
 UserScript.prototype.onMouseOver = function (e) {
     this.overNode = e.target;
-};
-
-/** @private */
-UserScript.prototype.onMouseUp = function (e) {
-    if (this.mouseActionUsed) {
-        delete this.mouseActionUsed;
-        return;
-    }
-    if (this.settings.selectAction && !this.isEditableElem(e)) {
-        this.translateText(e);
-    }
-};
-
-/** @private */
-UserScript.prototype.onDblClick = function (e) {
-    if (this.settings.clickAction && !this.isEditableElem(e)) {
-        this.mouseActionUsed = true;
-        this.translateText(e);
-    }
 };
 
 /** @private */
@@ -197,8 +200,8 @@ UserScript.prototype.outOfPopup = function (targetElem) {
 };
 
 /** @private */
-UserScript.prototype.isEditableElem = function (e) {
-    return e.target === document.activeElement;
+UserScript.prototype.isActiveElem = function (elem) {
+    return elem === document.activeElement;
 };
 
 /** @private */

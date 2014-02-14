@@ -6,9 +6,6 @@ var UTILS = require('../utils'),
     VendorLanguageSelect = require('./vendor_language_select').VendorLanguageSelect,
     UIComponent = require('../ui/ui_component').UIComponent;
 
-/** @const */
-var TRANSLATE_DELAY = 250;
-
 /**
  * @constructor
  */
@@ -17,6 +14,7 @@ var UserInputContainer = function (options) {
 
     this.createDom();
     this.bindEvents();
+    this.setText(this.state.text);
 };
 
 inherit(UserInputContainer, UIComponent);
@@ -25,25 +23,25 @@ inherit(UserInputContainer, UIComponent);
 UserInputContainer.prototype.createDom = function () {
     this.$container.addClass('userInputContainer');
 
-    this.langSelect = new VendorLanguageSelect().appendTo(this.$container);
+    this.selectLang = new VendorLanguageSelect().appendTo(this.$container);
     this.$text = $('<textarea/>').attr('placeholder', __(63)).appendTo(this.$container);
     this.result = new VendorDataView().hide().appendTo(this);
 };
 
 /** @private */
 UserInputContainer.prototype.bindEvents = function () {
-    this.onDone = this.onTranslationDone.bind(this);
-    this.translateTextLazy = UTILS.debounce(this.translateText.bind(this), TRANSLATE_DELAY);
+    this.onTranslationDone = this.onTranslationDone.bind(this);
+    this.onVendorChange = this.onVendorChange.bind(this);
+    this.translateTextLazy = UTILS.debounce(this.translateText.bind(this), 250);
 
     this.$text.on('input', this.onInput.bind(this));
     this.result
         .on('playText', this.onPlayText.bind(this))
         .on('linkClick', this.onLinkClick.bind(this));
 
-    var onVendorChange = this.onVendorChange.bind(this);
-    APP.on('change:settingsContainer.vendorBlock.activeVendor', onVendorChange);
-    APP.on('change:settingsContainer.vendorBlock.langFrom', onVendorChange);
-    APP.on('change:settingsContainer.vendorBlock.langTo', onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.activeVendor', this.onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langFrom', this.onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langTo', this.onVendorChange);
 };
 
 /** @private */
@@ -53,18 +51,21 @@ UserInputContainer.prototype.getText = function (text) {
 
 /** @private */
 UserInputContainer.prototype.setText = function (text) {
+    if (!text) return;
     this.$text.val(text)[0].setSelectionRange(text.length, text.length);
     this.translateText(text);
 };
 
+/** @private */
 UserInputContainer.prototype.translateText = function (text) {
     text = this.getText(text);
     if (text) {
-        this.sourceText = text;
-        APP.vendor.translateText(text).done(this.onDone);
+        this.sourceText = this.state.text = text;
+        APP.vendor.translateText(text).done(this.onTranslationDone);
     }
 };
 
+/** @private */
 UserInputContainer.prototype.onPlayText = function () {
     APP.vendor.playText();
     this.$text.focus();
@@ -84,14 +85,18 @@ UserInputContainer.prototype.onLinkClick = function (text) {
 /** @private */
 UserInputContainer.prototype.onInput = function (e) {
     this.translateTextLazy();
-    if (!this.getText()) this.result.hide();
+
+    if (!this.getText()) {
+        this.state.text = '';
+        this.result.hide();
+    }
 };
 
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
     if (data.sourceText !== this.sourceText) return;
     this.result.parseData(data).show();
-    this.$text.blur().focus(); // scrollbar visual bugfix
+    this.$text.blur().focus();
 };
 
 UserInputContainer.prototype.show = function () {

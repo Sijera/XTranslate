@@ -70,6 +70,9 @@ App.prototype.state = {
             collapsed: true,
             links    : ['acid3.acidtests.org']
         }
+    },
+    userInputContainer: {
+        text: ''
     }
 };
 
