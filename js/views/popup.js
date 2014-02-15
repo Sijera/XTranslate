@@ -1,7 +1,7 @@
 'use strict';
 
 var inherit = require('../utils').inherit,
-    THEME = require('../theme'),
+    toCSS = require('../theme').toCSS,
     ScrollBar = require('../ui/scroll_bar').ScrollBar,
     FlyingPanel = require('../ui/flying_panel').FlyingPanel,
     VendorDataView = require('./vendor_data_view').VendorDataView;
@@ -48,7 +48,7 @@ Popup.prototype.applyTheme = function (theme) {
         var popup = APP.get('settingsContainer.popupStyle');
         theme = popup.activeTheme ? popup.themes[popup.activeTheme] : popup.customTheme;
     }
-    this.$container.css(THEME.toCSS(theme));
+    this.$container.css(toCSS(theme));
     return theme;
 };
 
@@ -68,6 +68,11 @@ Popup.prototype.update = function () {
     Popup.superclass.update.apply(this, arguments);
     this.scrollBar.scrollTo(0);
     this.scrollBar.update();
+};
+
+Popup.prototype.show = function () {
+    Popup.superclass.show.apply(this, arguments);
+    this.trigger('show');
 };
 
 Popup.prototype.focus = function () {

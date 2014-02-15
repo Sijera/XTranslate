@@ -60,7 +60,7 @@ UserScript.prototype.bindEvents = function () {
     APP.extension.onMessage(this.onMessage.bind(this));
 
     this.popup
-        .on('show', UTILS.debounce(this.onShowPopup.bind(this), 0))
+        .on('show', this.onShowPopup.bind(this))
         .on('hide', this.onHidePopup.bind(this))
         .on('linkClick', this.onLinkClick.bind(this))
         .on('playText', this.onPlayText.bind(this));
@@ -107,7 +107,8 @@ UserScript.prototype.onSync = function (data) {
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
-    this.popup.parseData(data).setAnchor(this.$app).show();
+    this.popup.parseData(data).show();
+    this.popup.setAnchor(this.$app);
     this.reselectText();
 };
 
@@ -189,7 +190,8 @@ UserScript.prototype.onPlayText = function () {
 
 /** @private */
 UserScript.prototype.onShowPopup = function () {
-    if (this.settings.autoFocus) this.popup.focus();
+    if (!this.settings.autoFocus) return;
+    this.popup.focus();
 };
 
 /** @private */

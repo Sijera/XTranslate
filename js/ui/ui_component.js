@@ -5,7 +5,7 @@ var inherit = require('../utils').inherit,
     EventDriven = require('../events').EventDriven;
 
 /**
- * Base class for all UI components
+ * Base class for all UI views
  * @constructor
  * @param {{container: jQuery, className: String, nodeType: String, name: String, state: Object}} [options]
  */

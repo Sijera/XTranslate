@@ -206,15 +206,17 @@ ScrollBar.prototype.onClick = function (e) {
 /** @private */
 ScrollBar.prototype.onKeyDown = function (e) {
     if (this.scrolling) return;
-    switch (e.which) {
+    var keyCode = e.which;
+    switch (keyCode) {
         case 38: this.scrollBy(-this.scrollSpeed); break; // UP
         case 40: this.scrollBy(this.scrollSpeed); break; // DOWN
         case 36: this.scrollTo(0); break; // HOME
         case 35: this.scrollTo(this.pScrollHeight - this.pVisibleHeight); break; // END
         case 33: this.scrollBy(-this.pageSpeed); break; // PAGE UP
         case 34: this.scrollBy(this.pageSpeed); break; // PAGE DOWN
+        default: var idle = true;
     }
-    e.preventDefault();
+    if (!idle) e.preventDefault();
 };
 
 /** @private */
