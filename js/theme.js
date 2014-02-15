@@ -53,8 +53,8 @@ var CSS_THEMES = {
         maxWidth         : 300,
         maxHeight        : 250,
         boxShadowColor   : '#000000',
-        boxShadowSize    : 11,
-        boxShadowOpacity : 50,
+        boxShadowSize    : 15,
+        boxShadowOpacity : 25,
         boxShadowInner   : false
     }
 };

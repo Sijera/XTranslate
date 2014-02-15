@@ -52,6 +52,7 @@ App.prototype.state = {
             clickAction  : true,
             selectAction : false,
             keyAction    : true,
+            autoDetection: true,
             hotKey       : 'Ctrl+Shift+X'
         },
         vendorBlock: {
