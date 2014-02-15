@@ -1,6 +1,6 @@
 @import "../_vars", '../_mixins';
 
-.settingsPopupStyle {
+.settingsThemeManager {
   .popupPreview {
     border: 1px dashed lighten($darkBgColor, 15%);
     height: 120px;

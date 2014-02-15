@@ -70,10 +70,8 @@ Popup.prototype.update = function () {
     this.scrollBar.update();
 };
 
-Popup.prototype.show = function () {
-    Popup.superclass.show.apply(this, arguments);
+Popup.prototype.focus = function () {
     this.$container.focus();
-    return this;
 };
 
 exports.Popup = Popup;

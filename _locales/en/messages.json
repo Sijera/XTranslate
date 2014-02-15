@@ -226,5 +226,9 @@
     "64": {
         "message"    : "Every time, when there is no selected text on the page, you can can press the hotkey and get translation from element on the page, which is lying under the mouse cursor. In addition, it makes possible to get translation from editable fields, like textarea and input, translate a text from non-selectable or hard-selectable elements, like links and buttons and even more - get translation from the title / alternative text of the images.",
         "description": "A title for the text above"
+    },
+    "65": {
+        "message"    : "Auto focus after showing",
+        "description": "A title for checkbox inside `display options` block in the settings"
     }
 }

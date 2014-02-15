@@ -2,9 +2,9 @@
 
 var inherit = require('../utils').inherit,
     UIComponent = require('../ui/ui_component').UIComponent,
-    SettingsPopupDefinitions = require('./settings_popup_definitions').SettingsPopupDefinitions,
+    SettingsDisplayOptions = require('./settings_display_options').SettingsDisplayOptions,
     SettingsVendor = require('./settings_vendor').SettingsVendor,
-    SettingsPopupStyle = require('./settings_popup_style').SettingsPopupStyle,
+    SettingsThemeManager = require('./settings_theme_manager').SettingsThemeManager,
     SettingsExclusions = require('./settings_exclusions').SettingsExclusions;
 
 /**
@@ -13,19 +13,14 @@ var inherit = require('../utils').inherit,
 var SettingsContainer = function (options) {
     SettingsContainer.superclass.constructor.call(this, options);
 
-    this.createDom(this.state);
+    var state = this.state;
+    this.$container.addClass('settingsContainer');
+    new SettingsDisplayOptions({state: state.popupDefinitions}).appendTo(this);
+    new SettingsVendor({state: state.vendorBlock}).appendTo(this);
+    new SettingsThemeManager({state: state.popupStyle}).appendTo(this);
+    new SettingsExclusions({state: state.siteExclusions}).appendTo(this);
 };
 
 inherit(SettingsContainer, UIComponent);
-
-/** @private */
-SettingsContainer.prototype.createDom = function (state) {
-    this.$container.addClass('settingsContainer');
-
-    new SettingsPopupDefinitions({state: state.popupDefinitions}).appendTo(this);
-    new SettingsVendor({state: state.vendorBlock}).appendTo(this);
-    new SettingsPopupStyle({state: state.popupStyle}).appendTo(this);
-    new SettingsExclusions({state: state.siteExclusions}).appendTo(this);
-};
 
 exports.SettingsContainer = SettingsContainer;

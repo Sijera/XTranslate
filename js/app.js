@@ -46,13 +46,14 @@ App.prototype.state = {
     },
     settingsContainer: {
         popupDefinitions: {
-            collapsed    : true,
-            autoPlay     : false,
-            showPlayIcon : true,
-            clickAction  : true,
-            selectAction : false,
-            keyAction    : true,
-            hotKey       : 'Ctrl+Shift+X'
+            collapsed   : true,
+            autoFocus   : true,
+            autoPlay    : false,
+            showPlayIcon: true,
+            clickAction : true,
+            selectAction: false,
+            keyAction   : true,
+            hotKey      : 'Ctrl+Shift+X'
         },
         vendorBlock: {
             collapsed   : false,

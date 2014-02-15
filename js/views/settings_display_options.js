@@ -9,23 +9,27 @@ var UTILS = require('../utils'),
 /**
  * @constructor
  */
-var SettingsPopupDefinitions = function (options) {
-    SettingsPopupDefinitions.superclass.constructor.call(this, options);
+var SettingsDisplayOptions = function (options) {
+    SettingsDisplayOptions.superclass.constructor.call(this, options);
     this.setTitle(__(3));
 };
 
-inherit(SettingsPopupDefinitions, SettingsBlock);
+inherit(SettingsDisplayOptions, SettingsBlock);
 
 /** @private */
-SettingsPopupDefinitions.prototype.createDom = function (state) {
-    SettingsPopupDefinitions.superclass.createDom.apply(this, arguments);
-    this.$container.addClass('settingsPopupDefinitions');
+SettingsDisplayOptions.prototype.createDom = function (state) {
+    SettingsDisplayOptions.superclass.createDom.apply(this, arguments);
+    this.$container.addClass('settingsDisplayOptions');
+
+    this.autoFocus = new CheckBox({label: __(65), checked: state.autoFocus})
+        .on('change', function (value) { state.autoFocus = value; })
+        .appendTo(this.$content);
 
     this.autoPlay = new CheckBox({label: __(15), checked: state.autoPlay})
         .on('change', function (value) { state.autoPlay = value; })
         .appendTo(this.$content);
 
-    this.showPlayIcon = new CheckBox({ label: __(16), checked: state.showPlayIcon })
+    this.showPlayIcon = new CheckBox({label: __(16), checked: state.showPlayIcon })
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
 
@@ -53,7 +57,7 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
 };
 
 /** @private */
-SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
+SettingsDisplayOptions.prototype.onDefineKey = function (e) {
     var keyCode = e.which,
         hotKey = UTILS.getHotkey(e),
         tabKey = keyCode === 9,
@@ -73,4 +77,4 @@ SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
     }
 };
 
-exports.SettingsPopupDefinitions = SettingsPopupDefinitions;
+exports.SettingsDisplayOptions = SettingsDisplayOptions;

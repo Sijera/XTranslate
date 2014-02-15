@@ -55,19 +55,20 @@ UserScript.prototype.createDom = function () {
 UserScript.prototype.bindEvents = function () {
     var applyTheme = UTILS.debounce(this.applyTheme.bind(this), 200);
 
-    APP.extension.onMessage(this.onMessage.bind(this));
     APP.on('change:settingsContainer.popupStyle.activeTheme', applyTheme);
     APP.on('change:settingsContainer.popupStyle.customTheme', applyTheme);
+    APP.extension.onMessage(this.onMessage.bind(this));
 
     this.popup
+        .on('show', UTILS.debounce(this.onShowPopup.bind(this), 0))
         .on('hide', this.onHidePopup.bind(this))
         .on('linkClick', this.onLinkClick.bind(this))
-        .on('playText', this.playTextAction);
+        .on('playText', this.onPlayText.bind(this));
 
     $(window)
         .on('resize', UTILS.debounce(this.onResize.bind(this), 300))
-        .on('mouseover', UTILS.debounce(this.onMouseOver.bind(this), 100))
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
+        .on('mouseover', this.onMouseOver.bind(this))
         .on('dblclick', this.onDblClick.bind(this))
         .on('keydown', this.onKeyDown.bind(this));
 };
@@ -122,7 +123,7 @@ UserScript.prototype.getOverText= function () {
         notBody = overNode !== document.body && overNode !== document.documentElement;
 
     // Attempt to get text from element under the mouse cursor (in case when nothing selected)
-    if (!text && overNode && notBody && this.outOfPopup(overNode)) {
+    if (!text && overNode && notBody && this.isOutside(overNode)) {
         var nodeName = overNode.nodeName.toLowerCase();
         if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
         else if (nodeName === 'img') text = overNode.title || overNode.alt;
@@ -151,14 +152,14 @@ UserScript.prototype.onMouseUp = function (e) {
         delete this.mouseActionUsed;
         return;
     }
-    if (this.settings.selectAction && !this.isEditableElem(e.target)) {
+    if (this.settings.selectAction && !this.isEditable(e.target)) {
         this.translateText(e);
     }
 };
 
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
-    if (this.settings.clickAction && !this.isEditableElem(e.target)) {
+    if (this.settings.clickAction && !this.isEditable(e.target)) {
         this.mouseActionUsed = true;
         this.translateText(e);
     }
@@ -181,26 +182,38 @@ UserScript.prototype.onLinkClick = function (text) {
 };
 
 /** @private */
+UserScript.prototype.onPlayText = function () {
+    this.playTextAction();
+    this.reselectText();
+};
+
+/** @private */
+UserScript.prototype.onShowPopup = function () {
+    if (this.settings.autoFocus) this.popup.focus();
+};
+
+/** @private */
 UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
     this.stopPlayingAction();
 };
 
 /** @private */
-UserScript.prototype.outOfPopup = function (elem) {
+UserScript.prototype.isOutside = function (elem) {
+    // Make sure the target is outside of the popup
     return !this.popup.$container[0].contains(elem);
 };
 
 /** @private */
-UserScript.prototype.isEditableElem = function (elem) {
-    // In case if double click or mouse-up action happened inside editable form field,
-    // like textarea, don't proceed with it.
+UserScript.prototype.isEditable = function (elem) {
+    // In case if double click or mouse-up action happened inside the editable form field,
+    // like <textarea>, don't handle the event.
     return elem === document.activeElement;
 };
 
 /** @private */
 UserScript.prototype.translateText = function (e, text) {
-    if ((text = this.getText(text)) && this.outOfPopup(e.target)) {
+    if ((text = this.getText(text)) && this.isOutside(e.target)) {
         this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
         this.translateAction(text);
     }
