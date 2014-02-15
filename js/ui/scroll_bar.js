@@ -206,7 +206,6 @@ ScrollBar.prototype.onClick = function (e) {
 /** @private */
 ScrollBar.prototype.onKeyDown = function (e) {
     if (this.scrolling) return;
-    var prevPos = this.realPos;
     switch (e.which) {
         case 38: this.scrollBy(-this.scrollSpeed); break; // UP
         case 40: this.scrollBy(this.scrollSpeed); break; // DOWN
@@ -215,7 +214,7 @@ ScrollBar.prototype.onKeyDown = function (e) {
         case 33: this.scrollBy(-this.pageSpeed); break; // PAGE UP
         case 34: this.scrollBy(this.pageSpeed); break; // PAGE DOWN
     }
-    if (prevPos !== this.realPos) e.preventDefault();
+    e.preventDefault();
 };
 
 /** @private */

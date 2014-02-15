@@ -21,7 +21,7 @@
     }
   }
 
-  &:hover {
+  &:focus, &:hover {
     .scrollBar {
       margin-right: 0;
     }

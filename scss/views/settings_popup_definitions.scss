@@ -4,16 +4,15 @@
   .hotKey {
     vertical-align: middle;
     text-transform: lowercase;
-    color: silver;
     cursor: help;
 
-    &:focus {
-      color: white;
-      cursor: text;
+    &:hover, &:focus {
+      color: silver;
     }
   }
 
-  .autoDetection .label {
+  .hint {
+    vertical-align: middle;
     cursor: help;
   }
 

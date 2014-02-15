@@ -116,12 +116,13 @@ UserScript.prototype.getText = function (text) {
 };
 
 /** @private */
-UserScript.prototype.autoDetectText= function (e) {
+UserScript.prototype.getOverText= function () {
     var overNode = this.overNode,
-        text = this.getText();
+        text = this.getText(),
+        notBody = overNode !== document.body && overNode !== document.documentElement;
 
-    // Retrieve a text from element under the mouse cursor (in case when nothing selected)
-    if (!text && overNode && this.outOfPopup(overNode)) {
+    // Attempt to get text from element under the mouse cursor (in case when nothing selected)
+    if (!text && overNode && notBody && this.outOfPopup(overNode)) {
         var nodeName = overNode.nodeName.toLowerCase();
         if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
         else if (nodeName === 'img') text = overNode.title || overNode.alt;
@@ -140,10 +141,7 @@ UserScript.prototype.autoDetectText= function (e) {
 UserScript.prototype.onKeyDown = function (e) {
     if (this.settings.keyAction) {
         var keyMatch = this.settings.hotKey == UTILS.getHotkey(e).join('+');
-        if (keyMatch) {
-            var text = this.settings.autoDetection ? this.autoDetectText(e) : this.getText();
-            this.translateText(e, text);
-        }
+        if (keyMatch) this.translateText(e, this.getOverText());
     }
 };
 
@@ -153,14 +151,14 @@ UserScript.prototype.onMouseUp = function (e) {
         delete this.mouseActionUsed;
         return;
     }
-    if (this.settings.selectAction && !this.isActiveElem(e.target)) {
+    if (this.settings.selectAction && !this.isEditableElem(e.target)) {
         this.translateText(e);
     }
 };
 
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
-    if (this.settings.clickAction && !this.isActiveElem(e.target)) {
+    if (this.settings.clickAction && !this.isEditableElem(e.target)) {
         this.mouseActionUsed = true;
         this.translateText(e);
     }
@@ -189,19 +187,20 @@ UserScript.prototype.onHidePopup = function () {
 };
 
 /** @private */
-UserScript.prototype.outOfPopup = function (targetElem) {
-    return !this.popup.$container[0].contains(targetElem);
+UserScript.prototype.outOfPopup = function (elem) {
+    return !this.popup.$container[0].contains(elem);
 };
 
 /** @private */
-UserScript.prototype.isActiveElem = function (elem) {
+UserScript.prototype.isEditableElem = function (elem) {
+    // In case if double click or mouse-up action happened inside editable form field,
+    // like textarea, don't proceed with it.
     return elem === document.activeElement;
 };
 
 /** @private */
 UserScript.prototype.translateText = function (e, text) {
-    text = this.getText(text);
-    if (text && this.outOfPopup(e.target)) {
+    if ((text = this.getText(text)) && this.outOfPopup(e.target)) {
         this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
         this.translateAction(text);
     }

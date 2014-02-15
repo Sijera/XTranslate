@@ -49,7 +49,6 @@ Popup.prototype.applyTheme = function (theme) {
         theme = popup.activeTheme ? popup.themes[popup.activeTheme] : popup.customTheme;
     }
     this.$container.css(THEME.toCSS(theme));
-    this.scrollBar.update();
     return theme;
 };
 

@@ -29,11 +29,6 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
 
-    this.autoDetection = new CheckBox({label: __(64), title: __(65), checked: state.autoDetection, className: 'autoDetection'})
-        .toggle(state.keyAction)
-        .on('change', function (value) { state.autoDetection = value; })
-        .appendTo(this.$content);
-
     this.selectAction = new CheckBox({label: __(8), checked: state.selectAction, className: 'sep'})
         .on('change', function (value) { state.selectAction = value; })
         .appendTo(this.$content);
@@ -51,13 +46,10 @@ SettingsPopupDefinitions.prototype.createDom = function (state) {
         .attr('title', __(10))
         .on('keydown', this.onDefineKey.bind(this))
         .appendTo(this.keyAction.$container);
-};
 
-SettingsPopupDefinitions.prototype.bindEvents = function () {
-    SettingsPopupDefinitions.superclass.bindEvents.apply(this, arguments);
-    this.keyAction.on('change', function (checked) {
-        this.autoDetection.setValue(checked).toggle(checked);
-    }, this);
+    this.$hotKeyHint = $('<i class="hint"> *</i>')
+        .attr('title', __(64))
+        .appendTo(this.keyAction.$container);
 };
 
 /** @private */
@@ -65,7 +57,8 @@ SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
     var keyCode = e.which,
         hotKey = UTILS.getHotkey(e),
         tabKey = keyCode === 9,
-        escapeKey = keyCode === 27;
+        escapeKey = keyCode === 27,
+        enterKey = keyCode === 13;
 
     if (hotKey.length >= 2) {
         hotKey = hotKey.join('+');
@@ -73,8 +66,11 @@ SettingsPopupDefinitions.prototype.onDefineKey = function (e) {
         this.$hotKey.text(hotKey);
     }
 
-    if (escapeKey) this.$hotKey.blur();
-    if (!tabKey) e.preventDefault();
+    if (escapeKey || enterKey) this.$hotKey.blur();
+    if (!tabKey || enterKey) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
 };
 
 exports.SettingsPopupDefinitions = SettingsPopupDefinitions;
