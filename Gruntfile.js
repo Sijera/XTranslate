@@ -96,12 +96,9 @@ module.exports = function (grunt) {
     grunt.registerTask('copyManifest', 'Clean up and copy manifest.json', function () {
         var manifest = grunt.config.get('manifest');
         var destFile = grunt.config.get('buildPath') + '/manifest.json';
-
-        // remove development version of require.js
-        manifest.background.scripts.splice(0, 1);
+        manifest.background.scripts.splice(0, 1); // remove development version of require.js
         manifest.content_scripts.forEach(function (content) { content.js.splice(0, 1) });
         manifest.web_accessible_resources = ['img/*'];
-
         grunt.file.write(destFile, JSON.stringify(manifest, null, 4));
     });
 
