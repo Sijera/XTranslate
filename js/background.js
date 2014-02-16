@@ -4,7 +4,7 @@
  * XTranslate - the background page (entry point)
  * @url https://github.com/ixrock/XTranslate
  */
-var APP = global.APP = require('./app').create({autoSave: false});
+var APP = require('./app').create({autoSave: false});
 
 /**
  * @constructor
@@ -41,3 +41,4 @@ Background.prototype.onMessage = function (channel, msg) {
 
 // run
 var bgProcess = new Background();
+global.APP = APP;
