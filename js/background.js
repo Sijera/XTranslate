@@ -4,7 +4,7 @@
  * XTranslate - the background page (entry point)
  * @url https://github.com/ixrock/XTranslate
  */
-var APP = require('./app').create({autoSave: false});
+var APP = global.APP = require('./app').create({autoSave: false});
 
 /**
  * @constructor

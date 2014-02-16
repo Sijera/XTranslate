@@ -23,5 +23,5 @@ var APP = require('./app').create()
         });
     });
 
-/** @public */ global.APP = APP;
-/** @public */ global.__ = APP.localization;
+global.APP = APP;
+global.__ = APP.localization;

@@ -14,14 +14,15 @@ var Extension = function (options) {
 inherit(Extension, EventDriven);
 
 /** @protected */
-Extension.prototype.setState = function (state) {
+Extension.prototype.setState = function (state, onDone) {
     localStorage[this.stateName] = JSON.stringify(state);
+    if (typeof onDone == 'function') onDone();
 };
 
 /** @protected */
 Extension.prototype.getState = function (callback) {
     var state = JSON.parse(localStorage[this.stateName] || null);
-    callback(state);
+    setTimeout(callback.bind(this, state), 0);
 };
 
 exports.Extension = Extension;
