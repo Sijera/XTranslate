@@ -26,7 +26,7 @@ inherit(AppFooterBar, UIComponent);
 
 /** @private */
 AppFooterBar.prototype.getHtmlLink = function (url, text) {
-    return '<a href="' + url + '">' + text + '</a>';
+    return '<a href="' + url + '" target="_blank">' + text + '</a>';
 };
 
 exports.AppFooterBar = AppFooterBar;
