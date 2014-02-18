@@ -15,8 +15,12 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg : pkg,
         manifest : manifest,
+        env: process.env,
         buildPath: 'build/<%= pkg.name %>-<%= manifest.version %>',
-
+        chromeLocations: [
+            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome/chrome',
+            'c:\\Users\\<%=env.USERNAME%>\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe'
+        ],
         "browserify": {
             dist: {
                 files  : [
@@ -93,6 +97,39 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Register tasks
+    grunt.registerTask('build', ['browserify', 'uglify', 'sass', 'copy', 'copyManifest']);
+
+    grunt.registerTask('pack', 'Pack the files in one file chrome extension format (*.crx)', function (pemPath) {
+        var done = this.async(),
+            buildPath = [__dirname, grunt.config.get('buildPath')].join('/'),
+            chromePath = grunt.config.get('chromeLocations').reduce(function (resolvedPath, chromePath) {
+                if (grunt.file.isFile(chromePath)) return chromePath;
+                return resolvedPath;
+            }, ''),
+            args = [
+                '--pack-extension=' + buildPath,
+                '--pack-extension-key=' + (pemPath || '')
+            ];
+
+        if (!grunt.file.isDir(buildPath)) {
+            grunt.log.error('Build the project before packing!');
+            return;
+        }
+
+        if (!chromePath) {
+            grunt.log.warn('Grunt builder cannot resolve a file path to the chrome.');
+            grunt.log.warn('Add full path to the executable chrome file in Grunfile.js inside the config and try again.');
+            grunt.log.warn('Or.. pack the extension manually on "chrome://extensions" page, when developer-mode checkbox is on.');
+            return;
+        }
+
+        grunt.util.spawn({cmd: chromePath, args: args}, function (error, result) {
+            if (error) grunt.log.error(result.stderr);
+            else grunt.log.writeln('Packed file can be obtained from here: ', buildPath + '.crx');
+            done(!error);
+        });
+    });
+
     grunt.registerTask('copyManifest', 'Clean up and copy manifest.json', function () {
         var manifest = grunt.config.get('manifest');
         var destFile = grunt.config.get('buildPath') + '/manifest.json';
@@ -107,6 +144,6 @@ module.exports = function (grunt) {
         var line = grunt.util.repeat(header.length, '-');
         grunt.log.writeln(header);
         grunt.log.writeln(line);
-        grunt.task.run(['clean', 'browserify', 'uglify', 'sass', 'copy', 'copyManifest']);
+        grunt.task.run(['build', 'pack', 'clean']);
     });
 };
