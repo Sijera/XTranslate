@@ -68,21 +68,34 @@ module.exports = function (grunt) {
         },
 
         "copy": {
-            img: {
+            common: {
                 expand: true,
-                dest: '<%= buildPath %>',
-                src: ['img/**', '!img/*source*']
+                src: ['img/**', '!img/*source*', '_*/**', 'js/libs/jquery.min.js'],
+                dest: '<%= buildPath %>'
             },
-            text: {
-                expand: true,
-                dest: '<%= buildPath %>',
-                src: ['_*/**', '*.html', 'js/libs/jquery.min.*'],
+            manifest: {
+                expand : true,
+                src    : 'manifest.json',
+                dest   : '<%= buildPath %>',
                 options: {
-                    process: function (content, filePath) {
-                        if (filePath.match(/\.html$/i)) return content
+                    process: function () {
+                        var manifest = grunt.config.get('manifest');
+                        manifest.background.scripts.splice(0, 1); // remove development version of require.js
+                        manifest.content_scripts.forEach(function (content) { content.js.splice(0, 1) });
+                        manifest.web_accessible_resources = ['img/*'];
+                        return JSON.stringify(manifest, null, 4);
+                    }
+                }
+            },
+            html: {
+                expand : true,
+                src    : '*.html',
+                dest   : '<%= buildPath %>',
+                options: {
+                    process: function (content) {
+                        return content
                             .replace(/data-entry="(.*?)"/i, 'src="js/$1"')
                             .replace(/\s*src="js\/require.js"/i, '');
-                        return content;
                     }
                 }
             }
@@ -97,7 +110,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Register tasks
-    grunt.registerTask('build', ['browserify', 'uglify', 'sass', 'copy', 'copyManifest']);
+    grunt.registerTask('build', ['browserify', 'uglify', 'sass', 'copy']);
 
     grunt.registerTask('pack', 'Pack the files in one file chrome extension format (*.crx)', function (pemPath) {
         var done = this.async(),
@@ -118,8 +131,8 @@ module.exports = function (grunt) {
 
         if (!chromePath) {
             grunt.log.warn('Grunt builder cannot resolve a file path to the chrome.');
-            grunt.log.warn('Add full path to the executable chrome file in Grunfile.js inside the config and try again.');
-            grunt.log.warn('Or.. pack the extension manually on "chrome://extensions" page, when developer-mode checkbox is on.');
+            grunt.log.warn('Add full path to the executable chrome file in Grunfile.js in the config and try again.');
+            grunt.log.warn('Or.. pack the extension manually on chrome://extensions page.');
             return;
         }
 
@@ -128,15 +141,6 @@ module.exports = function (grunt) {
             else grunt.log.writeln('Packed file can be obtained from here: ', buildPath + '.crx');
             done(!error);
         });
-    });
-
-    grunt.registerTask('copyManifest', 'Clean up and copy manifest.json', function () {
-        var manifest = grunt.config.get('manifest');
-        var destFile = grunt.config.get('buildPath') + '/manifest.json';
-        manifest.background.scripts.splice(0, 1); // remove development version of require.js
-        manifest.content_scripts.forEach(function (content) { content.js.splice(0, 1) });
-        manifest.web_accessible_resources = ['img/*'];
-        grunt.file.write(destFile, JSON.stringify(manifest, null, 4));
     });
 
     grunt.registerTask('default', function () {
