@@ -49,7 +49,7 @@ Google.prototype.parseData = function (data) {
             .replace(/\s+([:;,.!?])/gi, '$1'),
         langSource  : data[2],
         langDetected: data[8] && data[8][0] && data[8][0][0],
-        spellCheck  : data[7] && data[7][0] ? data[7][1] : '',
+        spellCheck  : data[7] && data[7][0] || '',
         dictionary  : (data[1] || []).map(function (dictData) {
             return {
                 partOfSpeech: dictData[0],

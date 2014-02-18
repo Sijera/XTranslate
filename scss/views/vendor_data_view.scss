@@ -60,13 +60,12 @@
   .spellChecker {
     margin-top: $padding;
     clear: both;
-
-    .link {
+    font-style: italic;
+    * {
+      font-style: inherit;
+    }
+    b > i { // google
       font-weight: bold;
-      opacity: .9;
-      &:hover {
-        opacity: 1;
-      }
     }
   }
 
