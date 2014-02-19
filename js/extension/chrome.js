@@ -116,4 +116,12 @@ Chrome.prototype.getState = function (callback) {
     });
 };
 
+Chrome.prototype.setIcon = function (path) {
+    chrome.browserAction.setIcon({path: path});
+};
+
+Chrome.prototype.setTitle = function (title) {
+    chrome.browserAction.setTitle({title: title});
+};
+
 exports.Chrome = Chrome;

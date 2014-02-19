@@ -11,6 +11,18 @@ var APP = require('./app').create({autoSave: false});
  */
 var Background = function () {
     APP.extension.onConnect(this.onConnect.bind(this));
+    APP.on('change:settingsContainer.vendorBlock.langFrom', this.refresh, this);
+    APP.on('change:settingsContainer.vendorBlock.langTo', this.refresh, this);
+    APP.on('ready', this.refresh, this);
+};
+
+/** @private */
+Background.prototype.refresh = function () {
+    var vendorBlock = APP.get('settingsContainer.vendorBlock'),
+        langFrom = vendorBlock.langFrom.toUpperCase(),
+        langTo = vendorBlock.langTo.toUpperCase();
+    APP.extension.setIcon('img/flags/' + vendorBlock.langTo + '.png');
+    APP.extension.setTitle('XTranslate (' + langFrom + ' → ' + langTo + ')');
 };
 
 /** @private */
@@ -41,4 +53,4 @@ Background.prototype.onMessage = function (channel, msg) {
 
 // run
 var bgProcess = new Background();
-global.APP = APP;
+if (typeof global !== 'undefined') global.APP = APP;

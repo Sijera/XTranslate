@@ -196,5 +196,9 @@ App.prototype.reset = function () {
     this.extension.setState({}, location.reload.bind(location, true));
 };
 
+App.prototype.toString = function () {
+    return JSON.stringify(this.state, null, 4);
+};
+
 /** @return {App} */
 exports.create = function (o) { return new App(o) };
