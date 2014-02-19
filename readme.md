@@ -1,8 +1,6 @@
 XTranslate
 ==========
-A new life of popular extension for Opera browser, now for the Chrome!
-
-Old version and testimonials are [here](https://addons.opera.com/en/extensions/details/xtranslate/).
+A new life of popular extension for [Opera](https://addons.opera.com/en/extensions/details/xtranslate/) browser, now for [Chrome](https://chrome.google.com/webstore/detail/xtranslate/gfgpkepllngchpmcippidfhmbhlljhoo)!
 
 What it does?
 -----------
@@ -31,9 +29,8 @@ https://raw.github.com/ixrock/XTranslate/master/sshots/sshot2.png
 Help the project
 -----------
 The extension is open-source and free, so if someone can do something from the list below, I will be appreciate:
-* Draw a nice icons (128x128, 48x48, 16x16?)
-* Translate the extension UI in different languages
-
-Check [the link](https://github.com/ixrock/XTranslate/tree/master/_locales) to get to know which languages are absent or, maybe, you can suggest any fixes in other locales.
+* Draw nice icons (128x128, 48x48, 16x16)
+* Draw promotional images of the extension for chrome store (440x280, 920x680, 1400x560)
+* Translate the extension's UI in [other languages](https://github.com/ixrock/XTranslate/tree/master/_locales)
 
 Peace!
