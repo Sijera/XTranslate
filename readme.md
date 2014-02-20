@@ -29,8 +29,7 @@ https://raw.github.com/ixrock/XTranslate/master/sshots/sshot2.png
 Help the project
 -----------
 The extension is open-source and free, so if someone can do something from the list below, I will be appreciate:
-* Draw nice icons (128x128, 48x48, 16x16)
-* Draw promotional images of the extension for chrome store (440x280, 920x680, 1400x560)
+* Draw promotional images for chrome web-store (440x280, 920x680, 1400x560)
 * Translate the extension's UI in [other languages](https://github.com/ixrock/XTranslate/tree/master/_locales)
 
 Peace!
