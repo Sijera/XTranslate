@@ -86,10 +86,23 @@ Vendor.prototype.playText = function (text) {
     text = text || this.lastReqData.text;
     var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
+
     var url = this.getAudioUrl(text, lang);
     if (url) {
-        this.audio = new Audio(url);
-        this.audio.play();
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.responseType = 'blob';
+        xhr.send();
+        xhr.onload = function () {
+            var reader = new FileReader();
+            reader.readAsDataURL(xhr.response);
+            reader.addEventListener('loadend', function () {
+                var base64DataUrl = reader.result;
+                this.audio = new Audio(base64DataUrl);
+                this.audio.play();
+                console.info(base64DataUrl);
+            }.bind(this), false);
+        }.bind(this);
     }
 };
 

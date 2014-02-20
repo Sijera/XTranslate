@@ -35,9 +35,10 @@
     ],
 
     "permissions": [
-        "tabs", "storage", "clipboardWrite",
+        "tabs", "storage",
         "http://translate.google.com/",
         "http://translate.yandex.com/",
+        "http://tts.voicetech.yandex.net/",
         "http://api.microsofttranslator.com/"
     ]
 }

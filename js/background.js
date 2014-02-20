@@ -6,6 +6,9 @@
  */
 var APP = require('./app').create({autoSave: false});
 
+// fix: doesn't applies from the manifest
+APP.extension.setIcon('img/icons/16.png');
+
 /**
  * @constructor
  */
@@ -18,11 +21,10 @@ var Background = function () {
 
 /** @private */
 Background.prototype.refresh = function () {
-    var vendorBlock = APP.get('settingsContainer.vendorBlock'),
-        langFrom = vendorBlock.langFrom.toUpperCase(),
-        langTo = vendorBlock.langTo.toUpperCase();
-    APP.extension.setTitle('XTranslate (' + langFrom + ' → ' + langTo + ')');
-    APP.extension.setIcon('img/icons/16.png');
+    var vendor = APP.get('settingsContainer.vendorBlock'),
+        from = vendor.langFrom.toUpperCase(),
+        to = vendor.langTo.toUpperCase();
+    APP.extension.setTitle('XTranslate (' + from + ' → ' + to + ')');
 };
 
 /** @private */
@@ -43,7 +45,9 @@ Background.prototype.onMessage = function (channel, msg) {
             break;
 
         case 'translate':
-            APP.vendor.translateText(payload).done(function (data) {
+            var prevReq = this.transTextReq;
+            if (prevReq && prevReq.state() == 'pending') prevReq.reject('stop waiting previous request');
+            this.transTextReq = APP.vendor.translateText(payload).done(function (data) {
                 msg.payload = data;
                 channel.sendMessage(msg);
             });
