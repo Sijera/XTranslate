@@ -70,7 +70,11 @@ module.exports = function (grunt) {
         "copy": {
             common: {
                 expand: true,
-                src: ['img/**', '!img/*source*', '_*/**', 'js/libs/jquery.min.js'],
+                src: [
+                    '_*/**',
+                    'img/**', '!img/*source*', '!img/**/*.svg',
+                    'js/libs/jquery.min.js'
+                ],
                 dest: '<%= buildPath %>'
             },
             manifest: {

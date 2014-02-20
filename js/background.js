@@ -20,10 +20,9 @@ var Background = function () {
 Background.prototype.refresh = function () {
     var vendorBlock = APP.get('settingsContainer.vendorBlock'),
         langFrom = vendorBlock.langFrom.toUpperCase(),
-        langTo = vendorBlock.langTo.toUpperCase(),
-        langIcon = vendorBlock.langTo.split('-')[0];
-    APP.extension.setIcon('img/flags/' + langIcon + '.png');
+        langTo = vendorBlock.langTo.toUpperCase();
     APP.extension.setTitle('XTranslate (' + langFrom + ' → ' + langTo + ')');
+    APP.extension.setIcon('img/icons/16.png');
 };
 
 /** @private */
