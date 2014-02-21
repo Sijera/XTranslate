@@ -14,7 +14,6 @@ var UserInputContainer = function (options) {
 
     this.createDom();
     this.bindEvents();
-    this.setText(this.state.text);
 };
 
 inherit(UserInputContainer, UIComponent);
@@ -25,23 +24,23 @@ UserInputContainer.prototype.createDom = function () {
 
     this.selectLang = new VendorLanguageSelect().appendTo(this.$container);
     this.$text = $('<textarea/>').attr('placeholder', __(63)).appendTo(this.$container);
-    this.result = new VendorDataView().hide().appendTo(this);
+    this.dataView = new VendorDataView().hide().appendTo(this);
 };
 
 /** @private */
 UserInputContainer.prototype.bindEvents = function () {
     this.onTranslationDone = this.onTranslationDone.bind(this);
-    this.onVendorChange = this.onVendorChange.bind(this);
     this.translateTextLazy = UTILS.debounce(this.translateText.bind(this), 250);
 
     this.$text.on('input', this.onInput.bind(this));
-    this.result
+    this.dataView
         .on('playText', this.onPlayText.bind(this))
         .on('linkClick', this.onLinkClick.bind(this));
 
-    APP.on('change:settingsContainer.vendorBlock.activeVendor', this.onVendorChange);
-    APP.on('change:settingsContainer.vendorBlock.langFrom', this.onVendorChange);
-    APP.on('change:settingsContainer.vendorBlock.langTo', this.onVendorChange);
+    var onVendorChange = this.onVendorChange.bind(this);
+    APP.on('change:settingsContainer.vendorBlock.activeVendor', onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langFrom', onVendorChange);
+    APP.on('change:settingsContainer.vendorBlock.langTo', onVendorChange);
 };
 
 /** @private */
@@ -51,18 +50,19 @@ UserInputContainer.prototype.getText = function (text) {
 
 /** @private */
 UserInputContainer.prototype.setText = function (text) {
-    if (!text) return;
+    if (!text || this.getText() == text) return;
     this.$text.val(text)[0].setSelectionRange(text.length, text.length);
     this.translateText(text);
 };
 
 /** @private */
 UserInputContainer.prototype.translateText = function (text) {
-    text = this.getText(text);
-    if (text) {
-        this.sourceText = this.state.text = text;
-        APP.vendor.translateText(text).done(this.onTranslationDone);
+    if (text = this.getText(text)) {
+        this.state.text = text;
+        if (this.transTextReq && this.transTextReq.state() == 'pending') this.transTextReq.reject();
+        this.transTextReq = APP.vendor.translateText(text).done(this.onTranslationDone);
     }
+    return text;
 };
 
 /** @private */
@@ -83,24 +83,22 @@ UserInputContainer.prototype.onLinkClick = function (text) {
 };
 
 /** @private */
-UserInputContainer.prototype.onInput = function (e) {
-    this.translateTextLazy();
-
-    if (!this.getText()) {
+UserInputContainer.prototype.onInput = function () {
+    var text = this.translateTextLazy();
+    if (!text) {
         this.state.text = '';
-        this.result.hide();
+        this.dataView.hide();
     }
 };
 
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
-    if (data.sourceText !== this.sourceText) return;
-    this.result.parseData(data).show();
-    this.$text.blur().focus();
+    this.dataView.parseData(data).show();
 };
 
 UserInputContainer.prototype.show = function () {
     UserInputContainer.superclass.show.apply(this, arguments);
+    this.setText(this.state.text);
     this.$text.focus();
 };
 
