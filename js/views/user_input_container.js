@@ -6,11 +6,17 @@ var UTILS = require('../utils'),
     VendorLanguageSelect = require('./vendor_language_select').VendorLanguageSelect,
     UIComponent = require('../ui/ui_component').UIComponent;
 
+/** @const */
+var ACTIVE_VENDOR_CLASS = 'active';
+
 /**
  * @constructor
  */
 var UserInputContainer = function (options) {
     UserInputContainer.superclass.constructor.call(this, options);
+
+    this.activeVendor = APP.vendor.name;
+    this.vendors = [];
 
     this.createDom();
     this.bindEvents();
@@ -23,8 +29,23 @@ UserInputContainer.prototype.createDom = function () {
     this.$container.addClass('userInputContainer');
 
     this.selectLang = new VendorLanguageSelect().appendTo(this.$container);
+    this.$vendors = $('<div class="vendors"><i class="title">' + __(66) + ': </i></div>').appendTo(this.$container);
     this.$text = $('<textarea/>').attr('placeholder', __(63)).appendTo(this.$container);
     this.dataView = new VendorDataView().hide().appendTo(this);
+
+    APP.vendors.forEach(function (vendor) {
+        var vendorData = {
+            name : vendor.name,
+            $link: $('<span class="vendorLink"><b></b></span>').appendTo(this.$vendors)
+        };
+        vendorData.$link
+            .toggleClass(ACTIVE_VENDOR_CLASS, vendor.name === this.activeVendor)
+            .find('b')
+                .text(vendor.title)
+                .on('click', this.setVendor.bind(this, vendor.name))
+
+        this.vendors.push(vendorData);
+    }, this);
 };
 
 /** @private */
@@ -44,6 +65,18 @@ UserInputContainer.prototype.bindEvents = function () {
 };
 
 /** @private */
+UserInputContainer.prototype.setVendor = function (vendorName) {
+    if (vendorName === this.activeVendor) return;
+    this.activeVendor = this.dataView.activeVendor = vendorName;
+    this.vendors.forEach(function (vendorData) {
+        vendorData.$link.toggleClass(ACTIVE_VENDOR_CLASS, vendorData.name === vendorName);
+    });
+
+    this.translateText();
+    this.$text.focus();
+};
+
+/** @private */
 UserInputContainer.prototype.getText = function (text) {
     return (text || this.$text.val()).trim();
 };
@@ -60,14 +93,14 @@ UserInputContainer.prototype.translateText = function (text) {
     if (text = this.getText(text)) {
         this.state.text = text;
         if (this.transTextReq && this.transTextReq.state() == 'pending') this.transTextReq.reject();
-        this.transTextReq = APP.vendor.translateText(text).done(this.onTranslationDone);
+        this.transTextReq = APP.getVendor(this.activeVendor).translateText(text).done(this.onTranslationDone);
     }
     return text;
 };
 
 /** @private */
 UserInputContainer.prototype.onPlayText = function () {
-    APP.vendor.playText();
+    APP.getVendor(this.activeVendor).playText();
     this.$text.focus();
 };
 
@@ -94,6 +127,7 @@ UserInputContainer.prototype.onInput = function () {
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
     this.dataView.parseData(data).show();
+    if (document.activeElement === this.$text[0]) this.$text.blur().focus();
 };
 
 UserInputContainer.prototype.show = function () {

@@ -12,4 +12,35 @@
       @include addSepLine;
     }
   }
+
+  .vendors {
+    @include addSepLine(bottom);
+    text-align: center;
+    font-style: italic;
+    font-weight: bold;
+
+    .title {
+      text-shadow: 1px 1px 0 black;
+    }
+
+    .vendorLink {
+      &:not(:last-child) {
+        &:after {
+          font-weight: normal;
+          content: " | ";
+          color: $lightBgColor;
+        }
+      }
+
+      b {
+        @include pseudoLink(white);
+      }
+
+      &.active b {
+        color: silver;
+        cursor: default;
+        border: 0;
+      }
+    }
+  }
 }

@@ -230,5 +230,9 @@
     "65": {
         "message"    : "Auto focus after showing",
         "description": "A title for checkbox inside `display options` block in the settings"
+    },
+    "66": {
+        "message": "Fast switching",
+        "description": "A text title for fast switching between translation vendors"
     }
 }

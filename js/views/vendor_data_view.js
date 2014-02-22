@@ -11,6 +11,8 @@ var VendorDataView = function (options) {
     VendorDataView.superclass.constructor.call(this, options);
 
     this.showFullData = options.showFullData;
+    this.activeVendor = APP.vendor.name;
+
     this.createDom();
     this.bindEvents();
     this.refreshPlayIcon();
@@ -44,9 +46,10 @@ VendorDataView.prototype.bindEvents = function () {
  * @return VendorDataView
  */
 VendorDataView.prototype.parseData = function (data) {
-    var lang = data.langSource;
-    var transcription = data.transcription;
-    var title = lang ? __(49, [APP.vendor.langList[lang], APP.vendor.title]) : '';
+    var vendor = APP.getVendor(this.activeVendor),
+        lang = data.langSource,
+        ts = data.transcription,
+        title = lang ? __(49, [vendor.langList[lang], vendor.title]) : '';
 
     this.$playSound
         .attr('title', __(48) + ': ' + data.sourceText)
@@ -55,7 +58,7 @@ VendorDataView.prototype.parseData = function (data) {
     this.$translation
         .text(data.translation)
         .attr('title', title)
-        .append(transcription ? ' <i class="ts">' + transcription + '</i>' : undefined);
+        .append(ts ? ' <i class="ts">' + ts + '</i>' : undefined);
 
     this.$dictionary.empty();
     (data.dictionary || []).forEach(this.addDictionary, this);
@@ -126,7 +129,7 @@ VendorDataView.prototype.onPlayIconClick = function (e) {
 /** @private */
 VendorDataView.prototype.refreshPlayIcon = function () {
     var showIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
-    var featureAvail = !!APP.vendor.urlTextToSpeech;
+    var featureAvail = !!APP.getVendor(this.activeVendor).urlTextToSpeech;
     this.$playSound.toggle(showIcon && featureAvail);
 };
 

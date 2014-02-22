@@ -12,32 +12,30 @@ var inherit = require('./utils').inherit,
 /**
  * XTranslate (browser extension) - Easy translate text on web pages
  * @constructor
+ * @property {Chrome} extension
+ * @property {Google|Yandex|Bing} vendor
  */
 var App = function (options) {
     options = $.extend({autoSave: true}, options);
     App.superclass.constructor.call(this, options);
 
-    /** @type {Boolean} */ this.autoSave = options.autoSave;
-    /** @type {Chrome|Firefox|Opera} */ this.extension = new Chrome();
-    /** @type {Function} */ this.localization = this.extension.getText.bind(this.extension);
-
-    this.vendors = {
-        'google': new Google(),
-        'yandex': new Yandex(),
-        'bing'  : new Bing()
-    };
-
-    /** @type {Google|Yandex|Bing} */
-    Object.defineProperty(this, 'vendor', {
-        get: function () {
-            return this.vendors[this.state.settingsContainer.vendorBlock.activeVendor];
-        }.bind(this)
-    });
+    this.autoSave = options.autoSave;
+    this.vendors = [new Google(), new Yandex(), new Bing()];
+    this.extension = new Chrome();
+    this.localization = this.extension.getText.bind(this.extension);
+    Object.defineProperty(this, 'vendor', {get: this.getVendor});
 
     this.init();
 };
 
 inherit(App, EventDriven);
+
+App.prototype.getVendor = function (name) {
+    name = name || this.get('settingsContainer.vendorBlock.activeVendor');
+    return this.vendors.filter(function (vendor) {
+        return vendor.name === name;
+    })[0];
+};
 
 // Default settings
 App.prototype.state = {

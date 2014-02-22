@@ -153,3 +153,16 @@
     margin-right: $offset;
   }
 }
+
+@mixin pseudoLink($color: 'silver', $hoverColor: '') {
+  cursor: pointer;
+  color: $color;
+  border-bottom: 1px dotted $color;
+
+  @if $hoverColor {
+    &:hover {
+      color: $hoverColor;
+      border-bottom-color: $hoverColor;
+    }
+  }
+}
