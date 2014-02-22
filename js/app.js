@@ -53,24 +53,25 @@ App.prototype.state = {
             keyAction   : true,
             hotKey      : 'Ctrl+Shift+X'
         },
-        vendorBlock: {
+        vendorBlock     : {
             collapsed   : false,
             activeVendor: 'google',
             langFrom    : 'auto',
             langTo      : navigator.language.split('-')[0]
         },
-        popupStyle: {
+        popupStyle      : {
             collapsed  : false,
             activeTheme: Object.keys(themes)[0],
             themes     : themes,
             customTheme: null
         },
-        siteExclusions: {
+        siteExclusions  : {
             collapsed: true,
             links    : ['acid3.acidtests.org']
         }
     },
     userInputContainer: {
+        rememberText: true,
         text: ''
     }
 };

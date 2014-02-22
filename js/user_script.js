@@ -13,7 +13,7 @@ var UserScript = function () {
         urlMask = UTILS.escapeReg(urlMask, '*').replace(/\*/g, '[^/]+');
         return new RegExp(urlMask, 'i').test(document.URL);
     });
-    if (!excluded) this.init();
+    if (!excluded) this.inject();
 };
 
 Object.defineProperty(UserScript.prototype, 'channel', {
@@ -27,7 +27,7 @@ Object.defineProperty(UserScript.prototype, 'channel', {
 });
 
 /** @private */
-UserScript.prototype.init = function () {
+UserScript.prototype.inject = function () {
     this.settings = APP.get('settingsContainer.popupDefinitions');
     this.selection = window.getSelection();
     this.payloadId = 0;

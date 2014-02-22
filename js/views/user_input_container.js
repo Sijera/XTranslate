@@ -89,9 +89,18 @@ UserInputContainer.prototype.setText = function (text) {
 };
 
 /** @private */
+UserInputContainer.prototype.saveText = function (text) {
+    if (!this.state.rememberText) {
+        if (this.state.text) this.state.text = '';
+        return;
+    }
+    this.state.text = text;
+};
+
+/** @private */
 UserInputContainer.prototype.translateText = function (text) {
     if (text = this.getText(text)) {
-        this.state.text = text;
+        this.saveText(text);
         if (this.transTextReq && this.transTextReq.state() == 'pending') this.transTextReq.reject();
         this.transTextReq = APP.getVendor(this.activeVendor).translateText(text).done(this.onTranslationDone);
     }
@@ -117,22 +126,23 @@ UserInputContainer.prototype.onLinkClick = function (text) {
 
 /** @private */
 UserInputContainer.prototype.onInput = function () {
-    var text = this.translateTextLazy();
-    if (!text) {
-        this.state.text = '';
+    this.translateTextLazy();
+    if (!this.getText()) {
+        this.saveText('');
         this.dataView.hide();
     }
 };
 
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
+    if (!this.getText()) return;
     this.dataView.parseData(data).show();
     if (document.activeElement === this.$text[0]) this.$text.blur().focus();
 };
 
 UserInputContainer.prototype.show = function () {
     UserInputContainer.superclass.show.apply(this, arguments);
-    this.setText(this.state.text);
+    if (this.state.rememberText) this.setText(this.state.text);
     this.$text.focus();
 };
 

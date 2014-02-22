@@ -2,12 +2,25 @@
 
 .settingsDisplayOptions {
   .hotKey {
-    vertical-align: middle;
     text-transform: lowercase;
     cursor: help;
 
     &:hover, &:focus {
       color: silver;
+    }
+  }
+
+  .checkBox {
+    &:not(:first-child) {
+      margin-top: 8px;
+    }
+    .box {
+      float: left;
+      margin-right: $spacing;
+    }
+    .label {
+      display: block;
+      overflow: hidden;
     }
   }
 

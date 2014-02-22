@@ -118,7 +118,7 @@ VendorDataView.prototype.wrapHint = function (text, title) {
 
 /** @private */
 VendorDataView.prototype.onLinkClick = function (e) {
-    this.trigger('linkClick', $(e.target).text());
+    this.trigger('linkClick', $(e.currentTarget).text());
 };
 
 /** @private */

@@ -21,16 +21,20 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
     SettingsDisplayOptions.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsDisplayOptions');
 
-    this.autoFocus = new CheckBox({label: __(65), checked: state.autoFocus})
-        .on('change', function (value) { state.autoFocus = value; })
-        .appendTo(this.$content);
-
     this.autoPlay = new CheckBox({label: __(15), checked: state.autoPlay})
         .on('change', function (value) { state.autoPlay = value; })
         .appendTo(this.$content);
 
+    this.autoFocus = new CheckBox({label: __(65), checked: state.autoFocus})
+        .on('change', function (value) { state.autoFocus = value; })
+        .appendTo(this.$content);
+
     this.showPlayIcon = new CheckBox({label: __(16), checked: state.showPlayIcon })
         .on('change', function (value) { state.showPlayIcon = value; })
+        .appendTo(this.$content);
+
+    this.rememberText = new CheckBox({label: __(67), checked: APP.get('userInputContainer.rememberText') })
+        .on('change', function (value) { APP.set('userInputContainer.rememberText', value); })
         .appendTo(this.$content);
 
     this.selectAction = new CheckBox({label: __(8), checked: state.selectAction, className: 'sep'})
@@ -48,12 +52,13 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
     this.$hotKey = $('<span class="hotKey" contenteditable="true"/>')
         .text(state.hotKey)
         .attr('title', __(10))
+        .on('click', false)
         .on('keydown', this.onDefineKey.bind(this))
-        .appendTo(this.keyAction.$container);
+        .appendTo(this.keyAction.$label);
 
     this.$hotKeyHint = $('<i class="hint"> *</i>')
         .attr('title', __(64))
-        .appendTo(this.keyAction.$container);
+        .appendTo(this.keyAction.$label);
 };
 
 /** @private */
