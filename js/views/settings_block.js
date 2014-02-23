@@ -28,7 +28,7 @@ SettingsBlock.prototype.createDom = function (state) {
 
 /** @private */
 SettingsBlock.prototype.bindEvents = function () {
-    this.$icon.on('click', this.onIconClick.bind(this));
+    this.$icon.on('click', this.onClickShare.bind(this));
 };
 
 SettingsBlock.prototype.setCollapsed = function (val) {
@@ -41,7 +41,7 @@ SettingsBlock.prototype.setTitle = function (title) {
 };
 
 /** @private */
-SettingsBlock.prototype.onIconClick = function () {
+SettingsBlock.prototype.onClickShare = function () {
     this.setCollapsed(!this.state.collapsed);
 };
 

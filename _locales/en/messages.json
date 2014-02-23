@@ -208,16 +208,16 @@
         "description": "A tooltip title for the color picker box"
     },
     "60": {
-        "message"    : "If you like the app, please support us and future releases. $1 or $2. Thank you.",
+        "message"    : "Dear friend. If you like the app, please support us!",
         "description": "A text in the footer"
     },
     "61": {
-        "message"    : "Rate 5 stars",
-        "description": "First placeholder in the footer"
+        "message"    : "['$1', 'Leave a review'], ['$2', 'make any donation'] or tell your friends:",
+        "description": "A text in the footer"
     },
     "62": {
-        "message"    : "make a donation",
-        "description": "Second placeholder in the footer"
+        "message"    : "Thank you!",
+        "description": "A text in the footer"
     },
     "63": {
         "message"    : "Start typing to get translation",

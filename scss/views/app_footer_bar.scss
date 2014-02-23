@@ -5,7 +5,28 @@
   color: silver;
   font-style: italic;
 
-  a {
+  .shareLinks {
     white-space: nowrap;
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 $spacing;
+
+    a {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      vertical-align: middle;
+      background: no-repeat center;
+
+      @each $shareIcon in fb, vk, tw, gp {
+        &.#{$shareIcon} {
+          background-image: url('/img/social/#{$shareIcon}.png');
+        }
+      }
+
+      &:not(:last-child) {
+        margin-right: 3px;
+      }
+    }
   }
 }
