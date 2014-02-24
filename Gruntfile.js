@@ -114,7 +114,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-copy');
 
     // Register tasks
-    grunt.registerTask('build', ['browserify', 'uglify', 'sass', 'copy']);
+    grunt.registerTask('build', function (param) {
+        var tasks = ['browserify', 'sass', 'copy'];
+        if (param !== 'nocompress') tasks.splice(1, 0, 'uglify');
+        grunt.task.run(tasks);
+    });
 
     grunt.registerTask('pack', 'Pack the files in one file chrome extension format (*.crx)', function (pemPath) {
         var done = this.async(),
