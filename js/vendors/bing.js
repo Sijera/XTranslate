@@ -48,7 +48,7 @@ Bing.prototype.parseData = function (data) {
 
 /** @const */
 var LANGUAGES = {
-    "auto"  : "Auto detect",
+    "auto"  : "Auto-Detect",
     "ar"    : "Arabic",
     "bg"    : "Bulgarian",
     "ca"    : "Catalan",

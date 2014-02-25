@@ -65,9 +65,12 @@ Google.prototype.parseData = function (data) {
     });
 };
 
+// Actual list of supported languages:
+// http://translate.googleapis.com/translate_a/l?client=te&hl=en&cb=console.log
+
 /** @const */
 var LANGUAGES = {
-    "auto" : "Auto detect",
+    "auto" : "Detect language",
     "af"   : "Afrikaans",
     "sq"   : "Albanian",
     "ar"   : "Arabic",
@@ -97,11 +100,13 @@ var LANGUAGES = {
     "el"   : "Greek",
     "gu"   : "Gujarati",
     "ht"   : "Haitian Creole",
+    "ha"   : "Hausa",
     "iw"   : "Hebrew",
     "hi"   : "Hindi",
     "hmn"  : "Hmong",
     "hu"   : "Hungarian",
     "is"   : "Icelandic",
+    "ig"   : "Igbo",
     "id"   : "Indonesian",
     "ga"   : "Irish",
     "it"   : "Italian",
@@ -117,16 +122,21 @@ var LANGUAGES = {
     "mk"   : "Macedonian",
     "ms"   : "Malay",
     "mt"   : "Maltese",
+    "mi"   : "Maori",
     "mr"   : "Marathi",
+    "mn"   : "Mongolian",
+    "ne"   : "Nepali",
     "no"   : "Norwegian",
     "fa"   : "Persian",
     "pl"   : "Polish",
     "pt"   : "Portuguese",
+    "pa"   : "Punjabi",
     "ro"   : "Romanian",
     "ru"   : "Russian",
     "sr"   : "Serbian",
     "sk"   : "Slovak",
     "sl"   : "Slovenian",
+    "so"   : "Somali",
     "es"   : "Spanish",
     "sw"   : "Swahili",
     "sv"   : "Swedish",
@@ -138,7 +148,9 @@ var LANGUAGES = {
     "ur"   : "Urdu",
     "vi"   : "Vietnamese",
     "cy"   : "Welsh",
-    "yi"   : "Yiddish"
+    "yi"   : "Yiddish",
+    "yo"   : "Yoruba",
+    "zu"   : "Zulu"
 };
 
 exports.Google = Google;
