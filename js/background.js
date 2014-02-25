@@ -45,7 +45,6 @@ Background.prototype.onMessage = function (channel, msg) {
             break;
 
         case 'translate':
-            APP.vendor.abort();
             APP.vendor.translateText(payload).done(function (data) {
                 msg.payload = data;
                 channel.sendMessage(msg);

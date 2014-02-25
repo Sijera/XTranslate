@@ -6,13 +6,14 @@ var inherit = require('./utils').inherit,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
     Yandex = require('./vendors/yandex').Yandex,
+    Opera = require('./extension/opera').Opera,
     Chrome = require('./extension/chrome').Chrome,
     EventDriven = require('./events').EventDriven;
 
 /**
  * XTranslate (browser extension) - Easy translate text on web pages
  * @constructor
- * @property {Chrome} extension
+ * @property {Chrome|Opera} extension
  * @property {Google|Yandex|Bing} vendor
  */
 var App = function (options) {
@@ -21,7 +22,7 @@ var App = function (options) {
 
     this.autoSave = options.autoSave;
     this.vendors = [new Google(), new Yandex(), new Bing()];
-    this.extension = new Chrome();
+    this.extension = this.getExtension();
     this.localization = this.extension.getText.bind(this.extension);
     Object.defineProperty(this, 'vendor', {get: this.getVendor});
 
@@ -29,6 +30,14 @@ var App = function (options) {
 };
 
 inherit(App, EventDriven);
+
+/** @private */
+App.prototype.getExtension = function () {
+    var vendor = navigator.vendor.toLowerCase();
+    if (vendor.indexOf('google') > -1) return new Chrome();
+    if (vendor.indexOf('opera') > -1) return new Opera();
+    return null;
+};
 
 App.prototype.getVendor = function (name) {
     name = name || this.get('settingsContainer.vendorBlock.activeVendor');

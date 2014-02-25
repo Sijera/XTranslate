@@ -14,7 +14,7 @@ var Bing = function (options) {
     this.url = 'http://bing.com/translator/';
     this.apiUrl = 'http://api.microsofttranslator.com/v2';
     this.appId = 'C99C654F52B9010F7B789D98343831212B58CB34';
-    this.urlTextToSpeech = this.apiUrl + '/http.svc/Speak?format=audio/mp3&options=MaxQuality&text={0}&language={1}&appId='+ this.appId;
+    this.urlTextToSpeech = 'https://api.microsofttranslator.com/v2/http.svc/Speak?format=audio/mp3&options=MaxQuality&text={0}&language={1}&appId='+ this.appId;
     this.langList = $.extend({}, this.langList, LANGUAGES);
 };
 

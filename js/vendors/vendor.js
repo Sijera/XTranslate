@@ -22,6 +22,7 @@ inherit(Vendor, EventDriven);
 
 Vendor.prototype.translateText = function (text) {
     this.swapped = false;
+    if (this.request && this.request.state() === 'pending') this.abort();
     return this.loadData({text: text});
 };
 
@@ -35,6 +36,7 @@ Vendor.prototype.makeRequest = function (data) {
     return (this.request = $.ajax(data));
 };
 
+/** @protected */
 Vendor.prototype.abort = function () {
     this.request.abort();
 };
@@ -94,31 +96,12 @@ Vendor.prototype.playText = function (text) {
     text = text || this.lastReqData.text;
     var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
-
     var url = this.getAudioUrl(text, lang);
-    if (url) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', url, true);
-        xhr.responseType = 'blob';
-        xhr.send();
-        xhr.onload = function () {
-            var reader = new FileReader();
-            reader.readAsDataURL(xhr.response);
-            reader.addEventListener('loadend', function () {
-                var base64DataUrl = reader.result;
-                console.info(reader);
-                this.audio = new Audio(base64DataUrl);
-                this.audio.play();
-                console.info(base64DataUrl);
-            }.bind(this), false);
-        }.bind(this);
-    }
+    if (url) APP.extension.playAudio(url);
 };
 
 Vendor.prototype.stopPlaying = function () {
-    if (!this.audio) return;
-    this.audio.pause();
-    delete this.audio;
+    APP.extension.stopAudio();
 };
 
 /**

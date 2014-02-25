@@ -4,7 +4,6 @@ var inherit = require('../utils').inherit,
     Extension = require('./extension').Extension;
 
 /**
- * Google Chrome Extensions API wrapper
  * @constructor
  */
 var Chrome = function (options) {
@@ -122,6 +121,17 @@ Chrome.prototype.setIcon = function (path) {
 
 Chrome.prototype.setTitle = function (title) {
     chrome.browserAction.setTitle({title: title});
+};
+
+Chrome.prototype.playAudio = function (src) {
+    this.audio = new Audio(src);
+    this.audio.play();
+};
+
+Chrome.prototype.stopAudio = function () {
+    if (!this.audio) return;
+    this.audio.pause();
+    delete this.audio;
 };
 
 exports.Chrome = Chrome;
