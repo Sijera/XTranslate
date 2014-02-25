@@ -45,9 +45,8 @@ Background.prototype.onMessage = function (channel, msg) {
             break;
 
         case 'translate':
-            var prevReq = this.transTextReq;
-            if (prevReq && prevReq.state() == 'pending') prevReq.reject('stop waiting previous request');
-            this.transTextReq = APP.vendor.translateText(payload).done(function (data) {
+            APP.vendor.abort();
+            APP.vendor.translateText(payload).done(function (data) {
                 msg.payload = data;
                 channel.sendMessage(msg);
             });

@@ -32,7 +32,11 @@ Vendor.prototype.translateText = function (text) {
  */
 Vendor.prototype.makeRequest = function (data) {
     // must be overridden!
-    return $.Deferred();
+    return (this.request = $.ajax(data));
+};
+
+Vendor.prototype.abort = function () {
+    this.request.abort();
 };
 
 /** @protected */
@@ -58,8 +62,12 @@ Vendor.prototype.loadData = function (data) {
  */
 Vendor.prototype.parseData = function (response) {
     var ttsEnabled = !!this.getAudioUrl(this.lastReqData.text, response.langSource);
-    this.lastResData = $.extend({ttsEnabled: ttsEnabled, sourceText: this.lastReqData.text}, response);
-    return this.lastResData;
+    var data = $.extend({
+        ttsEnabled: ttsEnabled,
+        vendor    : this.name,
+        sourceText: this.lastReqData.text
+    }, response);
+    return (this.lastResData = data);
 };
 
 /** @protected */
@@ -98,6 +106,7 @@ Vendor.prototype.playText = function (text) {
             reader.readAsDataURL(xhr.response);
             reader.addEventListener('loadend', function () {
                 var base64DataUrl = reader.result;
+                console.info(reader);
                 this.audio = new Audio(base64DataUrl);
                 this.audio.play();
                 console.info(base64DataUrl);

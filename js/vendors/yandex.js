@@ -44,9 +44,26 @@ Yandex.prototype.makeRequest = function (data) {
         }
     });
 
-    return $.when(translateReq, dictReq).then(null, function failed() {
-        return $.when(translateReq, ['']);
+    $.when(translateReq, dictReq).then(
+        function ok(transRes, dicRes) {
+            this.request.resolve(transRes[0], dicRes[0]);
+        }.bind(this),
+
+        function failed(jqXHR, status, errorText) {
+            if (status === 'abort') return;
+            translateReq.done(function (translation) { this.request.resolve(translation) }.bind(this))
+        }.bind(this)
+    );
+
+    this.request = $.Deferred().fail(function () {
+        translateReq.abort();
+        dictReq.abort();
     });
+    return this.request;
+};
+
+Yandex.prototype.abort = function () {
+    this.request.reject();
 };
 
 /** @private */
@@ -57,8 +74,6 @@ var parserHelpers = {
 /** @private */
 Yandex.prototype.parseData = function (translation, dictionary) {
     var response = {};
-    translation = translation[0];
-    dictionary = dictionary[0];
 
     // base translation
     if (translation.code === 200) {
@@ -68,8 +83,9 @@ Yandex.prototype.parseData = function (translation, dictionary) {
             langDetected: translation.detected.lang
         });
     }
+
     // parse dictionary
-    if (Array.isArray(dictionary.def)) {
+    if (dictionary) {
         response.dictionary = dictionary.def.map(function (dictData) {
             if (!response.transcription && dictData.ts) response.transcription = dictData.ts;
             return {

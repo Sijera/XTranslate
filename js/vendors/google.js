@@ -21,7 +21,7 @@ inherit(Google, Vendor);
 
 /** @private */
 Google.prototype.makeRequest = function (data) {
-    return $.ajax({
+    return (this.request = $.ajax({
         url : this.url + '/translate_a/t?client=t&ie=UTF-8&sc=1',
         dataType: 'json',
         dataFilter: this.dataFilter,
@@ -31,7 +31,7 @@ Google.prototype.makeRequest = function (data) {
             sl: data.langFrom, // source language
             tl: data.langTo   // translate to language
         }
-    });
+    }));
 };
 
 /** @private */

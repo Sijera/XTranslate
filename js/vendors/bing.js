@@ -22,7 +22,7 @@ inherit(Bing, Vendor);
 
 /** @private */
 Bing.prototype.makeRequest = function (data) {
-    return $.ajax({
+    return (this.request = $.ajax({
         url: this.apiUrl + '/ajax.svc/TranslateArray',
         dataType: 'json',
         data: {
@@ -31,7 +31,7 @@ Bing.prototype.makeRequest = function (data) {
             from : data.langFrom !== this.autoDetect ? data.langFrom : '',
             to   : data.langTo
         }
-    });
+    }));
 };
 
 /** @private */

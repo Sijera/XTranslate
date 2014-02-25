@@ -101,8 +101,7 @@ UserInputContainer.prototype.saveText = function (text) {
 UserInputContainer.prototype.translateText = function (text) {
     if (text = this.getText(text)) {
         this.saveText(text);
-        if (this.transTextReq && this.transTextReq.state() == 'pending') this.transTextReq.reject();
-        this.transTextReq = APP.getVendor(this.activeVendor).translateText(text).done(this.onTranslationDone);
+        APP.getVendor(this.activeVendor).translateText(text).done(this.onTranslationDone);
     }
     return text;
 };
@@ -135,7 +134,7 @@ UserInputContainer.prototype.onInput = function () {
 
 /** @private */
 UserInputContainer.prototype.onTranslationDone = function (data) {
-    if (!this.getText()) return;
+    if (data.sourceText !== this.getText() || data.vendor !== this.activeVendor) return;
     this.dataView.parseData(data).show();
     if (document.activeElement === this.$text[0]) this.$text.blur().focus();
 };
