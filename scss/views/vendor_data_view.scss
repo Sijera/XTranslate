@@ -42,8 +42,11 @@
     }
   }
 
-  .hint[title] {
-    cursor: help;
+  .hint {
+    display: inline;
+    &[title] {
+      cursor: help;
+    }
   }
 
   .link {
