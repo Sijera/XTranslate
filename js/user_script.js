@@ -128,7 +128,7 @@ UserScript.prototype.getOverText= function () {
         var nodeName = overNode.nodeName.toLowerCase();
         if (nodeName == 'textarea' || nodeName == 'input') text = overNode.value || overNode.placeholder;
         else if (nodeName === 'img') text = overNode.title || overNode.alt;
-        else text = overNode.innerText;
+        else text = overNode.innerText || overNode.title;
 
         var range = new Range();
         overNode.childNodes.length ? range.selectNodeContents(overNode) : range.selectNode(overNode);
