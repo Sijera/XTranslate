@@ -51,7 +51,8 @@ Yandex.prototype.makeRequest = function (data) {
 
         function failed(jqXHR, status, errorText) {
             if (status === 'abort') return;
-            translateReq.done(function (translation) { this.request.resolve(translation) }.bind(this))
+            var data = translateReq.responseJSON;
+            if (data) this.request.resolve(data);
         }.bind(this)
     );
 
@@ -82,6 +83,10 @@ Yandex.prototype.parseData = function (translation, dictionary) {
             langSource  : translation.lang.split('-')[0],
             langDetected: translation.detected.lang
         });
+    }
+    else {
+        // handle error
+        response.translation = translation.message;
     }
 
     // parse dictionary

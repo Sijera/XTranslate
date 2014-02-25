@@ -1,7 +1,7 @@
 {
     "name"            : "XTranslate",
     "description"     : "__MSG_0__",
-    "version"         : "1.0.7",
+    "version"         : "1.0.8",
     "manifest_version": 2,
     "default_locale"  : "en",
     "options_page"    : "options.html",
@@ -36,9 +36,9 @@
 
     "permissions": [
         "tabs", "storage",
-        "http://translate.google.com/",
-        "http://translate.yandex.com/",
-        "http://tts.voicetech.yandex.net/",
-        "http://api.microsofttranslator.com/"
+        "*://translate.google.com/",
+        "*://translate.yandex.net/",
+        "*://tts.voicetech.yandex.net/",
+        "*://api.microsofttranslator.com/"
     ]
 }

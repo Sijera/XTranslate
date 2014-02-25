@@ -70,7 +70,7 @@ Google.prototype.parseData = function (data) {
 
 /** @const */
 var LANGUAGES = {
-    "auto" : "Detect language",
+    "auto" : "Auto-Detect",
     "af"   : "Afrikaans",
     "sq"   : "Albanian",
     "ar"   : "Arabic",

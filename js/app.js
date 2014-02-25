@@ -34,9 +34,8 @@ inherit(App, EventDriven);
 /** @private */
 App.prototype.getExtension = function () {
     var vendor = navigator.vendor.toLowerCase();
-    if (vendor.indexOf('google') > -1) return new Chrome();
     if (vendor.indexOf('opera') > -1) return new Opera();
-    return null;
+    return new Chrome();
 };
 
 App.prototype.getVendor = function (name) {
