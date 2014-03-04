@@ -124,6 +124,7 @@ Chrome.prototype.setTitle = function (title) {
 };
 
 Chrome.prototype.playAudio = function (src) {
+    this.stopAudio();
     this.audio = new Audio(src);
     this.audio.play();
 };

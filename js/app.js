@@ -11,7 +11,7 @@ var inherit = require('./utils').inherit,
     EventDriven = require('./events').EventDriven;
 
 /**
- * XTranslate (browser extension) - Easy translate text on web pages
+ * XTranslate (chromium-based browser extension) - Easy translate text on web pages
  * @constructor
  * @property {Chrome|Opera} extension
  * @property {Google|Yandex|Bing} vendor
