@@ -18,18 +18,8 @@ Out of the box it supports three translation vendors:
 
 You can choose your favorite!
 
-Screenshots
------------
-To understand what the heck is it and how it looks like, check out these screenshots:
-
-https://raw.github.com/ixrock/XTranslate/master/sshots/sshot1.png
-https://raw.github.com/ixrock/XTranslate/master/sshots/sshot2.png
-
-
 Help the project
 -----------
 The extension is open-source and free, so if someone can do something from the list below, I will be appreciate:
 * Draw promotional images for chrome web-store (440x280, 920x680, 1400x560)
 * Translate the extension's UI in [other languages](https://github.com/ixrock/XTranslate/tree/master/_locales)
-
-Peace!
