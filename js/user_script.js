@@ -87,14 +87,16 @@ UserScript.prototype.registerAction = function (name, handler) {
 /** @private */
 UserScript.prototype.sendAction = function (action, payload) {
     this.channel.sendMessage({
-        id     : this.payloadId++,
-        action : action,
-        payload: payload
+        id        : this.payloadId++,
+        vendorName: this.lastActiveVendor || APP.vendor.name,
+        action    : action,
+        payload   : payload
     });
 };
 
 /** @private */
 UserScript.prototype.onMessage = function (msg) {
+    this.lastActiveVendor = msg.vendorName;
     var action = msg.action;
     if (this.actions[action]) this.actions[action].call(this, msg.payload);
 };
@@ -107,6 +109,7 @@ UserScript.prototype.onSync = function (data) {
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
+    this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
     this.popup.parseData(data).show();
     this.popup.setAnchor(this.$app);
     this.reselectText();
@@ -198,6 +201,7 @@ UserScript.prototype.onShowPopup = function () {
 UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
     this.stopPlayingAction();
+    delete this.lastActiveVendor;
 };
 
 /** @private */
@@ -216,7 +220,6 @@ UserScript.prototype.isEditable = function (elem) {
 /** @private */
 UserScript.prototype.translateText = function (e, text) {
     if ((text = this.getText(text)) && this.isOutside(e.target)) {
-        this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
         this.translateAction(text);
     }
 };

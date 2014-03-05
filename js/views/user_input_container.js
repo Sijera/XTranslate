@@ -42,7 +42,7 @@ UserInputContainer.prototype.createDom = function () {
             .toggleClass(ACTIVE_VENDOR_CLASS, vendor.name === this.activeVendor)
             .find('b')
                 .text(vendor.title)
-                .on('click', this.setVendor.bind(this, vendor.name))
+                .on('click', this.setVendor.bind(this, vendor.name));
 
         this.vendors.push(vendorData);
     }, this);
@@ -67,7 +67,7 @@ UserInputContainer.prototype.bindEvents = function () {
 /** @private */
 UserInputContainer.prototype.setVendor = function (vendorName) {
     if (vendorName === this.activeVendor) return;
-    this.activeVendor = this.dataView.activeVendor = vendorName;
+    this.activeVendor = vendorName;
     this.vendors.forEach(function (vendorData) {
         vendorData.$link.toggleClass(ACTIVE_VENDOR_CLASS, vendorData.name === vendorName);
     });

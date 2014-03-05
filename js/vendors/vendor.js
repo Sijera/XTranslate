@@ -22,6 +22,7 @@ inherit(Vendor, EventDriven);
 
 Vendor.prototype.translateText = function (text) {
     this.swapped = false;
+    this.lastResData.resolved = false;
     if (this.request && this.request.state() === 'pending') this.abort();
     return this.loadData({text: text});
 };
@@ -46,7 +47,8 @@ Vendor.prototype.loadData = function (data) {
     var lastReq = this.lastReqData;
     data = $.extend(this.getLang(), data);
 
-    if (data.text === lastReq.text &&
+    if (this.lastResData.resolved &&
+        data.text === lastReq.text &&
         data.langFrom == lastReq.langFrom &&
         data.langTo == lastReq.langTo) {
         return $.Deferred().resolve(this.lastResData);
@@ -64,12 +66,12 @@ Vendor.prototype.loadData = function (data) {
  */
 Vendor.prototype.parseData = function (response) {
     var ttsEnabled = !!this.getAudioUrl(this.lastReqData.text, response.langSource);
-    var data = $.extend({
+    return (this.lastResData = $.extend({
+        resolved  : true,
         ttsEnabled: ttsEnabled,
         vendor    : this.name,
         sourceText: this.lastReqData.text
-    }, response);
-    return (this.lastResData = data);
+    }, response));
 };
 
 /** @protected */

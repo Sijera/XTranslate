@@ -59,7 +59,7 @@ Chrome.prototype.onConnect = function (callback) {
 /** @private */
 Chrome.prototype.createChannel = function (port) {
     var channel = {port: port};
-    channel.sendMessage = this.sendMessage;
+    channel.sendMessage = this.sendChannelMessage;
     channel.onMessage = this.onChannelMessage;
     channel.onDisconnect = this.onChannelDisconnect;
     channel.disconnect = port.disconnect.bind(port);
@@ -67,7 +67,7 @@ Chrome.prototype.createChannel = function (port) {
 };
 
 /** @private */
-Chrome.prototype.sendMessage = function (msg) {
+Chrome.prototype.sendChannelMessage = function (msg) {
     this.port.postMessage(msg);
 };
 
@@ -88,9 +88,13 @@ Chrome.prototype.onMessage = function (callback) {
 Chrome.prototype.broadcastMessage = function (msg) {
     chrome.tabs.query({}, function (tabs) {
         tabs.forEach(function (tab) {
-            chrome.tabs.sendMessage(tab.id, msg);
-        });
-    });
+            this.sendTabMessage(tab.id, msg);
+        }, this);
+    }.bind(this));
+};
+
+Chrome.prototype.sendTabMessage = function (tabId, msg) {
+    chrome.tabs.sendMessage(tabId, msg);
 };
 
 /**
@@ -133,6 +137,30 @@ Chrome.prototype.stopAudio = function () {
     if (!this.audio) return;
     this.audio.pause();
     delete this.audio;
+};
+
+Chrome.prototype.contextMenuCreate = function (createProperties, callback) {
+    return chrome.contextMenus.create(createProperties, callback);
+};
+
+Chrome.prototype.contextMenuUpdate = function (id, updateProperties, callback) {
+    return chrome.contextMenus.update(id, updateProperties, callback);
+};
+
+Chrome.prototype.contextMenuRemove = function (menuItemId, callback) {
+    return chrome.contextMenus.remove(menuItemId, callback);
+};
+
+Chrome.prototype.contextMenuRemoveAll = function (callback) {
+    return chrome.contextMenus.removeAll(callback);
+};
+
+Chrome.prototype.contextMenuOnClick = function (callback) {
+    return chrome.contextMenus.onClicked.addListener(callback);
+};
+
+Chrome.prototype.contextMenuRemoveClick = function (callback) {
+    return chrome.contextMenus.onClicked.removeListener(callback);
 };
 
 exports.Chrome = Chrome;

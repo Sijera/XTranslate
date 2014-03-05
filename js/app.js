@@ -38,6 +38,7 @@ App.prototype.getExtension = function () {
     return new Chrome();
 };
 
+/** @return {Vendor|*} */
 App.prototype.getVendor = function (name) {
     name = name || this.get('settingsContainer.vendorBlock.activeVendor');
     return this.vendors.filter(function (vendor) {
@@ -59,6 +60,8 @@ App.prototype.state = {
             clickAction : true,
             selectAction: false,
             keyAction   : true,
+            spellCheck  : true,
+            contextMenu : true,
             hotKey      : 'Ctrl+Shift+X'
         },
         vendorBlock     : {

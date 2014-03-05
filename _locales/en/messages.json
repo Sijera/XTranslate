@@ -238,5 +238,17 @@
     "67": {
         "message"    : "Restore typed text after reloading in second tab",
         "description": "A label for checkbox in the display options"
+    },
+    "68": {
+        "message"    : "Show suggestions about spelling correction",
+        "description": "Ability to turn off suggestions to correct spelling in the text (Google only)"
+    },
+    "69": {
+        "message"    : "Show in context menu when selected text",
+        "description": "Don't show the extension item in the context menu (applicable only when text is selected)"
+    },
+    "70": {
+        "message"    : "Translate with $1",
+        "description": "An item of the context menu"
     }
 }

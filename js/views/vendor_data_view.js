@@ -11,7 +11,6 @@ var VendorDataView = function (options) {
     VendorDataView.superclass.constructor.call(this, options);
 
     this.showFullData = options.showFullData;
-    this.activeVendor = APP.vendor.name;
 
     this.createDom();
     this.bindEvents();
@@ -37,7 +36,6 @@ VendorDataView.prototype.bindEvents = function () {
     this.$playSound.on('click', this.onPlayIconClick.bind(this));
     this.$container.on('click', '.link', this.onLinkClick.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
-    APP.on('change:settingsContainer.vendorBlock.activeVendor', this.refreshPlayIcon, this);
 };
 
 /**
@@ -46,10 +44,11 @@ VendorDataView.prototype.bindEvents = function () {
  * @return VendorDataView
  */
 VendorDataView.prototype.parseData = function (data) {
-    var vendor = APP.getVendor(this.activeVendor),
+    var vendor = APP.getVendor(data.vendor),
         lang = data.langSource,
         ts = data.transcription,
-        title = lang ? __(49, [vendor.langList[lang], vendor.title]) : '';
+        title = lang ? __(49, [vendor.langList[lang], vendor.title]) : '',
+        spellCheckData = APP.get('settingsContainer.popupDefinitions.spellCheck') ? data.spellCheck : null;
 
     this.$playSound
         .attr('title', __(48) + ': ' + data.sourceText)
@@ -62,7 +61,7 @@ VendorDataView.prototype.parseData = function (data) {
 
     this.$dictionary.empty();
     (data.dictionary || []).forEach(this.addDictionary, this);
-    this.spellCorrection(data.spellCheck);
+    this.spellCorrection(spellCheckData);
 
     return this;
 };
@@ -128,9 +127,8 @@ VendorDataView.prototype.onPlayIconClick = function (e) {
 
 /** @private */
 VendorDataView.prototype.refreshPlayIcon = function () {
-    var showIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
-    var featureAvail = !!APP.getVendor(this.activeVendor).urlTextToSpeech;
-    this.$playSound.toggle(showIcon && featureAvail);
+    this.showPlayIcon = APP.get('settingsContainer.popupDefinitions.showPlayIcon');
+    this.$playSound.toggle(this.showPlayIcon);
 };
 
 exports.VendorDataView = VendorDataView;

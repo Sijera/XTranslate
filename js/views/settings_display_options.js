@@ -25,12 +25,20 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .on('change', function (value) { state.autoPlay = value; })
         .appendTo(this.$content);
 
-    this.autoFocus = new CheckBox({label: __(65), checked: state.autoFocus})
-        .on('change', function (value) { state.autoFocus = value; })
-        .appendTo(this.$content);
-
     this.showPlayIcon = new CheckBox({label: __(16), checked: state.showPlayIcon })
         .on('change', function (value) { state.showPlayIcon = value; })
+        .appendTo(this.$content);
+
+    this.spellCheck = new CheckBox({label: __(68), checked: state.spellCheck, className: 'sep'})
+        .on('change', function (value) { state.spellCheck = value; })
+        .appendTo(this.$content);
+
+    this.contextMenu = new CheckBox({label: __(69), checked: state.contextMenu})
+        .on('change', function (value) { state.contextMenu = value; })
+        .appendTo(this.$content);
+
+    this.autoFocus = new CheckBox({label: __(65), checked: state.autoFocus})
+        .on('change', function (value) { state.autoFocus = value; })
         .appendTo(this.$content);
 
     this.rememberText = new CheckBox({label: __(67), checked: APP.get('userInputContainer.rememberText') })

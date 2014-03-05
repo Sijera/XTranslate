@@ -21,7 +21,10 @@ inherit(Popup, FlyingPanel);
 Popup.prototype.createDom = function () {
     this.$container.addClass('popup');
 
+    /** @type {ScrollBar} */
     this.scrollBar = new ScrollBar({$parent: this.$container});
+
+    /** @type {VendorDataView} */
     this.dataView = new VendorDataView({showFullData: false})
         .propagate('linkClick', this)
         .propagate('playText', this)
