@@ -22,7 +22,6 @@ inherit(Vendor, EventDriven);
 
 Vendor.prototype.translateText = function (text) {
     this.swapped = false;
-    this.lastResData.resolved = false;
     if (this.request && this.request.state() === 'pending') this.abort();
     return this.loadData({text: text});
 };
@@ -54,6 +53,7 @@ Vendor.prototype.loadData = function (data) {
         return $.Deferred().resolve(this.lastResData);
     }
 
+    this.lastResData.resolved = false;
     return this.makeRequest($.extend(this.lastReqData, data))
         .then(this.parseData.bind(this))
         .then(this.swapLang.bind(this));
