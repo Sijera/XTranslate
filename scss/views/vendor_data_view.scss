@@ -2,6 +2,8 @@
 
 .vendorDataView {
   $iconSize: 22px;
+  $iconColor: black;
+  $iconBgc: white;
   $linkColor: silver;
 
   .playIcon {
@@ -13,7 +15,42 @@
     border-radius: 50%;
     cursor: pointer;
     opacity: .5;
-    background: white no-repeat center;
+    background: $iconBgc no-repeat center;
+
+    b {
+      $symbolSize: 7px;
+      @include triangle($symbolSize, $iconColor, left, 1.2);
+      margin: -$symbolSize;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+
+      // square
+      &:before {
+        position: absolute;
+        content: '';
+        width: 2px;
+        height: 6px;
+        background: $iconColor;
+        border-right: 1px solid $iconBgc;
+        margin: -3px 0;
+      }
+
+      // arcs
+      &:after {
+        position: absolute;
+        content: '';
+        width: 10px;
+        height: 10px;
+        border: 7px double black;
+        top: -9px;
+        left: 2px;
+        border-left: 0;
+        border-top: 0;
+        border-radius: 80% 0;
+        -webkit-transform: rotate(-45deg) scale(0.6);
+      }
+    }
 
     &.disabled {
       pointer-events: none;

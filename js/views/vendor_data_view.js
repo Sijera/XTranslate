@@ -23,10 +23,7 @@ inherit(VendorDataView, UIComponent);
 VendorDataView.prototype.createDom = function () {
     this.$container.addClass('vendorDataView');
 
-    this.$playSound = $('<i class="playIcon"/>')
-        .css('background-image', 'url(' + APP.extension.getURL('img/sound.png') + ')')
-        .appendTo(this.$container);
-
+    this.$playSound = $('<i class="playIcon"><b/></i>').appendTo(this.$container);
     this.$translation = $('<div class="translation"/>').appendTo(this.$container);
     this.$dictionary = $('<dl class="dictionary"/>').appendTo(this.$container);
 };
