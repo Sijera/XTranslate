@@ -68,6 +68,8 @@ UserScript.prototype.bindEvents = function () {
     $(window)
         .on('resize', UTILS.debounce(this.onResize.bind(this), 300))
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
+        .on('contextmenu', this.onContextMenu.bind(this))
+        .on('mousedown', this.onMouseDown.bind(this))
         .on('mouseover', this.onMouseOver.bind(this))
         .on('dblclick', this.onDblClick.bind(this))
         .on('keydown', this.onKeyDown.bind(this));
@@ -151,9 +153,25 @@ UserScript.prototype.onKeyDown = function (e) {
 };
 
 /** @private */
+UserScript.prototype.onContextMenu = function (e) {
+    if (this.restoreSelection) {
+        delete this.restoreSelection;
+        this.reselectText();
+    }
+};
+
+/** @private */
+UserScript.prototype.onMouseDown = function (e) {
+    var rightClick = e.button === 2;
+    if (this.settings.contextMenu && rightClick && this.getText()) {
+        this.restoreSelection = true;
+    }
+};
+
+/** @private */
 UserScript.prototype.onMouseUp = function (e) {
-    if (this.mouseActionUsed) {
-        delete this.mouseActionUsed;
+    if (this.clickAction) {
+        delete this.clickAction;
         return;
     }
     if (this.settings.selectAction && !this.isEditable(e.target)) {
@@ -164,7 +182,7 @@ UserScript.prototype.onMouseUp = function (e) {
 /** @private */
 UserScript.prototype.onDblClick = function (e) {
     if (this.settings.clickAction && !this.isEditable(e.target)) {
-        this.mouseActionUsed = true;
+        this.clickAction = true;
         this.translateText(e);
     }
 };

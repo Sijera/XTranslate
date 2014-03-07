@@ -19,7 +19,7 @@
 
     b {
       $triangleSize: 7px;
-      @include triangle($triangleSize, $iconColor, left, 1.2);
+      @include triangle($triangleSize, $iconColor);
       margin: -$triangleSize;
       position: absolute;
       left: 50%;
