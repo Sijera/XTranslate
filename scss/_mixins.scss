@@ -1,14 +1,11 @@
 @import 'vars';
 
 @mixin with-vendors($prop, $value...) {
-  -moz-#{$prop}: $value;
   -webkit-#{$prop}: $value;
   #{$prop}: $value;
 }
 
 @mixin prop-with-vendors($prop, $value) {
-  #{$prop}: -ms-#{$value};
-  #{$prop}: -moz-#{$value};
   #{$prop}: -webkit-#{$value};
   #{$prop}: #{$value};
 }
