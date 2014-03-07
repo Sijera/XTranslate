@@ -9,11 +9,11 @@ var UTILS = require('./utils'),
  */
 var UserScript = function () {
     var links = APP.get('settingsContainer.siteExclusions.links') || [];
-    var excluded = links.some(function (urlMask) {
+    var urlExcluded = links.some(function (urlMask) {
         urlMask = UTILS.escapeReg(urlMask, '*').replace(/\*/g, '[^/]+');
         return new RegExp(urlMask, 'i').test(document.URL);
     });
-    if (!excluded) this.inject();
+    if (!urlExcluded) this.inject();
 };
 
 Object.defineProperty(UserScript.prototype, 'channel', {
@@ -162,9 +162,13 @@ UserScript.prototype.onContextMenu = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseDown = function (e) {
-    var rightClick = e.button === 2;
-    if (this.settings.contextMenu && rightClick && this.getText()) {
-        this.restoreSelection = true;
+    if (e.button === 2 /*RIGHT*/) {
+        if (this.settings.contextMenu && this.getText()) {
+            this.restoreSelection = true;
+        }
+    }
+    else if (this.lastRange) {
+        delete this.lastRange;
     }
 };
 
