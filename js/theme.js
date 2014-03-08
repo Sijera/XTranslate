@@ -126,7 +126,7 @@ var toCSS = function (theme) {
     // box
     var maxWidth = theme.maxWidth ? theme.maxWidth : 'none';
     var maxHeight = theme.maxHeight ? theme.maxHeight : 'none';
-    var padding = theme.padding + 'em';
+    var padding = Math.round(theme.fontSize * theme.padding); // convert "em" to "px"
     var boxShadowOpacity = theme.boxShadowOpacity / 100;
     var boxShadowColor = boxShadowOpacity < 1 ? hex2Rgba(theme.boxShadowColor, boxShadowOpacity) : theme.boxShadowColor;
     var boxShadow = [theme.boxShadowInner ? 'inset' : '', 0, 0, theme.boxShadowSize + 'px', boxShadowColor].join(' ');

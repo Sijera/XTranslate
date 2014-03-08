@@ -41,13 +41,13 @@
         position: absolute;
         content: '';
         width: 3px;
-        height: 5px;
-        left: 9px;
+        height: 6px;
+        left: 8px;
         top: -3px;
         border-radius: 0 100px 100px 0;
-        border: 1px solid $iconColor;
-        box-shadow: 0 0 0 2px $iconBgc, 0 0 0 3px $iconColor;
-        clip: rect(-50px 50px 50px 1px);
+        box-shadow: 0 0 0 1px white, 0 0 0 2px black, 0 0 0 3px white, 0 0 0 4px black;
+        clip: rect(-50px 50px 50px 2px);
+        background: black;
       }
     }
 
