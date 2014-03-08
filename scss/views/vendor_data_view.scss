@@ -40,15 +40,14 @@
       &:after {
         position: absolute;
         content: '';
-        width: 18px;
-        height: 18px;
-        border: 7px double $iconColor;
-        top: -9px;
-        left: 2px;
-        border-left: 0;
-        border-top: 0;
-        border-radius: 80% 0;
-        @include with-vendors(transform, rotate(-45deg) scale(0.6));
+        width: 3px;
+        height: 5px;
+        left: 9px;
+        top: -3px;
+        border-radius: 0 100px 100px 0;
+        border: 1px solid $iconColor;
+        box-shadow: 0 0 0 2px $iconBgc, 0 0 0 3px $iconColor;
+        clip: rect(-50px 50px 50px 1px);
       }
     }
 
