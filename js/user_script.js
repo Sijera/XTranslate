@@ -167,7 +167,7 @@ UserScript.prototype.onMouseDown = function (e) {
             this.restoreSelection = true;
         }
     }
-    else if (this.lastRange) {
+    else if (this.lastRange && this.isOutside(e.target)) {
         delete this.lastRange;
     }
 };
