@@ -1,0 +1,254 @@
+{
+    "0" : {
+        "message"    : "Web sayfalarındaki metinleri kolayca çevirin",
+        "description": "A description of the app in common list of extensions in Chrome"
+    },
+    "1" : {
+        "message"    : "Ayarlar",
+        "description": "Tab name in top-right corner"
+    },
+    "2" : {
+        "message"    : "Metin Girişi",
+        "description": "Tab name in top-right corner"
+    },
+    "3" : {
+        "message"    : "Görüntü seçenekleri",
+        "description": "A title for block of settings"
+    },
+    "4" : {
+        "message"    : "Çeviri sağlayıcıları",
+        "description": "A title for block of settings"
+    },
+    "5" : {
+        "message"    : "Tema yöneticisi",
+        "description": "A title for block of settings"
+    },
+    "6" : {
+        "message"    : "Harici bağlantılar",
+        "description": "A title for block of settings"
+    },
+    "7" : {
+        "message"    : "Kelimeye çift tıklandığında pencere aç",
+        "description": "A label for checkbox in settings"
+    },
+    "8" : {
+        "message"    : "Kelime(ler) seçilince bir pencere aç",
+        "description": "A label for checkbox in settings"
+    },
+    "9" : {
+        "message"    : "$1 tuşlarına bastığımda pencere aç",
+        "description": "A label for checkbox in settings"
+    },
+    "10": {
+        "message"    : "Seçili metinlerde kısayol tanımlamak için bir kombinayton belirleyin.EN az iki kombinasyon gerekli: ctrl, alt, shift, harfler (a-z) ya da numaralar (0-9) uygundur.",
+        "description": "Help how to define hotkey to make translation"
+    },
+    "11": {
+        "message"    : "$1 teması şu an kullanımda!",
+        "description": "Error message appears when user tries to save a theme with name which is already exist"
+    },
+    "12": {
+        "message"    : "Geçerli temayı kaydetmek için bir isim yazın ve [Enter]-tuşuna basın",
+        "description": "A tooltip for field with new theme name"
+    },
+    "13": {
+        "message"    : "Tema ismi görünür karakterler içermelidir",
+        "description": "Error message"
+    },
+    "14": {
+        "message"    : "Dili değiştirin",
+        "description": "Replace direction of the translation on opposite"
+    },
+    "15": {
+        "message"    : "Metinden-konuşmaya özelliğini otomatik çal",
+        "description": "A label for checkbox in settings"
+    },
+    "16": {
+        "message"    : "Popup engelleme yerine metinden-konuşmaya simgesini göster",
+        "description": "A label for checkbox in settings"
+    },
+    "18": {
+        "message"    : "Eğer eklentinin bazı sayfalarda ya da tüm sayfalarda çalışmasını istemiyorsanız, bu bağlantıları aşağıya yazın.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "19": {
+        "message"    : "Bağlantı içerisinde bir dizi tanımlamak için (*) yıldız simgesini kullanabilirsiniz, (/) taksim kullanılmaz.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "20": {
+        "message"    : "Yaptığınız değişiklik sonrası sayfayı(ları) yenilemeyi unutmayın.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "21": {
+        "message"    : "Blokları daralt ya da genişlet",
+        "description": "A title for +/- icon in right-top corner of each block"
+    },
+    "22": {
+        "message"    : "Çevrilen metin",
+        "description": "Result of translation, dummy-text in pop-up (user styles)"
+    },
+    "23": {
+        "message"    : "isim",
+        "description": "Part of speech, dummy-text in pop-up (user styles)"
+    },
+    "24": {
+        "message"    : "Kelime 1, Kelime 2, Kelime N",
+        "description": "Result of translation for specific part of speech, dummy-text in pop-up (user styles)"
+    },
+    "25": {
+        "message"    : "Tema",
+        "description": "Set of styles for pop-up block"
+    },
+    "26": {
+        "message"    : "Tema kaydetmeyi durdur",
+        "description": "Text for a button to cancel saving the theme"
+    },
+    "27": {
+        "message"    : "Daha evvel alınmış bir isimle tema kaydedemezsiniz.",
+        "description": "Error tooltip appears in case if user tries to save a theme with reserved name"
+    },
+    "28": {
+        "message"    : "Geçerli temayı kaydet",
+        "description": "Text for a button to save custom user theme"
+    },
+    "29": {
+        "message"    : "Sil",
+        "description": "Text for a button to remove the theme"
+    },
+    "30": {
+        "message"    : "Yaygın",
+        "description": "Sub-title for CSS styles of pop-up generally (padding, shadow, etc.)"
+    },
+    "31": {
+        "message"    : "Arka plan",
+        "description": "Sub-title for CSS styles relative to background (color, opacity, etc.)"
+    },
+    "32": {
+        "message"    : "Kenar",
+        "description": "Sub-title for CSS styles relative to border (color, radius, etc.)"
+    },
+    "33": {
+        "message"    : "Metin",
+        "description": "Sub-title for CSS styles relative to text (size, font, etc.)"
+    },
+    "36": {
+        "message"    : "Renk",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "37": {
+        "message"    : "Bulanıklık",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "38": {
+        "message"    : "Doğrusal gradyan kullan",
+        "description": "A label for checkbox, defines a type of gradient for CSS background"
+    },
+    "39": {
+        "message"    : "Genişlik",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "40": {
+        "message"    : "Radyus",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "41": {
+        "message"    : "Boyut",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "42": {
+        "message"    : "Yazı tipi",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "43": {
+        "message"    : "Kutu içi",
+        "description": "A title for checkbox, defines that the shadow it will be inner (inset)"
+    },
+    "47": {
+        "message"    : "Belki de kastettiğiniz şey budur: $1?",
+        "description": "Suggestion to correct a word or sentence for translation"
+    },
+    "48": {
+        "message"    : "Dinle",
+        "description": "A title tooltip for an icon to play text-to-speech"
+    },
+    "49": {
+        "message"    : "$1'den çevrildi. ($2 ile oluşturuldu.)",
+        "description": "A title tooltip for pop-up block"
+    },
+    "50": {
+        "message"    : "Gölge",
+        "description": "A sub-title for definition a box shadow for the pop-up"
+    },
+    "51": {
+        "message"    : "İçerik",
+        "description": "A sub-title for definition an inner margin inside the pop-up"
+    },
+    "52": {
+        "message"    : "Maks. genişlik",
+        "description": "A sub-title for definition a maximum width for the pop-up"
+    },
+    "53": {
+        "message"    : "Maks. yükseklik",
+        "description": "A sub-title for definition a maximum height for the pop-up"
+    },
+    "54": {
+        "message"    : "Stil",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "56": {
+        "message"    : "Bulanık radyus",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "57": {
+        "message"    : "Offset",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "59": {
+        "message"    : "Renki yumuşak bir şekilde değiştirmek için bir ya da tüm düğmelere beraberce basabilirsiniz. (Ctrl, Alt, Shift) ve  [↑] ya da  [↓] tuşu.",
+        "description": "A tooltip title for the color picker box"
+    },
+    "60": {
+        "message"    : "Sevgili arkadaşım. Eğer bu uygulamayı beğendiysen, lütfen bizi destekle!",
+        "description": "A text in the footer"
+    },
+    "61": {
+        "message"    : "['$1', 'Yorum bırak'], ['$2', 'bağış yap'] ya da arkadaşına öner:",
+        "description": "A text in the footer"
+    },
+    "62": {
+        "message"    : "Teşekkürler!",
+        "description": "A text in the footer"
+    },
+    "63": {
+        "message"    : "Çeviri için yazmaya başlayın",
+        "description": "Placeholder inside text area in the user input"
+    },
+    "64": {
+        "message"    : "Her zaman, sayfada seçilmiş bir metin olmadığında, çeviriyi görmek için kısayol tuşuna basarak ve imleç altında çeviri görebilirsiniz.	Ek olarak, eklenti ile düzenlenebilir alanlar içinde(metin kutuları gibi), seçilemez metinlerde ya da zor seçilebilir metinlerde (sayfa bağlantıları gibi), resim başlıklarında ve daha birçok yerde çevirileri yapabilirsiniz.",
+        "description": "A title for the text above"
+    },
+    "65": {
+        "message"    : "İzlemeden sonra küçük ekrana odaklan",
+        "description": "A title for checkbox inside the display options"
+    },
+    "66": {
+        "message"    : "Hızlı geçiş",
+        "description": "A text title for fast switching between translation vendors"
+    },
+    "67": {
+        "message"    : "İkinci sekme yüklendiğinde yazılmış metni tekrar getir.",
+        "description": "A label for checkbox in the display options"
+    },
+    "68": {
+        "message"    : "Yazım düzeltimi için önerileri göster",
+        "description": "Ability to turn off suggestions to correct spelling in the text (Google only)"
+    },
+    "69": {
+        "message"    : "Sağ klik menüsünde sadece metin seçildiğinde göster",
+        "description": "Don't show the extension item in the context menu (applicable only when text is selected)"
+    },
+    "70": {
+        "message"    : "$1 ile çevir.",
+        "description": "An item of the context menu"
+    }
+}
