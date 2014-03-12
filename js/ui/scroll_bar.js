@@ -181,6 +181,7 @@ ScrollBar.prototype.onMouseWheel = function (e) {
     if (e.wheelDelta > 0) this.scrollBy(-this.scrollSpeed);
     if (e.wheelDelta < 0) this.scrollBy(this.scrollSpeed);
     e.stopPropagation();
+    e.preventDefault();
 };
 
 /** @private */
