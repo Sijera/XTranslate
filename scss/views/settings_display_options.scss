@@ -2,11 +2,11 @@
 
 .settingsDisplayOptions {
   .hotKey {
-    text-transform: lowercase;
-    cursor: help;
+    cursor: text;
+    color: silver;
 
     &:hover, &:focus {
-      color: silver;
+      color: inherit;
     }
   }
 

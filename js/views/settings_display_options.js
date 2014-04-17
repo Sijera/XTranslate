@@ -58,7 +58,7 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .appendTo(this.$content);
 
     this.$hotKey = $('<span class="hotKey" contenteditable="true"/>')
-        .text(state.hotKey)
+        .html(state.hotKey)
         .attr('title', __(10))
         .on('click', false)
         .on('keydown', this.onDefineKey.bind(this))
@@ -77,10 +77,9 @@ SettingsDisplayOptions.prototype.onDefineKey = function (e) {
         escapeKey = keyCode === 27,
         enterKey = keyCode === 13;
 
-    if (hotKey.length >= 2) {
-        hotKey = hotKey.join('+');
+    if (hotKey) {
         this.state.hotKey = hotKey;
-        this.$hotKey.text(hotKey);
+        this.$hotKey.html(hotKey);
     }
 
     if (escapeKey || enterKey) this.$hotKey.blur();

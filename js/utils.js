@@ -148,26 +148,26 @@ exports.findObjByProp = function (objectsList, propName, testValue, onlyFirst) {
 
 /**
  * Get pressed hotkey from keyboard event
- * @param {KeyboardEvent} e Usually it should be keyDown-event
- * @param {RegExp} [charPattern] Regular expression to check matched char
- * @return {Array} List of pressed keys in text representation
+ * @param {KeyboardEvent|Object} e Usually it should be keyDown-event
+ * @param {Boolean} [useTitle] Show the titles in the result instead of symbols
+ * @return {String|false}
  */
-exports.getHotkey = function (e, charPattern) {
-    charPattern = charPattern || /[A-Z0-9]/;
-
-    var key = e.which,
-        isAppleDevice = navigator.appVersion.indexOf('Mac') !== -1,
-        char = String.fromCharCode(Number(key)),
-        shiftKey = e.shiftKey,
-        altKey = e.altKey,
-        ctrlKey = isAppleDevice ? (e.metaKey || key === 91 || key === 93) : (e.ctrlKey || key === 17),
+exports.getHotkey = function __(e, useTitle) {
+    var char = e.char || String.fromCharCode(e.which),
         hotKey = [];
 
-    if (ctrlKey) hotKey.push('Ctrl');
-    if (shiftKey) hotKey.push('Shift');
-    if (altKey) hotKey.push('Alt');
-    if (charPattern.test(char)) hotKey.push(char);
-    return hotKey;
+    if (e.metaKey) hotKey.push({char: '&#8984;', title: 'Cmd'});
+    if (e.ctrlKey) hotKey.push({char: '&#8963;', title: 'Ctrl'});
+    if (e.altKey) hotKey.push({char: '&#8997;', title: 'Alt'});
+    if (e.shiftKey) hotKey.push({char: '&#8679;', title: 'Shift'});
+
+    __.validHotkeyCharMask = __.validHotkeyCharMask || /[a-z0-9]/i;
+    if (__.validHotkeyCharMask.test(char)) {
+        return hotKey.map(function (key) {
+            return useTitle ? key.title : key.char;
+        }).join(useTitle ? '+' : '') + char;
+    }
+    return false;
 };
 
 /**

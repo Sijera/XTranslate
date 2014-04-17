@@ -80,8 +80,8 @@ Slider.prototype.bindEvents = function () {
         .on('drag:end', this._onDragEnd.bind(this));
 
     this.$container
-        .on('click', this._onClick.bind(this))
-        .on('mousewheel', this._onMouseWheel.bind(this));
+        .on('click', this._onClick.bind(this));
+//        .on('mousewheel', this._onMouseWheel.bind(this));
 
     this.$high.add(this.$low)
         .on('focus', this._onPointFocus.bind(this))

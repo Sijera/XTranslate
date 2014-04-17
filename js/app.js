@@ -1,18 +1,20 @@
 'use strict';
 
-var inherit = require('./utils').inherit,
-    debounce = require('./utils').debounce,
+var UTILS = require('./utils'),
+    inherit = UTILS.inherit,
+    debounce = UTILS.debounce,
     themes = require('./theme').THEMES,
     Google = require('./vendors/google').Google,
     Bing = require('./vendors/bing').Bing,
     Yandex = require('./vendors/yandex').Yandex,
     Opera = require('./extension/opera').Opera,
     Chrome = require('./extension/chrome').Chrome,
-    EventDriven = require('./events').EventDriven;
+    EventDriven = require('./events').EventDriven,
+    isMac = navigator.appVersion.indexOf('Macintosh') !== -1;
 
 /**
- * XTranslate (chromium-based browser extension) - Easy translate text on web pages
  * @constructor
+ * @description XTranslate - Easy translate text on web pages (chromium-based browser extension)
  * @property {Chrome|Opera} extension
  * @property {Google|Yandex|Bing} vendor
  */
@@ -62,7 +64,7 @@ App.prototype.state = {
             keyAction   : true,
             spellCheck  : true,
             contextMenu : true,
-            hotKey      : 'Ctrl+Shift+X'
+            hotKey      : UTILS.getHotkey({metaKey: isMac, ctrlKey: !isMac, shiftKey: true, char: 'X'})
         },
         vendorBlock     : {
             collapsed   : false,

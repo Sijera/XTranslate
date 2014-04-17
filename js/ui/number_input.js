@@ -54,7 +54,7 @@ NumberInput.prototype.bindEvents = function () {
     this.$container.on(mouseUp, this.stop.bind(this));
 
     if (!touchDevice) {
-        this.$container.on('mousewheel', this.onScroll.bind(this));
+//        this.$container.on('mousewheel', this.onScroll.bind(this));
         this.$input
             .on('keydown', this._onKeyDown.bind(this))
             .on('keyup', this._onKeyUp.bind(this));

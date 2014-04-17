@@ -30,7 +30,7 @@ UserInputContainer.prototype.createDom = function () {
 
     this.selectLang = new VendorLanguageSelect().appendTo(this.$container);
     this.$vendors = $('<div class="vendors"><i class="title">' + __(66) + ': </i></div>').appendTo(this.$container);
-    this.$text = $('<textarea/>').attr('placeholder', __(63)).appendTo(this.$container);
+    this.$text = $('<textarea tabindex="1"/>').attr('placeholder', __(63)).appendTo(this.$container);
     this.dataView = new VendorDataView().hide().appendTo(this);
 
     APP.vendors.forEach(function (vendor) {

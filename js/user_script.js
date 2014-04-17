@@ -147,7 +147,7 @@ UserScript.prototype.getOverText= function () {
 /** @private */
 UserScript.prototype.onKeyDown = function (e) {
     if (this.settings.keyAction) {
-        var keyMatch = this.settings.hotKey == UTILS.getHotkey(e).join('+');
+        var keyMatch = this.settings.hotKey == UTILS.getHotkey(e);
         if (keyMatch) this.translateText(e, this.getOverText());
     }
 };
