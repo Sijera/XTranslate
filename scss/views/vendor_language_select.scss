@@ -1,7 +1,7 @@
 @import "../vars", "../mixins";
 
 .vendorLanguageSelect {
-  $iconSize: 16px;
+  $iconSize: 1.25em;
 
   text-align: center;
   white-space: nowrap;
@@ -21,8 +21,8 @@
   }
 
   .swapLang {
-    $arrowSize: 4px;
-    $lineHeight: 2px;
+    $arrowSize: .4em;
+    $lineHeight: .1em;
     $color: white;
 
     position: relative;
@@ -51,7 +51,7 @@
     &:before, &:after {
       position: absolute;
       top: 50%;
-      margin: 0 -1px;
+      margin: 0 -.1em;
       margin-top: -$arrowSize;
     }
 

@@ -1,7 +1,7 @@
 @import "../vars", "../mixins";
 
 .vendorDataView {
-  $iconSize: 22px;
+  $iconSize: 1.5em;
   $iconColor: black;
   $iconBgc: white;
   $linkColor: silver;
@@ -18,41 +18,37 @@
     background: $iconBgc no-repeat center;
 
     b {
-      $triangleSize: 7px;
+      $triangleSize: .6em;
       @include triangle($triangleSize, $iconColor);
       margin: -$triangleSize;
       position: absolute;
-      left: 50%;
+      left: 60%;
       top: 50%;
 
       // square
       &:before {
         position: absolute;
         content: '';
-        width: 3px;
-        height: 6px;
+        width: .25em;
+        height: .6em;
         background: $iconColor;
         border-right: 1px solid $iconBgc;
-        margin: -3px 0;
+        margin: -.3em 0;
       }
 
       // waves
       &:after {
-        $waveBoxSize: 8px;
+        $waveBoxSize: .7em;
         content: '';
         position: absolute;
         width: $waveBoxSize * 2;
         height: $waveBoxSize * 2;
+        left: -$waveBoxSize / 2;
         top: -$waveBoxSize;
-        left: 0;
         border-radius: 100%;
         clip: rect(0 $waveBoxSize $waveBoxSize 0);
         -webkit-transform: rotate(135deg);
-        box-shadow: 0 0 0 1px $iconColor inset,
-                    0 0 0 3px $iconBgc inset,
-                    0 0 0 4px $iconColor inset,
-                    0 0 0 6px $iconBgc inset,
-                    0 0 0 8px $iconColor inset;
+        box-shadow: 0 0 0 2px black inset, 0 0 0 4px white inset, 0 0 0 6px black inset;
       }
     }
 

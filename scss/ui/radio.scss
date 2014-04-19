@@ -1,10 +1,10 @@
 @import "../vars";
 
 .radio {
-  $boxSize: 16px;
+  $boxSize: 1.2em;
   $bgColor: #555;
   $pointColor: #fff;
-  $borderSize: round($boxSize * .25);
+  $borderSize: .3em;
 
   .box {
     position: relative;

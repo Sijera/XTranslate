@@ -2,7 +2,7 @@
 
 // form control
 .colorPicker {
-  $boxSize: 17px;
+  $boxSize: 1.2em;
 
   .colorBox {
     width: $boxSize;
@@ -42,7 +42,7 @@
 
 // flying panel
 .colorPalette {
-  $size: 15px;
+  $size: 1.1em;
 
   position: absolute;
   background: $darkBgColor;

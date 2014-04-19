@@ -155,12 +155,12 @@ SettingsThemeManager.prototype.addThemeBlock = function () {
     this.themeName.on('keyenter', this.onSaveTheme, this);
 
     /** @type {Button} */
-    this.saveTheme = new Button({className: 'saveTheme', title: __(28)})
+    this.saveTheme = new Button({className: 'saveTheme fa-save', title: __(28)})
         .on('click', this.saveTheme, this)
         .appendTo($actionButtons);
 
     /** @type {Button} */
-    this.cancelSave = new Button({className: 'cancelSave', title: __(26)})
+    this.cancelSave = new Button({className: 'cancelSave fa-minus-square', title: __(26)})
         .on('click', this.cancelSaving, this)
         .appendTo($actionButtons);
 
@@ -227,7 +227,7 @@ SettingsThemeManager.prototype.addTextStyle = function () {
     var $shadow = this.createSubBlock(__(50), $text).addClass('textShadow');
 
     /** @type {Select} */      this.fontFamily = new Select({className: 'fontFamily'}).appendTo($font);
-    /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 10, maxValue: 25, title: __(41)}).appendTo($font);
+    /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 10, maxValue: 50, title: __(41)}).appendTo($font);
     /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(33), titleHint: __(59)}).appendTo($color);
     /** @type {ColorPicker} */ this.textShadowColor = new ColorPicker({useInput: true, title: __(50), titleHint: __(59)}).appendTo($color);
     /** @type {NumberInput} */ this.textShadowOffsetX = new NumberInput({value: 0, title: __(57)}).appendTo($shadow);

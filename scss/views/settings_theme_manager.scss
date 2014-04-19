@@ -3,14 +3,12 @@
 .settingsThemeManager {
   .popupPreview {
     border: 1px dashed lighten($darkBgColor, 15%);
-    height: 120px;
     text-align: center;
     margin-bottom: $padding;
+    padding: $padding;
     overflow: hidden;
 
     .popup {
-      @include with-vendors(transform, translateY(-50%));
-      top: 50%;
       position: relative !important;
       margin: auto;
       z-index: 0;
@@ -43,7 +41,7 @@
   .colorPicker .textInput,
   .borderStyle,
   .numberInput {
-    width: 80px;
+    width: 6em;
   }
 
   .checkBox {
@@ -113,16 +111,17 @@
     }
 
     .saveTheme, .cancelSave {
-      width: $formControlBaseHeight;
+      position: relative;
+      top: -.1em;
+      margin-left: .5em;
       border: 0;
       padding: 0;
       box-shadow: none !important;
-      background-repeat: no-repeat;
-      background-position: center;
+      font: 1.2em FontAwesome;
+      vertical-align: middle;
     }
 
-    .saveTheme { background-image: url("/img/save.png"); }
-    .cancelSave { background-image: url("/img/cancel.png"); display: none; }
+    .cancelSave { display: none; }
   }
 
   .textBlock {

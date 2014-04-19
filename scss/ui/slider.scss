@@ -2,7 +2,7 @@
 
 // form control
 .slider {
-  $sliderHeight: 7px;
+  $sliderHeight: .6em;
   $bgcDisabled: #c0c0c0;
   $pointColor: #008000;
 
@@ -24,7 +24,7 @@
   }
 
   .value {
-    $pointSize: $sliderHeight + 3;
+    $pointSize: $sliderHeight + .25em;
 
     position: absolute;
     outline: none;

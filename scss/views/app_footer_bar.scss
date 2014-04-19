@@ -4,6 +4,7 @@
   @include addSepLine;
   color: silver;
   font-style: italic;
+  padding: $padding;
 
   .shareLinks {
     white-space: nowrap;
@@ -12,20 +13,11 @@
     margin: 0 $spacing;
 
     a {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      vertical-align: middle;
-      background: no-repeat center;
-
-      @each $shareIcon in fb, vk, tw, gp {
-        &.#{$shareIcon} {
-          background-image: url('/img/social/#{$shareIcon}.png');
-        }
-      }
+      font: normal 1.1em FontAwesome;
+      text-decoration: none;
 
       &:not(:last-child) {
-        margin-right: 3px;
+        margin-right: .3em;
       }
     }
   }

@@ -1,4 +1,4 @@
-@import "vars", 'mixins';
+@import "vars", 'mixins', 'fa/font-awesome';
 
 html, body {
   @include with-vendors(user-select, none);
@@ -7,21 +7,10 @@ html, body {
 }
 
 #app {
-  $width: 410px;
-  $height: 600px;
-  $padding: 15px;
-
-  position: relative;
-  width: $width + $padding * 2;
-  min-height: $height;
-  padding: $padding;
-  margin: auto;
-
-  .popupView & {
-    width: $width;
-    margin: 0 $padding + $spacing;
-    padding: $padding 0;
-  }
+  width: 33em;
+  height: 599px;
+  margin: 1px auto 0 auto;
+  padding: $padding * 2;
 }
 
 *, *:after, *:before {
@@ -32,7 +21,7 @@ html, body {
 }
 
 body, table, textarea, input, button, select, a {
-  font: 13px Verdana, sans-serif;
+  font: 1em Verdana, sans-serif;
   color: $textColor;
 }
 

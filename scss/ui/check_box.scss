@@ -3,7 +3,7 @@
 .checkBox {
   $bgColor: #555;
   $markColor: white;
-  $boxSize: 16px;
+  $boxSize: 1.1em;
 
   position: relative;
   display: inline-block;
@@ -27,8 +27,8 @@
       &:after {
         content: '';
         position: absolute;
-        width: 10px;
-        height: 6px;
+        width: .75em;
+        height: .35em;
         background: transparent;
         top: 0;
         left: 0;

@@ -3,16 +3,17 @@
 .settingsDisplayOptions {
   .hotKey {
     cursor: text;
-    color: silver;
-
-    &:hover, &:focus {
-      color: inherit;
-    }
+    color: black;
+    background: #eee;
+    padding: .1em .2em;
+    border-radius: $radius;
+    display: inline-block;
+    vertical-align: middle;
   }
 
   .checkBox {
     &:not(:first-child) {
-      margin-top: 8px;
+      margin-top: .9em;
     }
     .box {
       float: left;

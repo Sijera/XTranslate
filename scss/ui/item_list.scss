@@ -1,7 +1,7 @@
 @import '../vars', '../mixins';
 
 .itemList {
-  $removeIcon: 13px;
+  $removeIcon: 1em;
   $padding: 3px;
 
   position: relative;
@@ -46,7 +46,7 @@
 
   &.removable {
     li {
-      padding-right: $removeIcon + $spacing;
+      padding-right: $removeIcon;
 
       &.selected, &:hover {
         .removeIcon {
@@ -73,7 +73,7 @@
 
       &:after {
         position: relative;
-        top: -6px;
+        top: -.5em;
         @include iconDelete;
       }
     }

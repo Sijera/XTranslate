@@ -260,6 +260,7 @@ Select.prototype._onChange = function (silent, value, prev) {
     this.$value.val(value);
     if (!this.showingLabel) this.editBox.setValue(boxValue, false, this.isTyping);
     if (!silent && value != prev) this.trigger('change', value, prev);
+    this._onResize();
 };
 
 /** @protected */

@@ -1,7 +1,7 @@
 @import "../vars";
 
 .settingsBlock {
-  $iconSize: 15px;
+  $iconSize: 1.1em;
   $borderColor: gray;
 
   position: relative;
@@ -15,7 +15,7 @@
     &.title {
       font-weight: bold;
       text-shadow: 1px 1px 0 black;
-      padding-right: $iconSize + $padding;
+      padding-right: $iconSize;
       display: inline-block;
     }
   }
@@ -43,7 +43,7 @@
         position: absolute;
         top: 2px;
         bottom: 2px;
-        left: floor($iconSize / 2) - 1;
+        left: 50%;
         width: 1px;
       }
     }
@@ -85,7 +85,7 @@
       position: absolute;
       left: 2px;
       right: 2px;
-      top: floor($iconSize / 2) - 1;
+      top: calc(50% - 1px);
       height: 1px;
     }
   }

@@ -61,22 +61,22 @@ AppFooterBar.prototype.onClickShare = function (url) {
 AppFooterBar.prototype.socialIcons = [
     {
         title: 'Facebook',
-        className: 'fb',
+        className: 'fa-facebook',
         shareUrl: 'https://www.facebook.com/sharer/sharer.php?u={0}'
     },
     {
         title: 'Vkontakte',
-        className: 'vk',
+        className: 'fa-vk',
         shareUrl: 'http://vkontakte.ru/share.php?url={0}'
     },
     {
         title: 'Twitter',
-        className: 'tw',
+        className: 'fa-twitter',
         shareUrl: 'https://twitter.com/intent/tweet?source=webclient&url={0}&text={1}'
     },
     {
         title: 'Google+',
-        className: 'gp',
+        className: 'fa-google-plus',
         shareUrl: 'https://plus.google.com/share?url={0}'
     }
 ];
