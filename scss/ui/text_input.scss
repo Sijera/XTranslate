@@ -25,6 +25,7 @@
     border: none;
     outline: none;
     text-align: inherit;
+    font-size: 1em;
 
     &[readonly] {
       pointer-events: none;

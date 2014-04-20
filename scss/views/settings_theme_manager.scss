@@ -1,4 +1,4 @@
-@import "../vars", '../_mixins';
+@import "../vars", '../mixins';
 
 .settingsThemeManager {
   .popupPreview {
@@ -131,9 +131,6 @@
     }
 
     .textShadow {
-      .numberInput {
-        width: 67px;
-      }
       b {
         color: silver;
       }

@@ -3,7 +3,6 @@
 var UTILS = require('../utils'),
     inherit = require('../utils').inherit,
     CheckBox = require('../ui/check_box').CheckBox,
-    Select = require('../ui/select').Select,
     SettingsBlock = require('./settings_block').SettingsBlock;
 
 /**
@@ -67,6 +66,33 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
     this.$hotKeyHint = $('<i class="hint"> *</i>')
         .attr('title', __(64))
         .appendTo(this.keyAction.$label);
+
+    // TODO: make as external component
+    this.zoomMin = 50;
+    this.zoomMax = 250;
+    this.zoomStep = 10;
+
+    this.$fontSizeBase = $('<div class="uiFontSize sep"/>').appendTo(this.$content);
+    this.$fontSizeBase.append('<span class="name">' + __(71) + '</span>');
+    this.$zoomOut = $('<i class="fa-icon fa-minus-square-o">').appendTo(this.$fontSizeBase);
+    this.$zoomValue = $('<span class="zoomValue">').appendTo(this.$fontSizeBase);
+    this.$zoomIn = $('<i class="fa-icon fa-plus-square-o">').appendTo(this.$fontSizeBase);
+
+    this.$zoomIn.on('click', this.setZoom.bind(this, +1));
+    this.$zoomOut.on('click', this.setZoom.bind(this, -1));
+    this.setZoom();
+};
+
+/** @private */
+SettingsDisplayOptions.prototype.setZoom = function (dir) {
+    dir = dir || 0;
+    var zoomValNew = this.state.zoomValue + this.zoomStep * dir;
+    if (zoomValNew < this.zoomMin || this.zoomMax < zoomValNew) return;
+    this.$zoomOut.toggleClass('disabled', zoomValNew === this.zoomMin);
+    this.$zoomIn.toggleClass('disabled', zoomValNew === this.zoomMax);
+    this.state.zoomValue = zoomValNew;
+    this.$zoomValue.text(zoomValNew + '%');
+    document.documentElement.style.fontSize = zoomValNew + '%';
 };
 
 /** @private */

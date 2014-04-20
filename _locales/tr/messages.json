@@ -40,7 +40,7 @@
         "description": "A label for checkbox in settings"
     },
     "10": {
-        "message"    : "Seçili metinlerde kısayol tanımlamak için bir kombinayton belirleyin.EN az iki kombinasyon gerekli: ctrl, alt, shift, harfler (a-z) ya da numaralar (0-9) uygundur.",
+        "message"    : "Seçili metinlerde kısayol tanımlamak için bir kombinayton belirleyin.EN az iki kombinasyon gerekli: cmd, ctrl, alt, shift, harfler (a-z) ya da numaralar (0-9) uygundur.",
         "description": "Help how to define hotkey to make translation"
     },
     "11": {

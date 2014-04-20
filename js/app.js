@@ -64,6 +64,7 @@ App.prototype.state = {
             keyAction   : true,
             spellCheck  : true,
             contextMenu : true,
+            zoomValue   : 100, //%
             hotKey      : UTILS.getHotkey({metaKey: isMac, ctrlKey: !isMac, shiftKey: true, char: 'X'})
         },
         vendorBlock     : {

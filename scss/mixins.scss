@@ -131,7 +131,7 @@
 }
 
 @mixin formControlFocus {
-  box-shadow: 0 0 5px -1px white;
+  box-shadow: 0 0 .35em -.1em white;
   @include with-vendors(transition, box-shadow .3s);
   @content;
 }

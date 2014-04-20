@@ -22,33 +22,34 @@
       @include triangle($triangleSize, $iconColor);
       margin: -$triangleSize;
       position: absolute;
-      left: 60%;
-      top: 50%;
+      left: .85em;
+      top: .75em;
 
       // square
       &:before {
         position: absolute;
         content: '';
         width: .25em;
-        height: .6em;
+        height: .5em;
         background: $iconColor;
         border-right: 1px solid $iconBgc;
-        margin: -.3em 0;
+        margin: -.25em 0;
       }
 
       // waves
       &:after {
-        $waveBoxSize: .7em;
+        $waveBoxSize: .65em;
         content: '';
         position: absolute;
         width: $waveBoxSize * 2;
         height: $waveBoxSize * 2;
-        left: -$waveBoxSize / 2;
+        right: -$waveBoxSize * 2;
         top: -$waveBoxSize;
         border-radius: 100%;
+        margin-right: .2em;
         clip: rect(0 $waveBoxSize $waveBoxSize 0);
         -webkit-transform: rotate(135deg);
-        box-shadow: 0 0 0 2px black inset, 0 0 0 4px white inset, 0 0 0 6px black inset;
+        box-shadow: 0 0 0 0.1em black inset, 0 0 0 0.25em white inset, 0 0 0 0.33em black inset;
       }
     }
 

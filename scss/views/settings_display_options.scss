@@ -11,9 +11,37 @@
     vertical-align: middle;
   }
 
+  .uiFontSize {
+    $color: silver;
+
+    .name {
+      margin-right: .5em;
+    }
+    .fa-icon {
+      font-size: 1.4em;
+      vertical-align: middle;
+      color: $color;
+      cursor: pointer;
+
+      &.disabled {
+        color: gray;
+        pointer-events: none;
+      }
+      &:hover {
+        color: white;
+      }
+    }
+    .zoomValue {
+      display: inline-block;
+      width: 4em;
+      text-align: center;
+      color: $color;
+    }
+  }
+
   .checkBox {
     &:not(:first-child) {
-      margin-top: .9em;
+      margin-top: $padding * 1.1;
     }
     .box {
       float: left;
