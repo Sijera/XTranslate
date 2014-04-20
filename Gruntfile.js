@@ -71,7 +71,7 @@ module.exports = function (grunt) {
             common: {
                 expand: true,
                 src: [
-                    '_*/**',
+                    '_*/**', 'fonts/**',
                     'img/**', '!img/*source*', '!img/**/*.svg',
                     'js/libs/jquery.min.js'
                 ],

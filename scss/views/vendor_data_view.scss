@@ -49,7 +49,9 @@
         margin-right: .2em;
         clip: rect(0 $waveBoxSize $waveBoxSize 0);
         -webkit-transform: rotate(135deg);
-        box-shadow: 0 0 0 0.1em black inset, 0 0 0 0.25em white inset, 0 0 0 0.33em black inset;
+        box-shadow: 0 0 0 0.10em $iconColor inset,
+                    0 0 0 0.25em $iconBgc inset,
+                    0 0 0 0.33em $iconColor inset;
       }
     }
 

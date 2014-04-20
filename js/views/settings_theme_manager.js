@@ -275,6 +275,7 @@ SettingsThemeManager.prototype.createTheme = function () {
 /** @private */
 SettingsThemeManager.prototype.applyTheme = function (theme) {
     theme = this.popup.applyTheme(theme);
+    if (!theme) return;
 
     this.bgColor1.setValue(theme.bgColor1, true);
     this.bgColor2.setValue(theme.bgColor2, true);
