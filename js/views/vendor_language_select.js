@@ -22,10 +22,10 @@ inherit(VendorLanguageSelect, UIComponent);
 VendorLanguageSelect.prototype.createDom = function () {
     this.$container.addClass('vendorLanguageSelect');
 
-    this.$langFrom = $('<img class="flagFrom"/>').appendTo(this.$container);
+    this.$langFrom = $('<span class="flagFrom"/>').appendTo(this.$container);
     this.langFrom = new Select({className: 'langFrom', noBodyAppend: true}).appendTo(this.$container);
     this.$swapLang = $('<span class="swapLang"><i class="line"/></span>').attr('title', __(14)).appendTo(this.$container);
-    this.$langTo = $('<img class="flagTo"/>').appendTo(this.$container);
+    this.$langTo = $('<span class="flagTo"/>').appendTo(this.$container);
     this.langTo = new Select({className: 'langTo', noBodyAppend: true}).appendTo(this.$container);
 };
 
@@ -70,26 +70,29 @@ VendorLanguageSelect.prototype.refresh = function () {
 };
 
 VendorLanguageSelect.prototype.setLangFrom = function (lang) {
+    var autoDetect = APP.vendor.autoDetect === lang;
     this.state.langFrom = lang;
     this.langFrom.selectByValue(lang, true);
-    this.$langFrom.attr('src', this.getFlagUrl(lang));
+    this.$langFrom.css(this.getFlagAttr(lang, autoDetect));
+    this.$langFrom.toggleClass('fa-gear', autoDetect);
     this.disableMirrorLang(this.langTo, lang);
 };
 
 VendorLanguageSelect.prototype.setLangTo = function (lang) {
     this.state.langTo = lang;
     this.langTo.selectByValue(lang, true);
-    this.$langTo.attr('src', this.getFlagUrl(lang));
+    this.$langTo.css(this.getFlagAttr(lang));
     this.disableMirrorLang(this.langFrom, lang);
 };
 
 /**
  * Get the source of the image with flag
  * @param {string} flag
- * @returns {string} URL relative to project root
+ * @param {boolean} [autoDetect]
  */
-VendorLanguageSelect.prototype.getFlagUrl = function (flag) {
-    return '/img/flags/' + flag.split('-')[0] + '.png';
+VendorLanguageSelect.prototype.getFlagAttr = function (flag, autoDetect) {
+    var bgcImage = autoDetect ? 'none' : 'url(/img/flags/' + flag.split('-')[0] + '.png)';
+    return {backgroundImage: bgcImage};
 };
 
 /**

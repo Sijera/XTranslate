@@ -80,11 +80,12 @@ Slider.prototype.bindEvents = function () {
         .on('drag:end', this._onDragEnd.bind(this));
 
     this.$container
-        .on('click', this._onClick.bind(this));
-//        .on('mousewheel', this._onMouseWheel.bind(this));
+        .on('click', this._onClick.bind(this))
+        .on('mousewheel', this._onMouseWheel.bind(this));
 
     this.$high.add(this.$low)
         .on('focus', this._onPointFocus.bind(this))
+        .on('blur', this._onPointBlur.bind(this))
         .on('keydown', this._onPointKeyDown.bind(this));
 };
 
@@ -161,14 +162,17 @@ Slider.prototype._onPointFocus = function (e) {
     this.$activePoint.css('z-index', 1);
 };
 
-Slider.prototype._onMouseWheel = function (e) {
-    var direction = e.wheelDelta;
+Slider.prototype._onPointBlur = function () {
+    delete this.$activePoint;
+};
 
-    if (!this.$activePoint) this.$activePoint = this.$high;
+Slider.prototype._onMouseWheel = function (e) {
+    if (!this.$activePoint) return;
+
+    var direction = e.wheelDelta;
     if (this.$activePoint == this.$low) this.setLow(this.low + this.step * direction);
     if (this.$activePoint == this.$high) this.setHigh(this.high + this.step * direction);
 
-    this.$activePoint.focus();
     e.stopPropagation();
     e.preventDefault();
 };

@@ -151,6 +151,7 @@ TextInput.prototype._onInput = function () {
 
 /** @private */
 TextInput.prototype._onFocus = function () {
+    this.focused = true;
     this.$container.addClass(IS_ACTIVATED).addClass(IS_FOCUSED);
     this.hideTooltip();
     this.trigger('focus');
@@ -158,6 +159,7 @@ TextInput.prototype._onFocus = function () {
 
 /** @private */
 TextInput.prototype._onBlur = function () {
+    this.focused = false;
     this.$container.removeClass(IS_FOCUSED);
 
     if (this.inputted) this._checkValue(this.value);

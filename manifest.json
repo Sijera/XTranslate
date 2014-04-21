@@ -1,7 +1,7 @@
 {
     "name"            : "XTranslate",
     "description"     : "__MSG_0__",
-    "version"         : "1.13",
+    "version"         : "1.15",
     "manifest_version": 2,
     "default_locale"  : "en",
     "options_page"    : "options.html",
@@ -22,7 +22,7 @@
         "persistent": false
     },
 
-    "web_accessible_resources": ["img/*", "js/*"],
+    "web_accessible_resources": ["img/*", "js/*", "fonts/*"],
 
     "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self' https://translate.google.com https://api.microsofttranslator.com",
 

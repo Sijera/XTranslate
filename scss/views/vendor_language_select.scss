@@ -1,7 +1,7 @@
 @import "../vars", "../mixins";
 
 .vendorLanguageSelect {
-  $iconSize: 1.25em;
+  $iconSize: 1.3em;
 
   text-align: center;
   white-space: nowrap;
@@ -18,6 +18,14 @@
   .flagFrom, .flagTo {
     width: $iconSize;
     height: $iconSize;
+    display: inline-block;
+    background: none no-repeat center;
+    background-size: cover;
+
+    &:before {
+      font-family: FontAwesome;
+      font-size: $iconSize;
+    }
   }
 
   .swapLang {

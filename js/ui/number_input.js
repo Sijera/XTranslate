@@ -26,7 +26,6 @@ var NumberInput = function (options) {
     this.inputted = true;
     this.increase = this.setValueByStep.bind(this, +1);
     this.decrease = this.setValueByStep.bind(this, -1);
-
     this.addValidator(this.numberValidator.bind(this));
 };
 
@@ -54,7 +53,7 @@ NumberInput.prototype.bindEvents = function () {
     this.$container.on(mouseUp, this.stop.bind(this));
 
     if (!touchDevice) {
-//        this.$container.on('mousewheel', this.onScroll.bind(this));
+        this.$container.on('mousewheel', this.onScroll.bind(this));
         this.$input
             .on('keydown', this._onKeyDown.bind(this))
             .on('keyup', this._onKeyUp.bind(this));
@@ -147,6 +146,7 @@ NumberInput.prototype.setValueByStep = function (dir) {
 
 /** @private */
 NumberInput.prototype.onScroll = function (e) {
+    if (!this.focused) return;
     if (e.wheelDelta > 0) this.increase();
     if (e.wheelDelta < 0) this.decrease();
     e.preventDefault();

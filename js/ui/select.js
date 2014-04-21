@@ -90,8 +90,8 @@ Select.prototype.bindEvents = function () {
         .on('click', this.toggleList.bind(this))
         .on('keydown', this._onKeyDown.bind(this))
         .on('keypress', this._onKeyPress.bind(this))
-        .on('keyup', this._onKeyUp.bind(this));
-//        .on('mousewheel', this._onScroll.bind(this));
+        .on('keyup', this._onKeyUp.bind(this))
+        .on('mousewheel', this._onScroll.bind(this));
 
     this.editBox
         .on('tooltipReady', this._onTooltipReady.bind(this))
@@ -287,6 +287,7 @@ Select.prototype._onItemRemove = function (item) {
 
 /** @protected */
 Select.prototype._onScroll = function (e) {
+    if (!this.$container.is(':focus')) return;
     var item = this.itemList.getNextItem(e.wheelDelta > 0);
     if (item) this._setSelectedItem(item);
     e.stopPropagation();
