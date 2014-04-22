@@ -7,12 +7,12 @@
   $linkColor: silver;
 
   .playIcon {
-    font: 1.25em FontAwesome;
-    opacity: .7;
+    @include fa-icon(1.25em);
     cursor: pointer;
     display: inline-block;
     vertical-align: middle;
     margin-right: $spacing;
+    opacity: .7;
 
     &.disabled {
       pointer-events: none;

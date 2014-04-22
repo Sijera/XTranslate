@@ -163,3 +163,10 @@
     }
   }
 }
+
+@mixin fa-icon($fontSize: 1em, $smoothing: antialiased) {
+  font-size: $fontSize;
+  font-family: FontAwesome;
+  font-style: normal;
+  -webkit-font-smoothing: $smoothing;
+}

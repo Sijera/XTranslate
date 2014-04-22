@@ -112,13 +112,13 @@
     }
 
     .saveTheme, .cancelSave {
+      @include fa-icon(1.2em);
       position: relative;
       top: -.1em;
       margin-left: .5em;
       border: 0;
       padding: 0;
       box-shadow: none !important;
-      font: 1.2em FontAwesome;
       vertical-align: middle;
     }
 

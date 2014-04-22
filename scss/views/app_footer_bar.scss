@@ -13,7 +13,7 @@
     margin: 0 $spacing;
 
     a {
-      font: normal 1.1em FontAwesome;
+      @include fa-icon(1.1em, auto);
       text-decoration: none;
 
       &:not(:last-child) {

@@ -23,8 +23,7 @@
     background-size: cover;
 
     &:before {
-      font-family: FontAwesome;
-      font-size: $iconSize;
+      @include fa-icon($iconSize);
     }
   }
 
