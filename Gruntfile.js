@@ -86,7 +86,6 @@ module.exports = function (grunt) {
                         var manifest = grunt.config.get('manifest');
                         manifest.background.scripts.splice(0, 1); // remove development version of require.js
                         manifest.content_scripts.forEach(function (content) { content.js.splice(0, 1) });
-                        manifest.web_accessible_resources = ['img/*'];
                         return JSON.stringify(manifest, null, 4);
                     }
                 }
