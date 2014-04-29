@@ -1,0 +1,258 @@
+{
+    "0" : {
+        "message"    : "Text auf Webseiten übersetzen leicht gemacht",
+        "description": "A description of the app in common list of extensions in Chrome"
+    },
+    "1" : {
+        "message"    : "Einstellungen",
+        "description": "Tab name in top-right corner"
+    },
+    "2" : {
+        "message"    : "Texteingabe",
+        "description": "Tab name in top-right corner"
+    },
+    "3" : {
+        "message"    : "Anzeigeeinstellungen",
+        "description": "A title for block of settings"
+    },
+    "4" : {
+        "message"    : "Übersetzungsdienst",
+        "description": "A title for block of settings"
+    },
+    "5" : {
+        "message"    : "Themenverwaltung",
+        "description": "A title for block of settings"
+    },
+    "6" : {
+        "message"    : "URL-Ausschlüsse",
+        "description": "A title for block of settings"
+    },
+    "7" : {
+        "message"    : "Popup anzeigen bei Doppelklick auf ein Wort",
+        "description": "A label for checkbox in settings"
+    },
+    "8" : {
+        "message"    : "Popup anzeigen bei Markieren eines Wortes oder Satzes",
+        "description": "A label for checkbox in settings"
+    },
+    "9" : {
+        "message"    : "Popup anzeigen beim Drücken von $1",
+        "description": "A label for checkbox in settings"
+    },
+    "10": {
+        "message"    : "Um ein Tastaturkürzel zu definieren, wählen Sie eine Zwei-Tasten-Kombination: Cmd, Strg, Alt, Umschalt, Buchstaben (a-z) oder Zahlen (0-9) sind möglich.",
+        "description": "Help how to define hotkey to make translation"
+    },
+    "11": {
+        "message"    : "Das Thema $1 gibt es bereits!",
+        "description": "Error message appears when user tries to save a theme with name which is already exist"
+    },
+    "12": {
+        "message"    : "Um das aktuelle Thema zu speichern, geben Sie einen Namen ein und drücken Sie die [Eingabe]-Taste",
+        "description": "A tooltip for field with new theme name"
+    },
+    "13": {
+        "message"    : "Der Name des Themas darf nur sichtbare Zeichen enthalten",
+        "description": "Error message"
+    },
+    "14": {
+        "message"    : "Sprachen tauschen",
+        "description": "Replace direction of the translation on opposite"
+    },
+    "15": {
+        "message"    : "Text-zu-Sprache automatisch abspielen",
+        "description": "A label for checkbox in settings"
+    },
+    "16": {
+        "message"    : "Symbol für Text-zu-Sprache im Popup anzeigen",
+        "description": "A label for checkbox in settings"
+    },
+    "18": {
+        "message"    : "Wenn Sie einzelne Webseiten oder komplette Webseiten von dieser Erweiterung ausnehmen wollen, fügen Sie einfach die Links unten ein.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "19": {
+        "message"    : "Sie können ein Sternsymbol verwenden (*), um einen Ausschnitt von einem oder mehreren Teilen in einer URL zu definieren, ausgenommen Schrägstrich (/).",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "20": {
+        "message"    : "Bitte vergessen Sie nicht, die Seite(n) neu zu laden, um die Änderungen anzuwenden.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "21": {
+        "message"    : "Abschnitt öffnen bzw. schließen",
+        "description": "A title for +/- icon in right-top corner of each block"
+    },
+    "22": {
+        "message"    : "Übersetzter Text",
+        "description": "Result of translation, dummy-text in pop-up (user styles)"
+    },
+    "23": {
+        "message"    : "Hauptwort",
+        "description": "Part of speech, dummy-text in pop-up (user styles)"
+    },
+    "24": {
+        "message"    : "Wort 1, Wort 2, Wort N",
+        "description": "Result of translation for specific part of speech, dummy-text in pop-up (user styles)"
+    },
+    "25": {
+        "message"    : "Thema",
+        "description": "Set of styles for pop-up block"
+    },
+    "26": {
+        "message"    : "Speichern des Themas abbrechen",
+        "description": "Text for a button to cancel saving the theme"
+    },
+    "27": {
+        "message"    : "Sie können keine reservierten Namen für ein benutzerdefiniertes Thema verwenden",
+        "description": "Error tooltip appears in case if user tries to save a theme with reserved name"
+    },
+    "28": {
+        "message"    : "Aktuelles Thema speichern",
+        "description": "Text for a button to save custom user theme"
+    },
+    "29": {
+        "message"    : "Entfernen",
+        "description": "Text for a button to remove the theme"
+    },
+    "30": {
+        "message"    : "Allgemein",
+        "description": "Sub-title for CSS styles of pop-up generally (padding, shadow, etc.)"
+    },
+    "31": {
+        "message"    : "Hintergrund",
+        "description": "Sub-title for CSS styles relative to background (color, opacity, etc.)"
+    },
+    "32": {
+        "message"    : "Umrandung",
+        "description": "Sub-title for CSS styles relative to border (color, radius, etc.)"
+    },
+    "33": {
+        "message"    : "Text",
+        "description": "Sub-title for CSS styles relative to text (size, font, etc.)"
+    },
+    "36": {
+        "message"    : "Farbe",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "37": {
+        "message"    : "Deckkraft",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "38": {
+        "message"    : "Farbverlauf verwenden",
+        "description": "A label for checkbox, defines a type of gradient for CSS background"
+    },
+    "39": {
+        "message"    : "Breite",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "40": {
+        "message"    : "Abrundung",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "41": {
+        "message"    : "Größe",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "42": {
+        "message"    : "Schriftart",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "43": {
+        "message"    : "Im Inneren anzeigen",
+        "description": "A title for checkbox, defines that the shadow it will be inner (inset)"
+    },
+    "47": {
+        "message"    : "Meinten Sie vielleicht $1?",
+        "description": "Suggestion to correct a word or sentence for translation"
+    },
+    "48": {
+        "message"    : "Anhören",
+        "description": "A title tooltip for an icon to play text-to-speech"
+    },
+    "49": {
+        "message"    : "Übersetzung aus $1 (Powered by $2)",
+        "description": "A title tooltip for pop-up block"
+    },
+    "50": {
+        "message"    : "Schatten",
+        "description": "A sub-title for definition a box shadow for the pop-up"
+    },
+    "51": {
+        "message"    : "Einbettung",
+        "description": "A sub-title for definition an inner margin inside the pop-up"
+    },
+    "52": {
+        "message"    : "Max. Breite",
+        "description": "A sub-title for definition a maximum width for the pop-up"
+    },
+    "53": {
+        "message"    : "Max. Höhe",
+        "description": "A sub-title for definition a maximum height for the pop-up"
+    },
+    "54": {
+        "message"    : "Stil",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "56": {
+        "message"    : "Verwischgrad",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "57": {
+        "message"    : "Vorlauf",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "59": {
+        "message"    : "Um die Farbe schrittweise zu ändern, können Sie gleichzeitig die Tasten (Strg, Alt, Umschalt) und  [?] oder [?] drücken und halten.",
+        "description": "A tooltip title for the color picker box"
+    },
+    "60": {
+        "message"    : "Lieber Nutzer, Wenn Ihnen diese App gefällt, unterstützen Sie uns bitte!",
+        "description": "A text in the footer"
+    },
+    "61": {
+        "message"    : "['$1', 'Schreiben Sie eine Bewertung'], ['$2', 'machen Sie eine Spende'] oder erzählen Sie es Ihren Freunden:",
+        "description": "A text in the footer"
+    },
+    "62": {
+        "message"    : "Vielen Dank!",
+        "description": "A text in the footer"
+    },
+    "63": {
+        "message"    : "Beginnen Sie mit der Eingabe, um Text zu übersetzen",
+        "description": "Placeholder inside text area in the user input"
+    },
+    "64": {
+        "message"    : "Immer, wenn kein Text auf der Webseite markiert ist, können Sie durch Drücken der Tastenkombination den Text unter dem Mauscursor übersetzen lassen. Außerdem können so auch beschreibbare Felder, wie Text- oder Eingabefelder, übersetzt werden. Es lassen sich auch nicht markierbare oder schwer markierbare Elemente, wie Links oder Schaltflächen, übersetzen. Auch Titel oder Alternativtexte von Bildern lassen sich auf diese Weise übersetzen.",
+        "description": "A title for the text above"
+    },
+    "65": {
+        "message"    : "Popup nach der Anzeige automatisch fokussieren",
+        "description": "A title for checkbox inside the display options"
+    },
+    "66": {
+        "message"    : "Schnelles Umschalten",
+        "description": "A text title for fast switching between translation vendors"
+    },
+    "67": {
+        "message"    : "Eingegebenen Text wiederherstellen nach Laden im zweiten Tab",
+        "description": "A label for checkbox in the display options"
+    },
+    "68": {
+        "message"    : "Zeige Vorschläge zur Rechtschreibkorrektur",
+        "description": "Ability to turn off suggestions to correct spelling in the text (Google only)"
+    },
+    "69": {
+        "message"    : "Im Kontextmenü anzeigen, wenn Text markiert ist",
+        "description": "Don't show the extension item in the context menu (applicable only when text is selected)"
+    },
+    "70": {
+        "message"    : "Übersetzen mit $1",
+        "description": "An item of the context menu"
+    },
+    "71": {
+        "message"    : "Schriftgröße der Benutzeroberfläche",
+        "description": "A checkbox in the display options"
+    }
+}
