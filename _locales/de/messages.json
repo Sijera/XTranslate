@@ -236,7 +236,7 @@
         "description": "A text title for fast switching between translation vendors"
     },
     "67": {
-        "message"    : "Eingegebenen Text wiederherstellen nach Laden im zweiten Tab",
+        "message"    : "Eingegebenen Text im Feld \"Texteingabe\" merken",
         "description": "A label for checkbox in the display options"
     },
     "68": {
