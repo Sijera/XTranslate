@@ -150,24 +150,23 @@ exports.findObjByProp = function (objectsList, propName, testValue, onlyFirst) {
  * Get pressed hotkey from keyboard event
  * @param {KeyboardEvent|Object} e Usually it should be keyDown-event
  * @param {Boolean} [useTitle] Show the titles in the result instead of symbols
- * @return {String|false}
+ * @return {String|*}
  */
 exports.getHotkey = function __(e, useTitle) {
     var char = e.char || String.fromCharCode(e.which),
         hotKey = [];
 
+    __.validHotkeyCharMask = __.validHotkeyCharMask || /[a-z0-9]/i;
+
     if (e.metaKey) hotKey.push({char: '&#8984;', title: 'Cmd'});
     if (e.ctrlKey) hotKey.push({char: '&#8963;', title: 'Ctrl'});
     if (e.altKey) hotKey.push({char: '&#8997;', title: 'Alt'});
     if (e.shiftKey) hotKey.push({char: '&#8679;', title: 'Shift'});
+    if(__.validHotkeyCharMask.test(char)) hotKey.push({char: char, title: char});
 
-    __.validHotkeyCharMask = __.validHotkeyCharMask || /[a-z0-9]/i;
-    if (__.validHotkeyCharMask.test(char)) {
-        return hotKey.map(function (key) {
-            return useTitle ? key.title : key.char;
-        }).join(useTitle ? '+' : '') + char;
-    }
-    return false;
+    return hotKey.map(function (key) {
+        return useTitle ? key.title : key.char;
+    }).join(useTitle ? '+' : '')
 };
 
 /**

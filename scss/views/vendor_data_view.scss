@@ -1,6 +1,8 @@
 @import "../vars", "../mixins";
 
 .vendorDataView {
+  @include with-vendors(user-select, initial);
+
   $iconSize: 1.5em;
   $iconColor: black;
   $iconBgc: white;

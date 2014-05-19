@@ -46,7 +46,8 @@ UserScript.prototype.inject = function () {
 
 /** @private */
 UserScript.prototype.createDom = function () {
-    this.$app = $('<div id="XTranslate" data-url="' + APP.extension.url + '"></div>').appendTo(document.body);
+    this.$app = $('<div id="XTranslate"/>').appendTo(document.body);
+    this.$showIcon = $('<span class="showPopupTriggerIcon fa-gear"/>').hide().appendTo(this.$app);
     this.popup = new Popup({borderElem: this.$app});
     UTILS.spawnElement.$pool.detach();
 };
@@ -111,10 +112,16 @@ UserScript.prototype.onSync = function (data) {
 /** @private */
 UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
-    this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
+    this.refreshRange();
     this.popup.parseData(data).show();
     this.popup.setAnchor(this.$app);
     this.reselectText();
+};
+
+/** @private */
+UserScript.prototype.refreshRange = function () {
+    this.lastRange = !this.selection.isCollapsed && this.selection.getRangeAt(0);
+    return this.lastRange;
 };
 
 /** @private */
@@ -144,6 +151,35 @@ UserScript.prototype.getOverText= function () {
     return text;
 };
 
+/** @protected */
+UserScript.prototype.getFocusPoint = function () {
+    var range = this.refreshRange();
+    if (range) {
+        var s = this.selection,
+            clientRects = $.makeArray(range.getClientRects()),
+            anchorOffset = s.anchorOffset,
+            focusOffset = s.focusOffset;
+
+        if (s.anchorNode !== s.focusNode) {
+            var parentText = range.commonAncestorContainer.textContent;
+            anchorOffset = parentText.indexOf(s.anchorNode.textContent);
+            focusOffset = parentText.indexOf(s.focusNode.textContent);
+        }
+
+        // normalize rect
+        var rect = $.extend({}, anchorOffset < focusOffset ? clientRects.pop() : clientRects.shift());
+        rect.left += window.pageXOffset;
+        rect.top += window.pageYOffset;
+        rect.right = rect.left + rect.width;
+        rect.bottom = rect.top + rect.height;
+
+        return {
+            rect: rect,
+            isLeftTop: anchorOffset > focusOffset,
+            isRightBottom: anchorOffset < focusOffset
+        };
+    }
+};
 /** @private */
 UserScript.prototype.onKeyDown = function (e) {
     if (this.settings.keyAction) {
@@ -162,12 +198,21 @@ UserScript.prototype.onContextMenu = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseDown = function (e) {
+    var targetElem = e.target;
     if (e.button === 2 /*RIGHT*/) {
         if (this.settings.contextMenu && this.getText()) {
             this.restoreSelection = true;
         }
     }
-    else if (this.lastRange && this.isOutside(e.target)) {
+    else if (this.lastRange && this.isOutside(targetElem)) {
+        if (this.settings.showActionIcon) {
+            if (this.$showIcon.is(targetElem)) {
+                this.showIconClicked = true;
+                this.translateText(e);
+                e.preventDefault();
+            }
+            this.$showIcon.hide();
+        }
         delete this.lastRange;
     }
 };
@@ -178,6 +223,24 @@ UserScript.prototype.onMouseUp = function (e) {
         delete this.clickAction;
         return;
     }
+
+    if (this.settings.showActionIcon) {
+        if (!this.showIconClicked) {
+            var point = this.getFocusPoint();
+            if (point) {
+                var isLeftTop = point.isLeftTop;
+                this.$showIcon.show().toggleClass('leftTop', isLeftTop);
+                this.$showIcon.css({
+                    left: point.rect[isLeftTop ? 'left' : 'right'],
+                    top : point.rect[isLeftTop ? 'top' : 'bottom']
+                });
+            }
+        }
+        else {
+            delete this.showIconClicked;
+        }
+    }
+
     if (this.settings.selectAction && !this.isEditable(e.target)) {
         this.translateText(e);
     }

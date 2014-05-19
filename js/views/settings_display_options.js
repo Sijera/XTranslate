@@ -44,7 +44,11 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .on('change', function (value) { APP.set('userInputContainer.rememberText', value); })
         .appendTo(this.$content);
 
-    this.selectAction = new CheckBox({label: __(8), checked: state.selectAction, className: 'sep'})
+    this.showActionIcon = new CheckBox({label: __(72), checked: state.showActionIcon, className: 'sep'})
+        .on('change', function (value) { state.showActionIcon = value; })
+        .appendTo(this.$content);
+
+    this.selectAction = new CheckBox({label: __(8), checked: state.selectAction})
         .on('change', function (value) { state.selectAction = value; })
         .appendTo(this.$content);
 
@@ -63,8 +67,15 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .on('keydown', this.onDefineKey.bind(this))
         .appendTo(this.keyAction.$label);
 
+    var ctrlKeysDescription = [
+        '⌘ . . . Command, Cmd, Clover, (formerly) Apple',
+        '⌃ . . . Control, Ctl, Ctrl',
+        '⌥ . . . Option, Opt, (Windows) Alt',
+        '⇧ . . . Shift'
+    ];
+
     this.$hotKeyHint = $('<i class="hint"> *</i>')
-        .attr('title', __(64))
+        .attr('title', [__(64), '--'].concat(ctrlKeysDescription).join('\n'))
         .appendTo(this.keyAction.$label);
 
     // TODO: make as external component

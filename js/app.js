@@ -61,6 +61,7 @@ App.prototype.state = {
             showPlayIcon: true,
             clickAction : true,
             selectAction: false,
+            showActionIcon: true,
             keyAction   : true,
             spellCheck  : true,
             contextMenu : true,

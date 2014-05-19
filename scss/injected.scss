@@ -5,9 +5,8 @@
   position: absolute;
   left: 0;
   top: 0;
-  right: 0;
-  bottom: 0;
-  pointer-events: none;
+  width: 100%;
+  z-index: 10000000000;
 
   // reset user and page styles for the inner elements
   *, *:after, *:before {
@@ -21,6 +20,19 @@
     font-weight: initial;
     font-style: initial;
     text-decoration: initial;
+    background: initial;
+  }
+
+  .showPopupTriggerIcon {
+    position: absolute;
+    font-family: FontAwesome;
+    font-size: 1.5em;
+    text-shadow: 0 0 2px white;
+    cursor: pointer;
+
+    &.leftTop {
+      @include with-vendors(transform, translate(-100%, -100%));
+    }
   }
 
   // include dependencies

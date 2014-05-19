@@ -1,7 +1,7 @@
 {
     "name"            : "XTranslate",
     "description"     : "__MSG_0__",
-    "version"         : "1.152",
+    "version"         : "1.7",
     "manifest_version": 2,
     "default_locale"  : "en",
     "options_page"    : "options.html",
@@ -28,9 +28,10 @@
 
     "content_scripts": [
         {
-            "matches": ["http://*/*", "https://*/*", "file://*/*"],
-            "css"    : ["css/injected.css"],
-            "js"     : ["js/require.js", "js/libs/jquery.min.js", "js/injected.js"]
+            "all_frames": true,
+            "matches"   : ["http://*/*", "https://*/*", "file://*/*"],
+            "css"       : ["css/injected.css"],
+            "js"        : ["js/require.js", "js/libs/jquery.min.js", "js/injected.js"]
         }
     ],
 

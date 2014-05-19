@@ -40,7 +40,7 @@
         "description": "A label for checkbox in settings"
     },
     "10": {
-        "message"    : "To define a hotkey click on the text and press at least two keys-combination: cmd, ctrl, alt, shift, letters (a-z) or numbers (0-9) available.",
+        "message"    : "To define a hotkey click on the text and press keys combination from: cmd, ctrl, alt, shift, letters (a-z) or numbers (0-9).",
         "description": "Help how to define hotkey to make translation"
     },
     "11": {
@@ -254,5 +254,9 @@
     "71": {
         "message"    : "UI font size",
         "description": "A checkbox in the display options"
+    },
+    "72": {
+        "message"    : "Show an icon near selected text for getting translation",
+        "description": "An option to get translated text"
     }
 }
