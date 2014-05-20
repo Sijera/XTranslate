@@ -224,20 +224,20 @@ UserScript.prototype.onMouseUp = function (e) {
         return;
     }
 
-    if (this.settings.showActionIcon) {
-        if (!this.showIconClicked) {
-            var point = this.getFocusPoint();
-            if (point) {
-                var isLeftTop = point.isLeftTop;
-                this.$showIcon.show().toggleClass('leftTop', isLeftTop);
-                this.$showIcon.css({
-                    left: point.rect[isLeftTop ? 'left' : 'right'],
-                    top : point.rect[isLeftTop ? 'top' : 'bottom']
-                });
-            }
-        }
-        else {
-            delete this.showIconClicked;
+    if (this.showIconClicked) {
+        delete this.showIconClicked;
+        return;
+    }
+
+    if (this.settings.showActionIcon && this.isOutside(e.target)) {
+        var point = this.getFocusPoint();
+        if (point) {
+            var isLeftTop = point.isLeftTop;
+            this.$showIcon.show().toggleClass('leftTop', isLeftTop);
+            this.$showIcon.css({
+                left: point.rect[isLeftTop ? 'left' : 'right'],
+                top : point.rect[isLeftTop ? 'top' : 'bottom']
+            });
         }
     }
 
@@ -287,6 +287,7 @@ UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
     this.stopPlayingAction();
     delete this.lastActiveVendor;
+    delete this.showIconClicked;
 };
 
 /** @private */

@@ -13,7 +13,8 @@ var Google = function (options) {
     this.name = 'google';
     this.title = 'Google';
     this.url = 'http://translate.google.com';
-    this.urlTextToSpeech = 'https://translate.google.com/translate_tts?ie=UTF-8&q={0}&tl={1}';
+    this.ttsFormat = 'audio/mp3';
+    this.urlTextToSpeech = this.url + '/translate_tts?ie=UTF-8&q={0}&tl={1}';
     this.langList = $.extend({}, this.langList, LANGUAGES);
 };
 

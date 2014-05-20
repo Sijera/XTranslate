@@ -98,12 +98,28 @@ Vendor.prototype.playText = function (text) {
     text = text || this.lastReqData.text;
     var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
-    var url = this.getAudioUrl(text, lang);
-    if (url) APP.extension.playAudio(url);
+
+    this.stopPlaying();
+    this.audio = document.createElement('audio');
+    this.audio.autoplay = true;
+
+    var vendors = [this].concat(APP.vendors); // move yourself to the top of priority
+    vendors.splice(vendors.lastIndexOf(this), 1); // remove duplicate
+    vendors.forEach(function (vendor) {
+        var audioUrl = vendor.getAudioUrl(text, lang);
+        if (audioUrl) {
+            var source = document.createElement('source');
+            source.src = audioUrl;
+            source.type = vendor.ttsFormat;
+            this.audio.appendChild(source);
+        }
+    }, this);
 };
 
 Vendor.prototype.stopPlaying = function () {
-    APP.extension.stopAudio();
+    if (!this.audio) return;
+    this.audio.pause();
+    delete this.audio;
 };
 
 /**

@@ -12,7 +12,8 @@ var Yandex = function (options) {
     this.name = 'yandex';
     this.title = 'Yandex';
     this.url = 'http://translate.yandex.com';
-    this.urlTextToSpeech = 'http://tts.voicetech.yandex.net/tts?format=mp3&quality=hi&platform=web&text={0}&lang={1}';
+    this.ttsFormat = 'audio/wav';
+    this.urlTextToSpeech = 'http://tts.voicetech.yandex.net/tts?format=' + this.ttsFormat.split('/')[1] + '&quality=hi&platform=web&text={0}&lang={1}';
     this.langList = $.extend({}, LANGUAGES);
 };
 

@@ -7,6 +7,7 @@
   top: 0;
   width: 100%;
   z-index: 10000000000;
+  -webkit-font-smoothing: initial;
 
   // reset user and page styles for the inner elements
   *, *:after, *:before {
@@ -14,6 +15,7 @@
     margin: 0;
     padding: 0;
     outline: none;
+    border: none;
     font: inherit;
     color: inherit;
     line-height: initial;
