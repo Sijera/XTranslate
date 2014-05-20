@@ -7,10 +7,10 @@
   position: relative;
   overflow: hidden;
   list-style: none;
-  background: $darkBgColor;
+  background: $bgColorBase;
   padding: $padding;
   border-radius: $radius;
-  border: 1px solid $lightBgColor;
+  border: 1px solid $bgColorLighten;
   cursor: default;
 
   li {
@@ -29,10 +29,6 @@
       margin-top: 0;
     }
 
-    &.selected {
-      background-color: $frameBgColor !important;
-    }
-
     &.disabled {
       pointer-events: none;
       color: gray;
@@ -40,7 +36,7 @@
     }
 
     &:hover {
-      background-color: $lightBgColor;
+      background-color: $bgColorLighten;
     }
   }
 

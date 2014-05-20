@@ -55,7 +55,7 @@ App.prototype.state = {
     },
     settingsContainer: {
         popupDefinitions: {
-            collapsed   : true,
+            collapsed   : false,
             autoFocus   : true,
             autoPlay    : false,
             showPlayIcon: true,

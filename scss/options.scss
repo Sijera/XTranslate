@@ -2,7 +2,7 @@
 
 html, body {
   @include with-vendors(user-select, none);
-  background-color: $darkBgColor;
+  background-color: $bgColorBase;
   height: 100%;
 }
 

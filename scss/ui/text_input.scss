@@ -1,14 +1,14 @@
 @import "../vars", "../mixins";
 
 .textInput {
-  background-color: $darkBgColor;
-  border: 1px solid $lightBgColor;
+  background-color: $bgColorBase;
+  border: 1px solid $bgColorLighten;
   border-radius: $radius;
   height: $formControlBaseHeight;
 
   &.focused {
     @include formControlFocus;
-    border-color: lighten($lightBgColor, 15);
+    border-color: lighten($bgColorLighten, 15);
   }
 
   .editBox {

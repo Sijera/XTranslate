@@ -34,7 +34,7 @@
     &:after {
       position: absolute;
       bottom: $arrowOffset;
-      @include triangle($formControlArrowSize, $lightBgColor, top);
+      @include triangle($formControlArrowSize, $bgColorLighten, top);
     }
   }
 
@@ -43,7 +43,7 @@
     &:after {
       position: absolute;
       top: $arrowOffset;
-      @include triangle($formControlArrowSize, $lightBgColor, bottom);
+      @include triangle($formControlArrowSize, $bgColorLighten, bottom);
     }
   }
 }

@@ -3,9 +3,9 @@
 // form control
 .select {
   position: relative;
-  background-color: $darkBgColor;
+  background-color: $bgColorBase;
   border-radius: $radius;
-  border: 1px solid $lightBgColor;
+  border: 1px solid $bgColorLighten;
   height: $formControlBaseHeight;
   width: 100%;
   outline: none;
@@ -47,25 +47,13 @@
     }
   }
 
-  &:before {
-    position: absolute;
-    content: '';
-    right: 0;
-    top: 0;
-    background: rgba(255, 255, 255, 0);
-    width: $formControlArrowSpace;
-    height: 100%;
-    cursor: default;
-    z-index: 9;
-  }
-
   &:after {
     position: absolute;
     right: 4px;
     top: 50%;
     z-index: 10;
     margin-top: -($formControlArrowSize / 2);
-    @include triangle($formControlArrowSize, $lightBgColor, bottom);
+    @include triangle($formControlArrowSize, $bgColorLighten, bottom);
   }
 }
 
