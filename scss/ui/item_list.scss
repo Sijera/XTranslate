@@ -29,6 +29,10 @@
       margin-top: 0;
     }
 
+    &.selected {
+      background-color: darken($bgColorLighten, 20%) !important;
+    }
+
     &.disabled {
       pointer-events: none;
       color: gray;
