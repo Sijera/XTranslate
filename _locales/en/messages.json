@@ -258,5 +258,9 @@
     "72": {
         "message"    : "Show an icon near selected text for getting translation",
         "description": "An option to get translated text"
+    },
+    "73": {
+        "message"    : "Show/hide popup preview",
+        "description": "A title for icon in the theme block"
     }
 }

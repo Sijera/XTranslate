@@ -21,10 +21,28 @@ var UTILS = require('../utils'),
 var SettingsThemeManager = function (options) {
     this.customThemeName = '--';
     SettingsThemeManager.superclass.constructor.call(this, options);
-    this.setTitle(__(5));
+
+    this.setTitle(__(25));
+    this.togglePreview();
 };
 
 inherit(SettingsThemeManager, SettingsBlock);
+
+/** @private */
+SettingsThemeManager.prototype.togglePreview = function () {
+    var toggleHandler = function() {
+        var hidden = this.popupPreview.hidden;
+        this.popupPreview.hidden = !hidden;
+        this.$togglePreview.toggleClass('visible', hidden);
+    }.bind(this);
+
+    this.$togglePreview = $('<span class="togglePreview fa-picture-o">')
+        .click('click', toggleHandler)
+        .attr('title', __(73))
+        .appendTo(this.$title);
+
+    toggleHandler(); // set initial state
+};
 
 /** @private */
 SettingsThemeManager.prototype.createDom = function (state) {
@@ -37,8 +55,8 @@ SettingsThemeManager.prototype.createDom = function (state) {
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
     });
 
-    var $preview = $('<div class="popupPreview"/>').appendTo(this.$content);
-    this.popup.$container.appendTo($preview).show();
+    this.popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content)[0];
+    this.popup.$container.appendTo(this.popupPreview).show();
 
     this.addThemeBlock();
     this.addBackgroundStyle();
@@ -134,7 +152,7 @@ SettingsThemeManager.prototype.createSubBlock = function (title, parentBlock, re
 
 /** @private */
 SettingsThemeManager.prototype.addThemeBlock = function () {
-    this.$themeBlock = this.createBlock(__(25), 'themeBlock');
+    this.$themeBlock = this.createBlock('', 'themeBlock');
     var $actionButtons = $('<div class="actionButtons"/>').appendTo(this.$themeBlock);
 
     /** @type {Select} */
@@ -160,7 +178,7 @@ SettingsThemeManager.prototype.addThemeBlock = function () {
         .appendTo($actionButtons);
 
     /** @type {Button} */
-    this.cancelSave = new Button({className: 'cancelSave fa-minus-square', title: __(26)})
+    this.cancelSave = new Button({className: 'cancelSave fa-times-circle', title: __(26)})
         .on('click', this.cancelSaving, this)
         .appendTo($actionButtons);
 

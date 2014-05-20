@@ -151,7 +151,7 @@
   }
 }
 
-@mixin pseudoLink($color: 'silver', $hoverColor: '') {
+@mixin pseudoLink($color: silver, $hoverColor: white) {
   cursor: pointer;
   color: $color;
   border-bottom: 1px dotted $color;

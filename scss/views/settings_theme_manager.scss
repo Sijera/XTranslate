@@ -2,12 +2,15 @@
 
 .settingsThemeManager {
   .popupPreview {
-    border: 1px dashed lighten($darkBgColor, 15%);
+    position: fixed;
+    top: 25px;
+    left: 50%;
+    @include with-vendors(transform, translateX(-50%));
+    border: 1px dashed lighten($darkBgColor, 50%);
     text-align: center;
-    margin-bottom: $padding;
     padding: $padding;
     border-radius: $radius;
-    overflow: hidden;
+    z-index: 1000;
 
     .popup {
       position: relative !important;
@@ -135,6 +138,20 @@
       b {
         color: silver;
       }
+    }
+  }
+
+  .togglePreview {
+    @include fa-icon(1.2em);
+    cursor: pointer;
+    vertical-align: middle;
+    font-weight: normal;
+    margin-left: .5em;
+    opacity: .5;
+
+    &.visible,
+    &:hover {
+      opacity: 1;
     }
   }
 }

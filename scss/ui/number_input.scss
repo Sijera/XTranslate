@@ -2,21 +2,10 @@
 
 .numberInput {
   $arrHoverColor: white;
+  $arrowOffset: .1em;
 
   .editBox {
     padding-right: $formControlArrowSpace;
-  }
-
-  &:before {
-    position: absolute;
-    content: '';
-    right: 0;
-    top: 0;
-    background: rgba(255, 255, 255, 0);
-    width: $formControlArrowSpace;
-    height: 100%;
-    cursor: default;
-    z-index: 9;
   }
 
   &.error {
@@ -29,23 +18,32 @@
   .upArr,
   .downArr {
     position: absolute;
-    right: 0;
     cursor: pointer;
-    margin: .2em;
+    right: 0;
     z-index: 10;
+    width: $formControlArrowSize * 2;
+    height: 50%;
 
-    &:hover {
+    &:hover:after {
       border-color: $arrHoverColor;
     }
   }
 
   .upArr {
     top: 0;
-    @include triangle($formControlArrowSize, $lightBgColor, top);
+    &:after {
+      position: absolute;
+      bottom: $arrowOffset;
+      @include triangle($formControlArrowSize, $lightBgColor, top);
+    }
   }
 
   .downArr {
     bottom: 0;
-    @include triangle($formControlArrowSize, $lightBgColor, bottom);
+    &:after {
+      position: absolute;
+      top: $arrowOffset;
+      @include triangle($formControlArrowSize, $lightBgColor, bottom);
+    }
   }
 }
