@@ -2,13 +2,13 @@
 
 .itemList {
   $removeIcon: 1em;
-  $padding: 3px;
+  $offset: 3px;
 
   position: relative;
   overflow: hidden;
   list-style: none;
   background: $bgColorBase;
-  padding: $padding;
+  padding: $offset;
   border-radius: $radius;
   border: 1px solid $bgColorLighten;
   cursor: default;
@@ -19,7 +19,7 @@
     border-radius: $radius;
     white-space: nowrap;
     text-overflow: ellipsis;
-    margin-top: $padding;
+    margin-top: $offset;
 
     > span.item {
       color: inherit;

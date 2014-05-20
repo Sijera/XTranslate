@@ -1,14 +1,14 @@
 // Dimensions
-$radius: .25em;
-$spacing: .25em;
-$padding: .5em;
+$radius: .25em !global;
+$spacing: .25em !global;
+$padding: .5em !global;
 
-$formControlBaseHeight: 1.5em;
-$formControlArrowSize: .37em;
-$formControlArrowSpace: .45em;
-$scrollBarSize: .6em;
+$formControlBaseHeight: 1.5em !global;
+$formControlArrowSize: .37em !global;
+$formControlArrowSpace: .45em !global;
+$scrollBarSize: .6em !global;
 
 // Colors
-$textColor: white;
-$bgColorBase: #343434;
-$bgColorLighten: lighten($bgColorBase, 34%);
+$textColor: white !global;
+$bgColorBase: #343434 !global;
+$bgColorLighten: lighten($bgColorBase, 34%) !global;

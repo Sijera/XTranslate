@@ -1,14 +1,14 @@
 @import "../vars";
 
 .scrollBar {
-  $padding: 2px;
+  $offset: 2px;
 
   position: absolute;
   width: $scrollBarSize;
-  top: $padding;
-  bottom: $padding;
-  left: $padding;
-  right: $padding;
+  top: $offset;
+  bottom: $offset;
+  left: $offset;
+  right: $offset;
   overflow: hidden;
 
   &.left { margin-right: auto; }
