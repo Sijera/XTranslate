@@ -81,7 +81,9 @@ ScrollBar.prototype.scrollTo = function (pos, silent) {
         this.$bar.css('top', this.barPos);
         this.$container.css({marginTop: this.realPos, marginBottom: -this.realPos});
         if (!silent) this.trigger('scroll', this.realPos);
+        return true;
     }
+    return false;
 };
 
 ScrollBar.prototype.scrollBy = function (step, silent) {
@@ -178,10 +180,13 @@ ScrollBar.prototype.onMouseMove = function (e) {
 
 /** @private */
 ScrollBar.prototype.onMouseWheel = function (e) {
-    if (e.wheelDelta > 0) this.scrollBy(-this.scrollSpeed);
-    if (e.wheelDelta < 0) this.scrollBy(this.scrollSpeed);
-    e.stopPropagation();
-    e.preventDefault();
+    var scrollChanged;
+    if (e.wheelDelta > 0) scrollChanged = this.scrollBy(-this.scrollSpeed);
+    if (e.wheelDelta < 0) scrollChanged = this.scrollBy(this.scrollSpeed);
+    if (scrollChanged) {
+        e.stopPropagation();
+        e.preventDefault();
+    }
 };
 
 /** @private */

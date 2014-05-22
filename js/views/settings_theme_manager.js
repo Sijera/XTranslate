@@ -37,7 +37,7 @@ SettingsThemeManager.prototype.togglePreview = function () {
     }.bind(this);
 
     this.$togglePreview = $('<span class="togglePreview fa-picture-o">')
-        .click('click', toggleHandler)
+        .on('click', toggleHandler)
         .attr('title', __(73))
         .appendTo(this.$title);
 
@@ -55,7 +55,7 @@ SettingsThemeManager.prototype.createDom = function (state) {
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
     });
 
-    this.popupPreview = $('<div class="popupPreview"/>').appendTo(this.$content)[0];
+    this.popupPreview = $('<div class="popupPreview"/>').appendTo(document.body)[0];
     this.popup.$container.appendTo(this.popupPreview).show();
 
     this.addThemeBlock();
@@ -196,9 +196,9 @@ SettingsThemeManager.prototype.addCommonStyle = function () {
     var $maxHeight = this.createSubBlock(__(53), $common);
     var $boxShadow = this.createSubBlock(__(50), $common);
 
-    /** @type {Slider} */      this.boxPadding = new Slider({min: 0, max: 5, step: 0.1, suffix: 'em'}).appendTo($padding);
-    /** @type {Slider} */      this.boxMaxWidth = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxWidth);
-    /** @type {Slider} */      this.boxMaxHeight = new Slider({min: 0, max: 500, step: 1, suffix: 'px'}).appendTo($maxHeight);
+    /** @type {Slider} */      this.boxPadding = new Slider({min: 0, max: 5, step: 0.1}).appendTo($padding);
+    /** @type {Slider} */      this.boxMaxWidth = new Slider({min: 0, max: 500, step: 1}).appendTo($maxWidth);
+    /** @type {Slider} */      this.boxMaxHeight = new Slider({min: 0, max: 500, step: 1}).appendTo($maxHeight);
     /** @type {ColorPicker} */ this.boxShadowColor = new ColorPicker({useInput: true, title: __(36), titleHint: __(59)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowSize = new NumberInput({minValue: 0, maxValue: 100, title: __(41)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowOpacity = new NumberInput({minValue: 0, maxValue: 100, title: __(37)}).appendTo($boxShadow);

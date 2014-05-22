@@ -1,26 +1,26 @@
 @import "../vars", '../mixins';
 
-.settingsThemeManager {
-  .popupPreview {
-    position: fixed;
-    top: 25px;
-    left: 50%;
-    @include with-vendors(transform, translateX(-50%));
-    border: 1px dashed lighten($bgColorBase, 50%);
-    text-align: center;
-    padding: $padding;
-    border-radius: $radius;
-    z-index: 1000;
+.popupPreview {
+  @include with-vendors(transform, translateX(-50%));
 
-    .popup {
-      position: relative !important;
-      margin: auto;
-      z-index: 0;
-      pointer-events: none;
-    }
+  position: fixed;
+  top: 25px;
+  left: 50%;
+  border: 1px dashed lighten($bgColorBase, 50%);
+  text-align: center;
+  padding: $padding;
+  border-radius: $radius;
+  z-index: 1001;
+
+  .popup {
+    position: relative !important;
+    margin: auto;
+    z-index: 0;
+    pointer-events: none;
   }
+}
 
-  // form controls
+.settingsThemeManager {
   .button {
     text-shadow: 1px 1px 0 black;
     background: none;
@@ -52,7 +52,6 @@
     margin-top: $spacing;
   }
 
-  // block of styles
   .block {
     &:not(.commonBlock) {
       @include addSepLine(bottom, $padding);

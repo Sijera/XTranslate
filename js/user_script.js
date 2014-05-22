@@ -198,20 +198,17 @@ UserScript.prototype.onContextMenu = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseDown = function (e) {
-    var targetElem = e.target;
+    var target = e.target;
     if (e.button === 2 /*RIGHT*/) {
         if (this.settings.contextMenu && this.getText()) {
             this.restoreSelection = true;
         }
     }
-    else if (this.lastRange && this.isOutside(targetElem)) {
-        if (this.settings.showActionIcon) {
-            if (this.$showIcon.is(targetElem)) {
-                this.showIconClicked = true;
-                this.translateText(e);
-                e.preventDefault();
-            }
-            this.$showIcon.hide();
+    else if (this.lastRange && this.isOutside(target)) {
+        if (this.settings.showActionIcon && this.$showIcon.is(target)) {
+            this.showIconClicked = true;
+            this.translateText(e);
+            e.preventDefault();
         }
         delete this.lastRange;
     }
@@ -278,8 +275,8 @@ UserScript.prototype.onPlayText = function () {
 
 /** @private */
 UserScript.prototype.onShowPopup = function () {
-    if (!this.settings.autoFocus) return;
-    this.popup.focus();
+    if (this.settings.autoFocus) this.popup.focus();
+    if (this.settings.showActionIcon) this.$showIcon.hide();
 };
 
 /** @private */
@@ -287,7 +284,6 @@ UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
     this.stopPlayingAction();
     delete this.lastActiveVendor;
-    delete this.showIconClicked;
 };
 
 /** @private */

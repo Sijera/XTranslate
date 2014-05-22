@@ -10,7 +10,7 @@
   width: auto;
   height: $sliderHeight;
   border-radius: $sliderHeight;
-  border: 1px solid #6A6A6A;
+  border: 1px groove rgba(255, 255, 255, .3);
   display: block;
 
   .line {
@@ -24,14 +24,12 @@
   }
 
   .value {
-    $pointSize: $sliderHeight + .25em;
+    $pointSize: $sliderHeight * 1.55;
 
     position: absolute;
     outline: none;
-    top: $sliderHeight - $pointSize;
     width: $pointSize;
-    height: $pointSize;
-    margin: 0 -#{$pointSize / 2};
+    height: $sliderHeight;
 
     &:focus {
       .title {
@@ -39,7 +37,7 @@
       }
       .point {
         @include formControlFocus;
-        border-style: solid;
+        border-color: white;
       }
     }
 
@@ -52,14 +50,17 @@
     }
 
     .point {
+      @include with-vendors(transform, translateY(-50%));
+
       position: absolute;
-      width: inherit;
-      height: inherit;
-      border-radius: 50%;
-      z-index: 1;
-      border: .2em outset white;
-      box-shadow: 0 1px .35em black;
+      width: $pointSize;
+      height: $pointSize;
       background: $pointColor;
+      border-radius: 50%;
+      top: 50%;
+      z-index: 1;
+      border: .2em solid #ccc;
+      box-shadow: 0 1px .35em black;
       cursor: pointer;
 
       &:hover + .title {
@@ -68,6 +69,8 @@
     }
 
     .title {
+      @include with-vendors(transform, translateX(-50%));
+
       position: absolute;
       font-style: normal;
       display: none;
@@ -76,7 +79,9 @@
       white-space: nowrap;
       background: $bgColorBase;
       padding: 0 $radius;
-      top: -$pointSize * 2;
+      left: 50%;
+      bottom: $pointSize / 2;
+      margin-bottom: .5em;
       border-radius: $radius;
       border: 1px solid $bgcDisabled;
       z-index: 2;
