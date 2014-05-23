@@ -56,6 +56,26 @@
   .hint {
     vertical-align: middle;
     cursor: help;
+
+    &:hover:after {
+      height: 100%;
+      top: 0;
+      margin-top: .5em;
+    }
+
+    &:after {
+      content: attr(x-title);
+      white-space: pre-line;
+      display: block;
+      color: silver;
+      height: 0;
+      top: -50em;
+      position: relative;
+      @include with-vendors(transition-property, height, top, margin-top);
+      @include with-vendors(transition-duration, .25s, 0);
+      @include with-vendors(transition-timing-function, ease-out, easy-in);
+      @include with-vendors(transition-delay, 1s);
+    }
   }
 
   .sep {

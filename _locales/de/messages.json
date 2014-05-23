@@ -40,7 +40,7 @@
         "description": "A label for checkbox in settings"
     },
     "10": {
-        "message"    : "Um ein Tastaturkürzel zu definieren, wählen Sie eine Zwei-Tasten-Kombination: Cmd, Strg, Alt, Umschalt, Buchstaben (a-z) oder Zahlen (0-9) sind möglich.",
+        "message"    : "Um ein Tastaturkürzel zu definieren, klicken Sie in das Textfeld und wählen Sie eine Kombination aus: Cmd, Strg, Alt, Umschalt, Buchstaben (a-z) oder Zahlen (0-9)",
         "description": "Help how to define hotkey to make translation"
     },
     "11": {
@@ -254,5 +254,13 @@
     "71": {
         "message"    : "Schriftgröße der Benutzeroberfläche",
         "description": "A checkbox in the display options"
+    },
+    "72": {
+        "message"    : "Symbol zur Übersetzung neben markiertem Text anzeigen",
+        "description": "An option to get translated text"
+    },
+    "73": {
+        "message"    : "Popup-Vorschau anzeigen/ausblenden",
+        "description": "A title for icon in the theme block"
     }
 }

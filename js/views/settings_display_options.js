@@ -68,14 +68,14 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .appendTo(this.keyAction.$label);
 
     var ctrlKeysDescription = [
-        '⌘ . . . Command, Cmd, Clover, (formerly) Apple',
-        '⌃ . . . Control, Ctl, Ctrl',
-        '⌥ . . . Option, Opt, (Windows) Alt',
-        '⇧ . . . Shift'
+        String.fromCharCode(8984) + ' . . . Command, Cmd, Clover, (formerly) Apple',
+        String.fromCharCode(8963) + ' . . . Control, Ctl, Ctrl',
+        String.fromCharCode(8997) + ' . . . Option, Opt, (Windows) Alt',
+        String.fromCharCode(8679) + ' . . . Shift'
     ];
 
     this.$hotKeyHint = $('<i class="hint"> *</i>')
-        .attr('title', [__(64), '--'].concat(ctrlKeysDescription).join('\n'))
+        .attr('x-title', [__(64), '--'].concat(ctrlKeysDescription).join('\n'))
         .appendTo(this.keyAction.$label);
 
     // TODO: make as external component
