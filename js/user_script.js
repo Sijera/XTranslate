@@ -198,17 +198,20 @@ UserScript.prototype.onContextMenu = function (e) {
 
 /** @private */
 UserScript.prototype.onMouseDown = function (e) {
-    var target = e.target;
+    var targetElem = e.target;
     if (e.button === 2 /*RIGHT*/) {
         if (this.settings.contextMenu && this.getText()) {
             this.restoreSelection = true;
         }
     }
-    else if (this.lastRange && this.isOutside(target)) {
-        if (this.settings.showActionIcon && this.$showIcon.is(target)) {
-            this.showIconClicked = true;
-            this.translateText(e);
-            e.preventDefault();
+    else if (this.lastRange && this.isOutside(targetElem)) {
+        if (this.settings.showActionIcon) {
+            if (this.$showIcon.is(targetElem)) {
+                this.showIconClicked = true;
+                this.translateText(e);
+                e.preventDefault();
+            }
+            this.$showIcon.hide();
         }
         delete this.lastRange;
     }
