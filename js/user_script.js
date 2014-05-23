@@ -48,6 +48,7 @@ UserScript.prototype.inject = function () {
 UserScript.prototype.createDom = function () {
     this.$app = $('<div id="XTranslate"/>').appendTo(document.body);
     this.$showIcon = $('<span class="showPopupTriggerIcon fa-gear"/>').hide().appendTo(this.$app);
+    this.hideIcon = UTILS.debounce(this.$showIcon.hide.bind(this.$showIcon), 10);
     this.popup = new Popup({borderElem: this.$app});
     UTILS.spawnElement.$pool.detach();
 };
@@ -211,7 +212,7 @@ UserScript.prototype.onMouseDown = function (e) {
                 this.translateText(e);
                 e.preventDefault();
             }
-            this.$showIcon.hide();
+            this.hideIcon();
         }
         delete this.lastRange;
     }
@@ -279,7 +280,7 @@ UserScript.prototype.onPlayText = function () {
 /** @private */
 UserScript.prototype.onShowPopup = function () {
     if (this.settings.autoFocus) this.popup.focus();
-    if (this.settings.showActionIcon) this.$showIcon.hide();
+    if (this.settings.showActionIcon) this.hideIcon();
 };
 
 /** @private */
