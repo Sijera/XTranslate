@@ -140,7 +140,7 @@
     }
   }
 
-  .togglePreview {
+  .togglePreviewIcon {
     @include fa-icon(1.2em);
     cursor: pointer;
     vertical-align: middle;
@@ -148,7 +148,7 @@
     margin-left: .5em;
     opacity: .5;
 
-    &.visible,
+    &.active,
     &:hover {
       opacity: 1;
     }

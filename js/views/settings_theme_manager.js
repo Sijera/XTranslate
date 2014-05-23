@@ -23,25 +23,30 @@ var SettingsThemeManager = function (options) {
     SettingsThemeManager.superclass.constructor.call(this, options);
 
     this.setTitle(__(25));
-    this.togglePreview();
+    this.initPreviewIcon();
 };
 
 inherit(SettingsThemeManager, SettingsBlock);
 
 /** @private */
-SettingsThemeManager.prototype.togglePreview = function () {
+SettingsThemeManager.prototype.initPreviewIcon = function () {
     var toggleHandler = function() {
         var hidden = this.popupPreview.hidden;
         this.popupPreview.hidden = !hidden;
-        this.$togglePreview.toggleClass('visible', hidden);
+        this.$togglePreviewIcon.toggleClass('active', hidden);
     }.bind(this);
 
-    this.$togglePreview = $('<span class="togglePreview fa-picture-o">')
-        .on('click', toggleHandler)
-        .attr('title', __(73))
-        .appendTo(this.$title);
+    this.$togglePreviewIcon = $('<span class="togglePreviewIcon fa-picture-o">').appendTo(this.$title);
+    this.$togglePreviewIcon
+        .on('click', toggleHandler).click() // set initial state
+        .attr('title', __(73));
 
-    toggleHandler(); // set initial state
+    // hide the block on tabs change
+    APP.on('change:headerBar.activeTab', function () {
+        var popupIsVisible = !this.popupPreview.hidden;
+        var blockIsVisible = this.$container.is(':visible');
+        this.popupPreview.style.display = (popupIsVisible && !blockIsVisible) ? 'none' : '';
+    }.bind(this));
 };
 
 /** @private */
