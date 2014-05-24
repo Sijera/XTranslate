@@ -204,7 +204,7 @@
         "description": "A title for part of pop-up CSS style"
     },
     "59": {
-        "message"    : "Um die Farbe schrittweise zu ändern, können Sie gleichzeitig die Tasten (Strg, Alt, Umschalt) und  [?] oder [?] drücken und halten.",
+        "message"    : "Um die Farbe schrittweise zu ändern, können Sie eine oder alle Steuerungstasten (Strg, Alt, Umschalt) und  [↑] oder [↓] gleichzeitig drücken und halten.",
         "description": "A tooltip title for the color picker box"
     },
     "60": {
