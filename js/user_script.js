@@ -46,9 +46,9 @@ UserScript.prototype.inject = function () {
 
 /** @private */
 UserScript.prototype.createDom = function () {
-    this.$app = $('<div id="XTranslate"/>').appendTo(document.body);
-    this.$showIcon = $('<span class="showPopupTriggerIcon fa-gear"/>').hide().appendTo(this.$app);
-    this.hideIcon = UTILS.debounce(this.$showIcon.hide.bind(this.$showIcon), 10);
+    this.$app = $('<app id="XTranslate"/>').appendTo(document.documentElement);
+    this.$icon = $('<icon class="showPopup fa-gear"/>').hide().appendTo(this.$app);
+    this.hideIcon = UTILS.debounce(this.$icon.hide.bind(this.$icon), 10);
     this.popup = new Popup({borderElem: this.$app});
     UTILS.spawnElement.$pool.detach();
 };
@@ -207,7 +207,7 @@ UserScript.prototype.onMouseDown = function (e) {
     }
     else if (this.lastRange && this.isOutside(targetElem)) {
         if (this.settings.showActionIcon) {
-            if (this.$showIcon.is(targetElem)) {
+            if (this.$icon.is(targetElem)) {
                 this.showIconClicked = true;
                 this.translateText(e);
                 e.preventDefault();
@@ -234,8 +234,8 @@ UserScript.prototype.onMouseUp = function (e) {
         var point = this.getFocusPoint();
         if (point) {
             var isLeftTop = point.isLeftTop;
-            this.$showIcon.show().toggleClass('leftTop', isLeftTop);
-            this.$showIcon.css({
+            this.$icon.show().toggleClass('leftTop', isLeftTop);
+            this.$icon.css({
                 left: point.rect[isLeftTop ? 'left' : 'right'],
                 top : point.rect[isLeftTop ? 'top' : 'bottom']
             });

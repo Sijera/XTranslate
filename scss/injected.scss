@@ -1,6 +1,6 @@
 @import "vars", 'mixins', 'fa/font-awesome';
 
-// wrap the user css into single class name
+// create "namespace" of all user data for the app
 #XTranslate {
   position: absolute;
   left: 0;
@@ -9,7 +9,7 @@
   z-index: 10000000000;
   -webkit-font-smoothing: initial;
 
-  // reset user and page styles for the inner elements
+  // reset styles for all inner elements
   *, *:after, *:before {
     @include with-vendors(box-sizing, border-box);
     margin: 0;
@@ -26,7 +26,7 @@
     text-align: initial;
   }
 
-  .showPopupTriggerIcon {
+  .showPopup {
     position: absolute;
     font-family: FontAwesome;
     font-size: 1.5em;
