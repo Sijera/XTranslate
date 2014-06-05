@@ -1,6 +1,7 @@
 // Variables
 // --------------------------
 
+$fa-export-name:     XTranslateIcons; // to avoid some conflicts, if other/modified versions of the font included on the page
 $fa-font-path:        "chrome-extension://__MSG_@@extension_id__/fonts" !default;
 //$fa-font-path:        "//netdna.bootstrapcdn.com/font-awesome/4.0.3/fonts" !default; // for referencing Bootstrap CDN font files directly
 $fa-css-prefix:       fa !default;
