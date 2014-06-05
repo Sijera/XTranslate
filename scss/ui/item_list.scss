@@ -21,10 +21,6 @@
     text-overflow: ellipsis;
     margin-top: $offset;
 
-    > span.item {
-      color: inherit;
-    }
-
     &:first-child {
       margin-top: 0;
     }
@@ -59,7 +55,7 @@
       position: absolute;
       right: 0;
       top: 0;
-      margin: $radius;
+      margin: .2em;
       width: $removeIcon;
       height: $removeIcon;
       border-radius: $radius;

@@ -54,13 +54,12 @@ ItemList.prototype.add = function (item, silent) {
     if (itemObj.value === undefined) itemObj.value = itemObj.title;
     if (itemObj.title === undefined || isNumeric) itemObj.title = String(itemObj.value);
 
-    itemObj.$el = $('<li><span class="item"/></li>')
+    itemObj.$el = $('<li class="item"/>')
         .addClass(itemObj.className)
+        .text(itemObj.title)
         .attr('title', this.showTitles ? itemObj.title : undefined)
         .on('click', this.onClickItem.bind(this, itemObj))
         .appendTo(this.$container);
-
-    itemObj.$el.find('.item').text(itemObj.title);
 
     if (this.removable) {
         $('<i class="removeIcon"/>')
