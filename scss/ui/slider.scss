@@ -60,7 +60,7 @@
       top: 50%;
       z-index: 1;
       border: .2em solid #ccc;
-      box-shadow: 0 1px .35em black;
+      box-shadow: 0 0 .35em black;
       cursor: pointer;
 
       &:hover + .title {

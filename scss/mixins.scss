@@ -164,11 +164,9 @@
   }
 }
 
-@mixin fa-icon($fontSize: 1em, $smoothing: antialiased) {
-  font-size: $fontSize;
-  font-family: $fa-export-name;
-  font-style: normal;
-  -webkit-font-smoothing: $smoothing;
+@mixin fa-icon($fontSize: 1em) {
+  font: normal $fontSize $fa-export-name;
+  -webkit-font-smoothing: antialiased;
 }
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }

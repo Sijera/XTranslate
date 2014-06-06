@@ -215,22 +215,21 @@ FlyingPanel.prototype.bindAutoHide = function () {
         this.autoHideInited = true;
         this.$window = $(window);
         this.autoHideHandler = this.autoHideHandler.bind(this);
-        this.$container.on('click', false);
     }
 
-    this.$window.on('keydown click', this.autoHideHandler);
+    this.$window.on('keydown mousedown', this.autoHideHandler);
 };
 
 /** @private */
 FlyingPanel.prototype.unbindAutoHide = function () {
     if (!this.autoHideInited) return;
-    this.$window.off('keydown click', this.autoHideHandler);
+    this.$window.off('keydown mousedown', this.autoHideHandler);
 };
 
 /** @private */
 FlyingPanel.prototype.autoHideHandler = function (e) {
     switch (e.type) {
-        case 'click':
+        case 'mousedown':
             var elem = e.target;
             if (this.$container[0].contains(elem) || this.$anchor[0].contains(elem)) return;
             this.hide();

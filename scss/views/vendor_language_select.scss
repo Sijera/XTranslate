@@ -1,7 +1,7 @@
 @import "../vars", "../mixins";
 
 .vendorLanguageSelect {
-  $iconSize: 1.3em;
+  $iconSize: 1.4em;
 
   text-align: center;
   white-space: nowrap;
@@ -19,7 +19,7 @@
     width: $iconSize;
     height: $iconSize;
     display: inline-block;
-    background: none no-repeat center;
+    background: none no-repeat 0 .1em;
     background-size: cover;
 
     &:before {

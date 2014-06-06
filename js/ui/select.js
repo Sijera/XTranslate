@@ -87,14 +87,13 @@ Select.prototype.createDom = function () {
 /** @protected */
 Select.prototype.bindEvents = function () {
     this.$container
-        .on('click', this.toggleList.bind(this))
+        .on('click', this._onClick.bind(this))
         .on('keydown', this._onKeyDown.bind(this))
         .on('keypress', this._onKeyPress.bind(this))
         .on('keyup', this._onKeyUp.bind(this));
 
     this.editBox
         .on('tooltipReady', this._onTooltipReady.bind(this))
-        .on('keydown', this._onKeyDown.bind(this))
         .on('validChanged', this._onValidChange, this)
         .on('change', this._onEditBoxChange, this);
 
@@ -106,7 +105,6 @@ Select.prototype.bindEvents = function () {
         .on('remove', this._onItemRemove, this)
         .on('click', this._onItemClick, this);
 
-    // TODO: optimize me!
     $(window).on('resize', this._onResize.bind(this));
 };
 
@@ -285,17 +283,6 @@ Select.prototype._onItemRemove = function (item) {
 };
 
 /** @protected */
-Select.prototype._onScroll = function (e) {
-    if (!this.$container.is(':focus')) return;
-    var item = this.itemList.getNextItem(e.wheelDelta > 0);
-    if (item) {
-        this._setSelectedItem(item);
-        e.stopPropagation();
-        e.preventDefault();
-    }
-};
-
-/** @protected */
 Select.prototype._onKeyPress = function (e) {
     if (this.editable) return;
     if (this._searchText === undefined) this._searchText = '';
@@ -342,6 +329,12 @@ Select.prototype._onKeyDown = function (e) {
         e.preventDefault();
         e.stopPropagation();
     }
+};
+
+/** @protected */
+Select.prototype._onClick = function (e) {
+    if(this.flyingPanel.$container[0].contains(e.target)) return;
+    this.toggleList();
 };
 
 /** @protected */

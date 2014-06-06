@@ -181,13 +181,7 @@ UserScript.prototype.getFocusPoint = function () {
         };
     }
 };
-/** @private */
-UserScript.prototype.onKeyDown = function (e) {
-    if (this.settings.keyAction) {
-        var keyMatch = this.settings.hotKey == UTILS.getHotkey(e);
-        if (keyMatch) this.translateText(e, this.getOverText());
-    }
-};
+
 
 /** @private */
 UserScript.prototype.onContextMenu = function (e) {
@@ -197,6 +191,15 @@ UserScript.prototype.onContextMenu = function (e) {
     }
 };
 
+/** @private */
+UserScript.prototype.onKeyDown = function (e) {
+    if (this.settings.keyAction) {
+        var keyMatch = this.settings.hotKey == UTILS.getHotkey(e);
+        if (keyMatch) {
+            this.translateText(e, this.getOverText());
+        }
+    }
+};
 /** @private */
 UserScript.prototype.onMouseDown = function (e) {
     var targetElem = e.target;
@@ -221,16 +224,18 @@ UserScript.prototype.onMouseDown = function (e) {
 /** @private */
 UserScript.prototype.onMouseUp = function (e) {
     if (this.clickAction) {
+        // avoid attempts of getting translation twice, if double-click was used
         delete this.clickAction;
         return;
     }
 
     if (this.showIconClicked) {
+        // don't try to show the icon again, if we click on it
         delete this.showIconClicked;
         return;
     }
 
-    if (this.settings.showActionIcon && this.isOutside(e.target)) {
+    if (this.settings.showActionIcon && this.popup.hidden && this.isOutside(e.target)) {
         var point = this.getFocusPoint();
         if (point) {
             var isLeftTop = point.isLeftTop;
