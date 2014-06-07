@@ -1,25 +1,5 @@
 @import "../vars", '../mixins';
 
-.popupPreview {
-  @include with-vendors(transform, translateX(-50%));
-
-  position: fixed;
-  top: 25px;
-  left: 50%;
-  border: 1px dashed lighten($bgColorBase, 50%);
-  text-align: center;
-  padding: $padding;
-  border-radius: $radius;
-  z-index: 1001;
-
-  .popup {
-    position: relative !important;
-    margin: auto;
-    z-index: 0;
-    pointer-events: none;
-  }
-}
-
 .settingsThemeManager {
   .button {
     text-shadow: 1px 1px 0 black;

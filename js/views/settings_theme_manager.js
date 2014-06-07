@@ -30,22 +30,20 @@ inherit(SettingsThemeManager, SettingsBlock);
 
 /** @private */
 SettingsThemeManager.prototype.initPreviewIcon = function () {
-    var toggleHandler = function() {
-        var hidden = this.popupPreview.hidden;
-        this.popupPreview.hidden = !hidden;
-        this.$togglePreviewIcon.toggleClass('active', hidden);
-    }.bind(this);
+    var $previewIcon = $('<span class="togglePreviewIcon fa-picture-o">')
+        .attr('title', __(73))
+        .appendTo(this.$title);
 
-    this.$togglePreviewIcon = $('<span class="togglePreviewIcon fa-picture-o">').appendTo(this.$title);
-    this.$togglePreviewIcon
-        .on('click', toggleHandler).click() // set initial state
-        .attr('title', __(73));
+    $previewIcon.on('click', function () {
+        this.popup.toggle();
+        $previewIcon.toggleClass('active', !this.popup.hidden);
+    }.bind(this));
 
-    // hide the block on tabs change
+    // hide on tabs change
     APP.on('change:headerBar.activeTab', function () {
-        var popupIsVisible = !this.popupPreview.hidden;
         var blockIsVisible = this.$container.is(':visible');
-        this.popupPreview.style.display = (popupIsVisible && !blockIsVisible) ? 'none' : '';
+        var previewIsActive = $previewIcon.is('.active');
+        this.popup.toggle(previewIsActive && blockIsVisible);
     }.bind(this));
 };
 
@@ -54,14 +52,12 @@ SettingsThemeManager.prototype.createDom = function (state) {
     SettingsThemeManager.superclass.createDom.apply(this, arguments);
     this.$container.addClass('settingsThemeManager');
 
-    this.popup = new Popup().parseData({
+    /** @type {Popup} */
+    this.popup = new Popup({className: 'preview'}).parseData({
         translation: __(22),
         ttsEnabled : true,
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
     });
-
-    this.popupPreview = $('<div class="popupPreview"/>').appendTo(document.body)[0];
-    this.popup.$container.appendTo(this.popupPreview).show();
 
     this.addThemeBlock();
     this.addBackgroundStyle();

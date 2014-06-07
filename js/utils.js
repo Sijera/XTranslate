@@ -182,3 +182,8 @@ exports.escapeReg = function (text, exceptChars) {
         return '\\' + char;
     });
 };
+
+exports.approxEquals = function (num1, num2, offset) {
+    offset = offset || 1;
+    return Math.abs(num1 - num2) <= offset;
+};

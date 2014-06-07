@@ -110,26 +110,27 @@ var toCSS = function (theme) {
     // border
     var borderOpacity = theme.borderOpacity / 100;
     var borderColor = borderOpacity < 1 ? hex2Rgba(theme.borderColor, borderOpacity) : theme.borderColor;
-    var border = [theme.borderWidth + 'px', theme.borderStyle, borderColor].join(' ');
-    var borderRadius = theme.borderRadius + 'px';
+    var border = [zoomedValue(theme.borderWidth) + 'px', theme.borderStyle, borderColor].join(' ');
+    var borderRadius = zoomedValue(theme.borderRadius) + 'px';
 
     // text
     var fontFamily = theme.fontFamily;
-    var fontSize = theme.fontSize + 'px';
+    var fontSize = zoomedValue(theme.fontSize) + 'px';
     var textColor = theme.textColor;
-    var textShadowX = theme.textShadowOffsetX;
-    var textShadowY = theme.textShadowOffsetY;
-    var textShadowBlur = theme.textShadowBlur;
+    var textShadowX = zoomedValue(theme.textShadowOffsetX);
+    var textShadowY = zoomedValue(theme.textShadowOffsetY);
+    var textShadowBlur = zoomedValue(theme.textShadowBlur);
     var textShadow = [textShadowX + 'px', textShadowY + 'px', textShadowBlur + 'px', theme.textShadowColor].join(' ');
     if (!textShadowX && !textShadowY && !textShadowBlur) textShadow = 'none';
 
     // box
-    var maxWidth = theme.maxWidth ? theme.maxWidth : 'none';
-    var maxHeight = theme.maxHeight ? theme.maxHeight : 'none';
-    var padding = Math.round(theme.fontSize * theme.padding); // convert "em" to "px"
+    var maxWidth = zoomedValue(theme.maxWidth) || 'none';
+    var maxHeight = zoomedValue(theme.maxHeight) || 'none';
+    var padding = theme.padding + 'em';
     var boxShadowOpacity = theme.boxShadowOpacity / 100;
     var boxShadowColor = boxShadowOpacity < 1 ? hex2Rgba(theme.boxShadowColor, boxShadowOpacity) : theme.boxShadowColor;
-    var boxShadow = [theme.boxShadowInner ? 'inset' : '', 0, 0, theme.boxShadowSize + 'px', boxShadowColor].join(' ');
+    var boxShadowSize = zoomedValue(theme.boxShadowSize) + 'px';
+    var boxShadow = [theme.boxShadowInner ? 'inset' : '', 0, 0, boxShadowSize, boxShadowColor].join(' ');
 
     return {
         maxWidth    : maxWidth,
@@ -144,6 +145,12 @@ var toCSS = function (theme) {
         textShadow  : textShadow,
         boxShadow   : boxShadow
     };
+};
+
+// keep actual pixel-based sizes despite on the page zooming
+var zoomedValue = function (value) {
+    var pixelRatio = 1 / (window.devicePixelRatio || 1);
+    return Number((+value * pixelRatio).toFixed(1));
 };
 
 exports.THEMES = CSS_THEMES;

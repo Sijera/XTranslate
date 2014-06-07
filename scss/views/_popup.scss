@@ -11,7 +11,6 @@
   white-space: pre-line;
   text-align: left;
   line-height: 130%;
-  pointer-events: auto;
   z-index: 10000000000;
 
   .vendorDataView {
@@ -32,17 +31,14 @@
 
   .scrollBar {
     $animSpeed: .25s;
-    $offset: 7px;
-    $width: 9px;
+    $offset: .3em;
 
     @include with-vendors(transition, margin-right $animSpeed);
     margin-right: -$padding * 2;
-    width: $width;
     left: $offset;
     right: $offset;
     top: $offset;
     bottom: $offset;
-    overflow: visible;
     border-radius: inherit;
 
     .bar {
@@ -50,5 +46,19 @@
       border-radius: inherit;
       box-shadow: gray 0px 0px 7px -1px;
     }
+  }
+
+  // inside the theme manager
+  &.preview {
+    @include with-vendors(transform, translateX(-50%));
+
+    position: fixed !important;
+    top: 25px !important;
+    left: 50% !important;
+    margin: auto;
+    outline: .1em dashed lighten($bgColorBase, 50%);
+    outline-offset: .7em;
+    z-index: 1001;
+    display: none;
   }
 }

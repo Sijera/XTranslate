@@ -1,7 +1,7 @@
 {
     "name"            : "XTranslate",
     "description"     : "__MSG_0__",
-    "version"         : "1.172",
+    "version"         : "1.173",
     "manifest_version": 2,
     "default_locale"  : "en",
     "options_page"    : "options.html",

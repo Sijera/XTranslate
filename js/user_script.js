@@ -48,7 +48,7 @@ UserScript.prototype.inject = function () {
 UserScript.prototype.createDom = function () {
     this.$app = $('<app id="XTranslate"/>').appendTo(document.documentElement);
     this.$icon = $('<icon class="showPopup fa-gear"/>').hide().appendTo(this.$app);
-    this.hideIcon = UTILS.debounce(this.$icon.hide.bind(this.$icon), 10);
+    this.hideIcon = this.$icon.hide.bind(this.$icon);
     this.popup = new Popup({borderElem: this.$app});
     UTILS.spawnElement.$pool.detach();
 };
@@ -68,7 +68,6 @@ UserScript.prototype.bindEvents = function () {
         .on('playText', this.onPlayText.bind(this));
 
     $(window)
-        .on('resize', UTILS.debounce(this.onResize.bind(this), 300))
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
         .on('contextmenu', this.onContextMenu.bind(this))
         .on('mousedown', this.onMouseDown.bind(this))
@@ -260,10 +259,6 @@ UserScript.prototype.onDblClick = function (e) {
     }
 };
 
-/** @private */
-UserScript.prototype.onResize = function (e) {
-    this.popup.update();
-};
 
 /** @private */
 UserScript.prototype.onMouseOver = function (e) {

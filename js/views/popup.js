@@ -13,6 +13,7 @@ var Popup = function (options) {
     options = $.extend({autoSize: false, autoHide: true}, options);
     Popup.superclass.constructor.call(this, options);
     this.createDom();
+    this.bindEvents();
 };
 
 inherit(Popup, FlyingPanel);
@@ -29,6 +30,17 @@ Popup.prototype.createDom = function () {
         .propagate('linkClick', this)
         .propagate('playText', this)
         .appendTo(this);
+};
+
+/** @private */
+Popup.prototype.bindEvents = function () {
+    $(window).on('resize', this.onResize.bind(this));
+};
+
+/** @private */
+Popup.prototype.onResize = function () {
+    this.applyTheme(); // updates font-size only
+    this.update();
 };
 
 /**
@@ -48,8 +60,8 @@ Popup.prototype.parseData = function (data) {
  */
 Popup.prototype.applyTheme = function (theme) {
     if (!theme) {
-        var popup = APP.get('settingsContainer.popupStyle');
-        theme = popup.activeTheme ? popup.themes[popup.activeTheme] : popup.customTheme;
+        var style = APP.get('settingsContainer.popupStyle');
+        theme = style.activeTheme ? style.themes[style.activeTheme] : style.customTheme;
     }
     this.$container.css(toCSS(theme));
     return theme;

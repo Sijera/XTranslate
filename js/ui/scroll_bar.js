@@ -92,27 +92,28 @@ ScrollBar.prototype.scrollBy = function (step, silent) {
 
 ScrollBar.prototype.update = function () {
     this.hide().cacheDimensions();
-    this.toggle(this.pVisibleHeight < this.pScrollHeight);
+    var showScroll = !UTILS.approxEquals(this._scrollHeight, this._clientHeight);
+    this.toggle(showScroll);
     this.$parent.toggleClass(this.side, !this.hidden);
 
     if (!this.hidden) {
         this.height = this.$container.height();
-        this.padding = this.pVisibleHeight - this.height;
-        this.barHeight = Math.round(this.pVisibleHeight * this.kDiff) - this.padding;
+        this.padding = this._clientHeight - this.height;
+        this.barHeight = Math.round(this._clientHeight * this.kDiff) - this.padding;
         this.$bar.css('height', this.barHeight);
         this.barHeightDiff = this.barHeight - this.$bar.height();
-        if (this.barHeightDiff) this.kDiff = (this.pVisibleHeight + this.barHeightDiff) / this.pScrollHeight;
+        if (this.barHeightDiff) this.kDiff = (this._clientHeight + this.barHeightDiff) / this._scrollHeight;
         this.scrollTo(this.realPos, true);
     }
 };
 
 /** @private */
 ScrollBar.prototype.cacheDimensions = function () {
-    this.pVisibleHeight = this.$parent[0].clientHeight;
-    this.pScrollHeight = this.$parent[0].scrollHeight;
-    this.pageSpeed = this.pVisibleHeight / 100 * 10;
-    this.scrollSpeed = this.pVisibleHeight / 100 * SCROLL_STEP;
-    this.kDiff = this.pVisibleHeight / this.pScrollHeight;
+    this._clientHeight = this.$parent[0].clientHeight;
+    this._scrollHeight = this.$parent[0].scrollHeight;
+    this.pageSpeed = this._clientHeight / 100 * 10;
+    this.scrollSpeed = this._clientHeight / 100 * SCROLL_STEP;
+    this.kDiff = this._clientHeight / this._scrollHeight;
 };
 
 /** @private */
@@ -217,7 +218,7 @@ ScrollBar.prototype.onKeyDown = function (e) {
         case 38: this.scrollBy(-this.scrollSpeed); break; // UP
         case 40: this.scrollBy(this.scrollSpeed); break; // DOWN
         case 36: this.scrollTo(0); break; // HOME
-        case 35: this.scrollTo(this.pScrollHeight - this.pVisibleHeight); break; // END
+        case 35: this.scrollTo(this._scrollHeight - this._clientHeight); break; // END
         case 33: this.scrollBy(-this.pageSpeed); break; // PAGE UP
         case 34: this.scrollBy(this.pageSpeed); break; // PAGE DOWN
         default: var idle = true;
