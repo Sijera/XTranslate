@@ -18,7 +18,7 @@ module.exports = function (grunt) {
         env: process.env,
         buildPath: 'build/<%= pkg.name %>-<%= manifest.version %>',
         chromeLocations: [
-            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome/chrome',
+            '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
             'c:\\Users\\<%=env.USERNAME%>\\AppData\\Local\\Google\\Chrome\\Application\\chrome.exe'
         ],
         "browserify": {
@@ -72,7 +72,7 @@ module.exports = function (grunt) {
                 expand: true,
                 src: [
                     '_*/**', 'fonts/**',
-                    'img/**', '!img/*source*', '!img/**/*.svg',
+                    'img/**', '!img/**/*.svg',
                     'js/libs/jquery.min.js'
                 ],
                 dest: '<%= buildPath %>'
