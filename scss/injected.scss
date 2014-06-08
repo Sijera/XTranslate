@@ -9,7 +9,7 @@
   z-index: 10000000000;
   -webkit-font-smoothing: initial;
 
-  // reset styles for all inner elements
+  // reset and optimize some styles inside the app
   *, *:after, *:before {
     @include with-vendors(box-sizing, border-box);
     margin: 0;
@@ -24,6 +24,8 @@
     text-decoration: initial;
     background: initial;
     text-align: initial;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: inherit;
   }
 
   .showPopup {
