@@ -117,7 +117,7 @@ var toCSS = function (theme) {
     // text
     var textColor = theme.textColor;
     var fontFamily = theme.fontFamily;
-    var fontSize = pageZoomFree(theme.fontSize, true) + 'px';
+    var fontSize = pageZoomFree(theme.fontSize) + 'px';
     var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
     var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
     var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
