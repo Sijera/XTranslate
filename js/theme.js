@@ -2,7 +2,8 @@
 
 var UTILS = require('./utils'),
     sprintf = UTILS.sprintf,
-    hex2Rgba = UTILS.hex2Rgba;
+    hex2Rgba = UTILS.hex2Rgba,
+    pageZoomFree = UTILS.pageZoomFree;
 
 /** @const */
 var CSS_THEMES = {
@@ -110,26 +111,26 @@ var toCSS = function (theme) {
     // border
     var borderOpacity = theme.borderOpacity / 100;
     var borderColor = borderOpacity < 1 ? hex2Rgba(theme.borderColor, borderOpacity) : theme.borderColor;
-    var border = [zoomedValue(theme.borderWidth) + 'px', theme.borderStyle, borderColor].join(' ');
-    var borderRadius = zoomedValue(theme.borderRadius) + 'px';
+    var border = [pageZoomFree(theme.borderWidth) + 'px', theme.borderStyle, borderColor].join(' ');
+    var borderRadius = pageZoomFree(theme.borderRadius) + 'px';
 
     // text
-    var fontFamily = theme.fontFamily;
-    var fontSize = zoomedValue(theme.fontSize) + 'px';
     var textColor = theme.textColor;
-    var textShadowX = zoomedValue(theme.textShadowOffsetX);
-    var textShadowY = zoomedValue(theme.textShadowOffsetY);
-    var textShadowBlur = zoomedValue(theme.textShadowBlur);
-    var textShadow = [textShadowX + 'px', textShadowY + 'px', textShadowBlur + 'px', theme.textShadowColor].join(' ');
+    var fontFamily = theme.fontFamily;
+    var fontSize = pageZoomFree(theme.fontSize, true) + 'px';
+    var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
+    var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
+    var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
+    var textShadow = [textShadowX, textShadowY, textShadowBlur, theme.textShadowColor].join(' ');
     if (!textShadowX && !textShadowY && !textShadowBlur) textShadow = 'none';
 
     // box
-    var maxWidth = zoomedValue(theme.maxWidth) || 'none';
-    var maxHeight = zoomedValue(theme.maxHeight) || 'none';
+    var maxWidth = pageZoomFree(theme.maxWidth) || 'none';
+    var maxHeight = pageZoomFree(theme.maxHeight) || 'none';
     var padding = theme.padding + 'em';
     var boxShadowOpacity = theme.boxShadowOpacity / 100;
     var boxShadowColor = boxShadowOpacity < 1 ? hex2Rgba(theme.boxShadowColor, boxShadowOpacity) : theme.boxShadowColor;
-    var boxShadowSize = zoomedValue(theme.boxShadowSize) + 'px';
+    var boxShadowSize = pageZoomFree(theme.boxShadowSize) + 'px';
     var boxShadow = [theme.boxShadowInner ? 'inset' : '', 0, 0, boxShadowSize, boxShadowColor].join(' ');
 
     return {
@@ -145,12 +146,6 @@ var toCSS = function (theme) {
         textShadow  : textShadow,
         boxShadow   : boxShadow
     };
-};
-
-// keep actual pixel-based sizes despite on the page zooming
-var zoomedValue = function (value) {
-    var pixelRatio = 1 / (window.devicePixelRatio || 1);
-    return Number((+value * pixelRatio).toFixed(1));
 };
 
 exports.THEMES = CSS_THEMES;

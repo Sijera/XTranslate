@@ -2,6 +2,7 @@
 
 var inherit = require('../utils').inherit,
     toCSS = require('../theme').toCSS,
+    pageZoomFree = require('../utils').pageZoomFree,
     ScrollBar = require('../ui/scroll_bar').ScrollBar,
     FlyingPanel = require('../ui/flying_panel').FlyingPanel,
     VendorDataView = require('./vendor_data_view').VendorDataView;
@@ -12,6 +13,8 @@ var inherit = require('../utils').inherit,
 var Popup = function (options) {
     options = $.extend({autoSize: false, autoHide: true}, options);
     Popup.superclass.constructor.call(this, options);
+
+    this.pageZoom = pageZoomFree(1);
     this.createDom();
     this.bindEvents();
 };
@@ -39,7 +42,11 @@ Popup.prototype.bindEvents = function () {
 
 /** @private */
 Popup.prototype.onResize = function () {
-    this.applyTheme(); // updates font-size only
+    var pageZoom = pageZoomFree(1);
+    if (this.pageZoom !== pageZoom) {
+        this.pageZoom = pageZoom;
+        this.applyTheme();
+    }
     this.update();
 };
 

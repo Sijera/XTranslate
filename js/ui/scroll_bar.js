@@ -92,7 +92,7 @@ ScrollBar.prototype.scrollBy = function (step, silent) {
 
 ScrollBar.prototype.update = function () {
     this.hide().cacheDimensions();
-    var showScroll = !UTILS.approxEquals(this._scrollHeight, this._clientHeight);
+    var showScroll = !UTILS.approxEquals(this._scrollHeight, this._clientHeight, 3);
     this.toggle(showScroll);
     this.$parent.toggleClass(this.side, !this.hidden);
 

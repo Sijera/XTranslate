@@ -187,3 +187,14 @@ exports.approxEquals = function (num1, num2, offset) {
     offset = offset || 1;
     return Math.abs(num1 - num2) <= offset;
 };
+
+/**
+ * Keep pixel-size dimensions the same, even if page was zoomed in/out
+ * @param {number} value
+ * @param {boolean} [lowSize]
+ */
+exports.pageZoomFree = function (value, lowSize) {
+    value = Number((value / (window.devicePixelRatio || 1)).toFixed(1));
+    if (lowSize) value = Math.floor(value); // special value for font-size
+    return value;
+};
