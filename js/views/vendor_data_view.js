@@ -24,7 +24,7 @@ VendorDataView.prototype.createDom = function () {
     this.$container.addClass('vendorDataView');
 
     this.$playSound = $('<i class="playIcon fa-volume-up"/>').appendTo(this.$container);
-    this.$translation = $('<div class="translation"/>').appendTo(this.$container);
+    this.$translation = $('<span class="translation"/>').appendTo(this.$container);
     this.$dictionary = $('<dl class="dictionary"/>').appendTo(this.$container);
 };
 
