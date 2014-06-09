@@ -7,6 +7,7 @@
   top: 0;
   width: 100%;
   z-index: 10000000000;
+  text-rendering: optimizeLegibility;
   -webkit-font-smoothing: initial;
 
   // reset and optimize some styles inside the app
@@ -24,8 +25,14 @@
     text-decoration: initial;
     background: initial;
     text-align: initial;
-    text-rendering: optimizeLegibility;
     -webkit-font-smoothing: inherit;
+  }
+
+  // hide pseudo-elements, if some site adds it
+  .popup {
+    &:after, &:before {
+      display: none;
+    }
   }
 
   .showPopup {
