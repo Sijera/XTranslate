@@ -247,7 +247,7 @@ SettingsThemeManager.prototype.addTextStyle = function () {
     var $shadow = this.createSubBlock(__(50), $text).addClass('textShadow');
 
     /** @type {Select} */      this.fontFamily = new Select({className: 'fontFamily'}).appendTo($font);
-    /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 10, maxValue: 50, title: __(41)}).appendTo($font);
+    /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 0, maxValue: 50, title: __(41)}).appendTo($font);
     /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(33), titleHint: __(59)}).appendTo($color);
     /** @type {ColorPicker} */ this.textShadowColor = new ColorPicker({useInput: true, title: __(50), titleHint: __(59)}).appendTo($color);
     /** @type {NumberInput} */ this.textShadowOffsetX = new NumberInput({value: 0, title: __(57) + ' X'}).appendTo($shadow);

@@ -1,6 +1,8 @@
 @import "../vars", '../mixins';
 
 .settingsThemeManager {
+  $faIconSize: 1.2em;
+
   .button {
     text-shadow: 1px 1px 0 black;
     background: none;
@@ -93,7 +95,7 @@
     }
 
     .saveTheme, .cancelSave {
-      @include fa-icon(1.2em);
+      @include fa-icon($faIconSize);
       position: relative;
       top: -.1em;
       margin-left: .5em;
@@ -120,7 +122,7 @@
   }
 
   .togglePreviewIcon {
-    @include fa-icon(1.2em);
+    @include fa-icon($faIconSize);
     cursor: pointer;
     vertical-align: middle;
     font-weight: normal;

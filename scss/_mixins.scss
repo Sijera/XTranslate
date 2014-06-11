@@ -152,11 +152,13 @@
   }
 }
 
-@mixin fa-icon($fontSize: 1em, $fontSmoothing: antialiased) {
+@mixin fa-icon($fontSize: 1em, $iconContent: '', $fontSmoothing: antialiased) {
   font: normal $fontSize $fa-export-name;
   -webkit-font-smoothing: $fontSmoothing;
-  &:before {
-    @content;
+  @if $iconContent != '' {
+    &:before {
+      content: $iconContent;
+    }
   }
 }
 

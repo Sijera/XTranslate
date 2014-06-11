@@ -13,7 +13,9 @@ var AppView = require('./views/app_view').AppView;
  */
 var APP = require('./app').create()
     .on('ready', function (state) {
-        this.view = new AppView({container: '#app'}).init(state);
+        /** @type AppView */
+        this.view = new AppView({container: '#app'});
+        this.view.init(state);
     })
     .on('change', function (data) {
         // sync the data with the background process page and opened window tabs

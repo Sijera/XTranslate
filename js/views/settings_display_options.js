@@ -103,7 +103,7 @@ SettingsDisplayOptions.prototype.setZoom = function (dir) {
     this.$zoomIn.toggleClass('disabled', zoomValNew === this.zoomMax);
     this.state.zoomValue = zoomValNew;
     this.$zoomValue.text(zoomValNew + '%');
-    document.documentElement.style.fontSize = zoomValNew + '%';
+    APP.view.$container.css('fontSize', zoomValNew + '%');
 };
 
 /** @private */

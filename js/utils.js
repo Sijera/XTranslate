@@ -189,9 +189,10 @@ exports.approxEquals = function (num1, num2, offset) {
 };
 
 /**
- * Keep pixel-size dimensions the same, even if page was zoomed in/out
+ * Keep css-dimensions the same, even if page zoom was changed
  * @param {number} value
  */
 exports.pageZoomFree = function (value) {
-    return Number((value / (window.devicePixelRatio || 1)).toFixed(1));
+    var ratio = window.devicePixelRatio || 1;
+    return Number((value / ratio).toFixed(2));
 };

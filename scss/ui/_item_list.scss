@@ -43,7 +43,7 @@
 
   &.removable {
     li {
-      padding-right: $removeIcon;
+      padding-right: $removeIcon * 1.5;
 
       &.selected, &:hover {
         .removeIcon {
@@ -53,23 +53,19 @@
     }
 
     .removeIcon {
+      @include fa-icon(1em, $fa-var-times-circle-o);
+
       position: absolute;
+      font-size: $removeIcon;
       right: 0;
       top: 0;
       margin: .2em;
-      width: $removeIcon;
-      height: $removeIcon;
-      border-radius: $radius;
-      text-align: center;
       cursor: pointer;
+      opacity: .5;
       display: none;
 
-      @include fa-icon {
-        content: $fa-var-times;
-      };
-
       &:hover {
-        background: rgba(0, 0, 0, .5);
+        opacity: 1;
       }
     }
   }

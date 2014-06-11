@@ -19,12 +19,12 @@ var CSS_THEMES = {
         borderOpacity    : 100,
         textColor        : '#ffffff',
         fontFamily       : 'Verdana',
-        fontSize         : 13,
+        fontSize         : 0, // px, 0 = initial (browser default)
         textShadowOffsetX: 1,
         textShadowOffsetY: 1,
         textShadowBlur   : 0,
         textShadowColor  : '#000000',
-        padding          : 1, // em
+        padding          : .7, // em
         maxWidth         : 300,
         maxHeight        : 250,
         boxShadowColor   : '#ffffff',
@@ -45,12 +45,12 @@ var CSS_THEMES = {
         borderOpacity    : 0,
         textColor        : '#000000',
         fontFamily       : 'Verdana',
-        fontSize         : 13,
+        fontSize         : 0,
         textShadowOffsetX: 0,
         textShadowOffsetY: 0,
         textShadowBlur   : 0,
         textShadowColor  : '#000000',
-        padding          : 0.8, // em
+        padding          : .7,
         maxWidth         : 300,
         maxHeight        : 250,
         boxShadowColor   : '#000000',
@@ -117,7 +117,8 @@ var toCSS = function (theme) {
     // text
     var textColor = theme.textColor;
     var fontFamily = theme.fontFamily;
-    var fontSize = pageZoomFree(theme.fontSize) + 'px';
+    var fontSizeDimension = theme.fontSize === 0 ? 'em' : 'px';
+    var fontSize = pageZoomFree(theme.fontSize || 1) + fontSizeDimension;
     var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
     var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
     var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
