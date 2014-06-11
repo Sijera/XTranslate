@@ -11,7 +11,7 @@ var inherit = require('../utils').inherit,
  * @constructor
  */
 var Popup = function (options) {
-    options = $.extend({autoSize: false, autoHide: true}, options);
+    options = $.extend({fitToWidth: false, autoHide: true}, options);
     Popup.superclass.constructor.call(this, options);
 
     this.pageZoom = pageZoomFree(1);

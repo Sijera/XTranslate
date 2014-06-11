@@ -27,11 +27,10 @@
   }
 
   .textInput {
-    width: 75px;
     vertical-align: middle;
 
     &.rgb {
-      width: 85px;
+      width: $formControlBaseWidth * 1.3;
     }
 
     .editBox {

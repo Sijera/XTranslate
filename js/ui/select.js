@@ -72,6 +72,7 @@ Select.prototype.createDom = function () {
 
     /** @type {ItemList} */
     this.itemList = new ItemList({
+        showTitles: true,
         maxHeight : this.listMaxHeight,
         removable : this.removable,
         selectable: true,

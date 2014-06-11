@@ -13,9 +13,9 @@ var FlyingPanel = function (options) {
     /** @type {HTMLElement} */ this.borderElem = options.borderElem || document.body;
     /** @type {HTMLElement} */ this.anchor = options.anchor || document.body;
     /** @type {Boolean} */ this.autoUpdate = options.autoUpdate !== false;
-    /** @type {Boolean} */ this.autoSize = options.autoSize !== false;
     /** @type {Boolean} */ this.autoHide = !!options.autoHide;
     /** @type {Boolean} */ this.noBodyAppend = !!options.noBodyAppend;
+    /** @type {Boolean} */ this.fitToWidth = options.fitToWidth !== false; // set width from anchor
 
     this.hidden = true;
     this.$container.addClass('flyingPanel');
@@ -106,10 +106,10 @@ FlyingPanel.prototype.setAnchor = function (anchor) {
  */
 FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
-    if (this.autoSize) pos.minWidth = Math.min(this.anchorRect.width, this.maxWidth);
+    if (this.fitToWidth) pos.width = Math.min(this.anchorRect.width, this.maxWidth);
 
     this.position = this.getPositionClassName(position);
-    this.$container.css(pos).toggleClass('large', this.containerRect.width > pos.minWidth);
+    this.$container.css(pos).toggleClass('large', !this.fitToWidth && this.containerRect.width > pos.width);
     this.containerRect = this.getElementRect(this.$container);
 };
 

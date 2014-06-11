@@ -5,7 +5,7 @@
   $arrowOffset: .1em;
 
   .editBox {
-    padding-right: $formControlArrowSpace;
+    padding-right: $formControlArrowSpace * 2;
   }
 
   &.error {
@@ -19,10 +19,10 @@
   .downArr {
     position: absolute;
     cursor: pointer;
-    right: 0;
-    z-index: 10;
+    right: $arrowOffset;
     width: $formControlArrowSize * 2;
     height: 50%;
+    z-index: 10;
 
     &:hover:after {
       border-color: $arrHoverColor;

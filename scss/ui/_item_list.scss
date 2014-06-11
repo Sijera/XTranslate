@@ -18,8 +18,9 @@
     padding: 1px $spacing;
     border-radius: $radius;
     white-space: nowrap;
-    text-overflow: ellipsis;
     margin-top: $offset;
+    text-overflow: ellipsis;
+    overflow: hidden;
 
     &:first-child {
       margin-top: 0;
@@ -63,14 +64,12 @@
       cursor: pointer;
       display: none;
 
-      &:hover {
-        background: rgba(0, 0, 0, .25);
-      }
+      @include fa-icon {
+        content: $fa-var-times;
+      };
 
-      &:after {
-        position: relative;
-        top: -.5em;
-        @include iconDelete;
+      &:hover {
+        background: rgba(0, 0, 0, .5);
       }
     }
   }

@@ -6,6 +6,10 @@ html, body {
   height: 100%;
 }
 
+body {
+  overflow-x: hidden;
+}
+
 #app {
   width: 33em;
   height: 599px;

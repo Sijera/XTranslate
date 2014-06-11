@@ -118,18 +118,6 @@
   }
 }
 
-@mixin iconDelete($color: white) {
-  content: "";
-  width: 1px;
-  height: 1px;
-  display: inline-block;
-  overflow: hidden;
-  background: $color;
-  box-shadow: -1px -1px $color, -2px -2px $color, -3px -3px $color,
-    1px -1px $color,  2px -2px $color,  3px -3px $color,
-    -1px  1px $color, -2px  2px $color, -3px  3px $color, 1px 1px $color, 2px 2px $color, 3px 3px $color;
-}
-
 @mixin formControlFocus {
   box-shadow: 0 0 .35em -.1em white;
   @include with-vendors(transition, box-shadow .3s);
@@ -164,9 +152,12 @@
   }
 }
 
-@mixin fa-icon($fontSize: 1em) {
+@mixin fa-icon($fontSize: 1em, $fontSmoothing: antialiased) {
   font: normal $fontSize $fa-export-name;
-  -webkit-font-smoothing: antialiased;
+  -webkit-font-smoothing: $fontSmoothing;
+  &:before {
+    @content;
+  }
 }
 
 @-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }

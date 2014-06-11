@@ -63,7 +63,11 @@ ColorPicker.prototype.enable = function () {
 /** @private */
 ColorPicker.prototype.createPalette = function () {
     if (!this.palette) {
-        this.palette = ColorPicker.PALETTE = new FlyingPanel({className: 'colorPalette', autoHide: true});
+        this.palette = ColorPicker.PALETTE = new FlyingPanel({
+            className: 'colorPalette',
+            fitToWidth: false,
+            autoHide: true
+        });
 
         PALETTE_COLORS.forEach(function (colors) {
             var $colorSet = $('<div class="colorSet"/>').appendTo(this.palette.$container);

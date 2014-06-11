@@ -18,7 +18,7 @@
       margin-right: .5em;
     }
     .fa-icon {
-      @include fa-icon(1.4em);
+      @include fa-icon(1.4em, auto);
       vertical-align: middle;
       color: $color;
       cursor: pointer;

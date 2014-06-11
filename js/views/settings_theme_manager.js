@@ -53,7 +53,8 @@ SettingsThemeManager.prototype.createDom = function (state) {
     this.$container.addClass('settingsThemeManager');
 
     /** @type {Popup} */
-    this.popup = new Popup({className: 'preview'}).parseData({
+    this.popup = new Popup({className: 'preview', autoHide: false});
+    this.popup.parseData({
         translation: __(22),
         ttsEnabled : true,
         dictionary : [{partOfSpeech: __(23), translation: __(24).split(', ')}]
@@ -249,13 +250,9 @@ SettingsThemeManager.prototype.addTextStyle = function () {
     /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 10, maxValue: 50, title: __(41)}).appendTo($font);
     /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(33), titleHint: __(59)}).appendTo($color);
     /** @type {ColorPicker} */ this.textShadowColor = new ColorPicker({useInput: true, title: __(50), titleHint: __(59)}).appendTo($color);
-    /** @type {NumberInput} */ this.textShadowOffsetX = new NumberInput({value: 0, title: __(57)}).appendTo($shadow);
-    /** @type {NumberInput} */ this.textShadowOffsetY = new NumberInput({value: 0, title: __(57)}).appendTo($shadow);
-    /** @type {NumberInput} */ this.textShadowBlurRadius = new NumberInput({value: 0, title: __(56)}).appendTo($shadow);
-
-    this.textShadowOffsetX.$container.before('<b>X:</b>');
-    this.textShadowOffsetY.$container.before('<b>Y:</b>');
-    this.textShadowBlurRadius.$container.before('<b>R:</b>');
+    /** @type {NumberInput} */ this.textShadowOffsetX = new NumberInput({value: 0, title: __(57) + ' X'}).appendTo($shadow);
+    /** @type {NumberInput} */ this.textShadowOffsetY = new NumberInput({value: 0, title: __(57) + ' Y'}).appendTo($shadow);
+    /** @type {NumberInput} */ this.textShadowBlurRadius = new NumberInput({value: 0, title: __(56), maxValue: 1000}).appendTo($shadow);
 
     THEME.FONTS.forEach(function (fontFamily) {
         this.fontFamily.add(fontFamily, true);

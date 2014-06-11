@@ -4,6 +4,7 @@
   background-color: $bgColorBase;
   border: 1px solid $bgColorLighten;
   border-radius: $radius;
+  width: $formControlBaseWidth;
   height: $formControlBaseHeight;
 
   &.focused {
