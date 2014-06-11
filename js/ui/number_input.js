@@ -44,20 +44,16 @@ NumberInput.prototype.createDom = function () {
 NumberInput.prototype.bindEvents = function () {
     NumberInput.superclass.bindEvents.apply(this, arguments);
 
-    var touchDevice = 'ontouchstart' in window;
-    var mouseDown = touchDevice ? 'touchstart' : 'mousedown';
-    var mouseUp = touchDevice ? 'touchend' : 'mouseleave mouseup';
+    this.$container
+        .on('mouseup', this.stop.bind(this))
+        .on('mousewheel', this.onScroll.bind(this));
 
-    this.$upArr.on(mouseDown, this._onArrowUp.bind(this));
-    this.$downArr.on(mouseDown, this._onArrowDown.bind(this));
-    this.$container.on(mouseUp, this.stop.bind(this));
+    this.$upArr.on('mousedown', this._onArrowUp.bind(this));
+    this.$downArr.on('mousedown', this._onArrowDown.bind(this));
 
-    if (!touchDevice) {
-        this.$container.on('mousewheel', this.onScroll.bind(this));
-        this.$input
-            .on('keydown', this._onKeyDown.bind(this))
-            .on('keyup', this._onKeyUp.bind(this));
-    }
+    this.$input
+        .on('keydown', this._onKeyDown.bind(this))
+        .on('keyup', this._onKeyUp.bind(this));
 };
 
 /** @private */
