@@ -9,8 +9,7 @@ var UTILS = require('./utils'),
     Yandex = require('./vendors/yandex').Yandex,
     Opera = require('./extension/opera').Opera,
     Chrome = require('./extension/chrome').Chrome,
-    EventDriven = require('./events').EventDriven,
-    isMac = navigator.appVersion.indexOf('Macintosh') !== -1;
+    EventDriven = require('./events').EventDriven;
 
 /**
  * @constructor
@@ -66,7 +65,7 @@ App.prototype.state = {
             spellCheck  : true,
             contextMenu : true,
             zoomValue   : 100, //%
-            hotKey      : UTILS.getHotkey({metaKey: isMac, ctrlKey: !isMac, shiftKey: true, char: 'X'})
+            hotKey      : UTILS.getHotkey({altKey: true, char: 'X'})
         },
         vendorBlock     : {
             collapsed   : false,

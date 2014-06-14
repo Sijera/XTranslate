@@ -196,6 +196,7 @@ UserScript.prototype.onKeyDown = function (e) {
         var keyMatch = this.settings.hotKey == UTILS.getHotkey(e);
         if (keyMatch) {
             this.translateText(e, this.getOverText());
+            e.preventDefault();
         }
     }
 };
