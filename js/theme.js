@@ -84,8 +84,10 @@ var FONTS = [
     "Meiryo UI",
     "Hiragino Kaku Gothic Pro",
     "MS UI Gothic",
-    "VL Gothic"
-];
+    "VL Gothic",
+    "Helvetica Neue",
+    "Segoe UI"
+].sort();
 
 /**
  * Convert the theme to jQuery.css()-form
@@ -119,11 +121,14 @@ var toCSS = function (theme) {
     var fontFamily = theme.fontFamily;
     var fontSizeDimension = theme.fontSize === 0 ? 'em' : 'px';
     var fontSize = pageZoomFree(theme.fontSize || 1) + fontSizeDimension;
-    var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
-    var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
-    var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
-    var textShadow = [textShadowX, textShadowY, textShadowBlur, theme.textShadowColor].join(' ');
-    if (!textShadowX && !textShadowY && !textShadowBlur) textShadow = 'none';
+    var textShadow;
+    if (!theme.textShadowOffsetX && !theme.textShadowOffsetY && !theme.textShadowBlur) textShadow = 'none';
+    else {
+        var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
+        var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
+        var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
+        textShadow = [textShadowX, textShadowY, textShadowBlur, theme.textShadowColor].join(' ');
+    }
 
     // box
     var maxWidth = pageZoomFree(theme.maxWidth) || 'none';
