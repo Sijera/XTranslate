@@ -10,7 +10,7 @@ What it does?
 -----------
 Easy translate a text on pages in the context of web-site that you reading. Don't loose the focus by switching to translate.google.com or other service. Get the translation right here, right now! Double click or select a word/sentence and you've got translation.
 
-Even more, by using a hotkey (**ctrl/cmd+shift+x** by default), you can obtain text translation from web-links, buttons, text inside the textarea and from the images ("alt" or "title" attribute will be used). 
+Even more, by using a hotkey (**alt+x** by default), you can obtain text translation from web-links, buttons, text inside the textarea and from the images ("alt" or "title" attribute will be used). 
 Just mouse over the element and press hotkey!
 
 What it supports?
