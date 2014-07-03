@@ -115,6 +115,7 @@ VendorLanguageSelect.prototype.onSwapLangPair = function () {
     this.setLangFrom(autoDetect);
     this.setLangTo(langFrom);
     this.setLangFrom(langTo);
+    this.trigger('swap');
 };
 
 exports.VendorLanguageSelect = VendorLanguageSelect;

@@ -13,7 +13,6 @@ APP.extension.setIcon('img/icons/16.png');
  * @constructor
  */
 var Background = function () {
-    this.onContextMenuClick = this.onContextMenuClick.bind(this);
     APP.extension.onConnect(this.onConnect.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.contextMenu', this.manageContextMenu, this);
     APP.on('change:settingsContainer.vendorBlock.langFrom', this.refresh, this);
@@ -118,7 +117,8 @@ Background.prototype.onContextMenuClick = function (info, tab) {
         APP.extension.sendTabMessage(tab.id, {
             action    : 'translate',
             payload   : data,
-            vendorName: vendor.name
+            vendorName: vendor.name,
+            pageUrl   : info.frameUrl || info.pageUrl
         });
     });
 };

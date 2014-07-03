@@ -86,7 +86,9 @@ var FONTS = [
     "MS UI Gothic",
     "VL Gothic",
     "Helvetica Neue",
-    "Segoe UI"
+    "Segoe UI",
+    "Lucida Grande",
+    "Monaco"
 ].sort();
 
 /**

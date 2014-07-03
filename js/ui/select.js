@@ -32,6 +32,7 @@ var Select = function (options) {
     /** @type {Boolean} */  this.noBodyAppend = !!options.noBodyAppend;
     /** @type {String} */   this.listClassName = options.listClassName || '';
     /** @type {Number} */   this.listMaxHeight = options.listMaxHeight || 250;
+    /** @type {Element} */  this.listBorderElem = options.listBorderElem;
     /** @type {Object} */   this.selectedItem = undefined;
     /** @type {Number} */   this.selectedIndex = -1;
     /** @type {String} */   this.state = IS_CLOSED;
@@ -56,14 +57,16 @@ Select.prototype.createDom = function () {
 
     /** @type {TextInput} */
     this.editBox = new this.editBoxClass({
-        readonly     : !this.editable,
-        className    : 'valueHolder',
-        restoreOnBlur: true
+        listBorderElem: this.listBorderElem,
+        readonly      : !this.editable,
+        className     : 'valueHolder',
+        restoreOnBlur : true
     }).appendTo(this);
 
     /** @type {FlyingPanel} */
     this.flyingPanel = new FlyingPanel({
         className   : 'selectList ' + this.listClassName,
+        borderElem  : this.listBorderElem,
         positions   : this.positions,
         anchor      : this.$container,
         noBodyAppend: this.noBodyAppend,

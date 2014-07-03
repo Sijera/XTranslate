@@ -84,17 +84,16 @@ FlyingPanel.prototype.update = function () {
 };
 
 /**
- * @param {HTMLElement|jQuery|*} anchor
+ * @param {HTMLElement|jQuery|UIComponent|*} anchor
  */
 FlyingPanel.prototype.setAnchor = function (anchor) {
-    if (!anchor) return this;
-    if (anchor instanceof jQuery) {
-        this.$anchor = anchor;
-        this.anchor = this.$anchor[0];
-    }
-    else {
-        this.anchor = anchor;
-        this.$anchor = $(anchor);
+    if (anchor instanceof HTMLElement) $anchor = $(anchor);
+    else if (anchor instanceof jQuery) var $anchor = anchor;
+    else if (anchor instanceof UIComponent) $anchor = anchor.$container;
+
+    if ($anchor) {
+        this.$anchor = $anchor;
+        this.anchor = $anchor[0];
     }
     return this;
 };

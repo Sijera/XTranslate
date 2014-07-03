@@ -22,6 +22,7 @@ var TextInput = function (options) {
     this.validators = [];
     this.restoreOnBlur = !!options.restoreOnBlur;
     this.noBodyAppend = options.noBodyAppend !== false;
+    this.listBorderElem = options.listBorderElem;
 
     this.createDom(options);
     this.setTooltip(options.tooltip);
@@ -31,7 +32,7 @@ var TextInput = function (options) {
     this.bindEvents();
 
     Object.defineProperties(this, {
-        'value': {get: this.getValue, set: this.setValue}
+        value: {get: this.getValue, set: this.setValue}
     });
 };
 
@@ -231,7 +232,12 @@ TextInput.prototype.setTooltip = function (tooltip) {
     if (tooltip === undefined) return;
     if (!this.tooltip) {
         this.tooltipDefault = tooltip;
-        this.tooltip = new FlyingPanel({className: 'tooltip', anchor: this.$container, noBodyAppend: this.noBodyAppend});
+        this.tooltip = new FlyingPanel({
+            className   : 'tooltip',
+            anchor      : this.$container,
+            borderElem  : this.listBorderElem,
+            noBodyAppend: this.noBodyAppend
+        });
         this.$tooltip = this.tooltip.$container;
         this.trigger('tooltipReady');
     }

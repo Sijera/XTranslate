@@ -99,6 +99,7 @@ UserScript.prototype.sendAction = function (action, payload) {
 
 /** @private */
 UserScript.prototype.onMessage = function (msg) {
+    if (msg.pageUrl && msg.pageUrl !== document.URL) return;
     this.lastActiveVendor = msg.vendorName;
     var action = msg.action;
     if (this.actions[action]) this.actions[action].call(this, msg.payload);

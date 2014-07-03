@@ -158,18 +158,24 @@ SettingsThemeManager.prototype.addThemeBlock = function () {
     var $actionButtons = $('<div class="actionButtons"/>').appendTo(this.$themeBlock);
 
     /** @type {Select} */
-    this.theme = new Select({className: 'themeSelect', removable: true})
+    this.theme = new Select({
+        listBorderElem: APP.view.$container[0],
+        className     : 'themeSelect',
+        removable     : true
+    }).appendTo(this.$themeBlock);
+
+    this.theme
         .on('change', this.onChangeTheme, this)
-        .on('remove', this.onRemoveTheme, this)
-        .appendTo(this.$themeBlock);
+        .on('remove', this.onRemoveTheme, this);
 
     /** @type {TextInput} */
     this.themeName = new TextInput({
-        className   : 'themeName',
-        title       : __(12),
-        tooltip     : '{0}',
-        noBodyAppend: false,
-        validation  : this.themeNameValidator.bind(this)
+        className     : 'themeName',
+        title         : __(12),
+        tooltip       : '{0}',
+        noBodyAppend  : false,
+        listBorderElem: APP.view.$container[0],
+        validation    : this.themeNameValidator.bind(this)
     }).appendTo(this.$themeBlock);
 
     this.themeName.on('keyenter', this.onSaveTheme, this);
@@ -199,8 +205,8 @@ SettingsThemeManager.prototype.addCommonStyle = function () {
     var $boxShadow = this.createSubBlock(__(50), $common);
 
     /** @type {Slider} */      this.boxPadding = new Slider({min: 0, max: 5, step: 0.1}).appendTo($padding);
-    /** @type {Slider} */      this.boxMaxWidth = new Slider({min: 0, max: 500, step: 1}).appendTo($maxWidth);
-    /** @type {Slider} */      this.boxMaxHeight = new Slider({min: 0, max: 500, step: 1}).appendTo($maxHeight);
+    /** @type {Slider} */      this.boxMaxWidth = new Slider({min: 0, max: 1000, step: 10}).appendTo($maxWidth);
+    /** @type {Slider} */      this.boxMaxHeight = new Slider({min: 0, max: 1000, step: 10}).appendTo($maxHeight);
     /** @type {ColorPicker} */ this.boxShadowColor = new ColorPicker({useInput: true, title: __(36), titleHint: __(59)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowSize = new NumberInput({minValue: 0, maxValue: 100, title: __(41)}).appendTo($boxShadow);
     /** @type {NumberInput} */ this.boxShadowOpacity = new NumberInput({minValue: 0, maxValue: 100, title: __(37)}).appendTo($boxShadow);
@@ -231,7 +237,7 @@ SettingsThemeManager.prototype.addBorderStyle = function () {
     /** @type {Slider} */      this.borderRadius = new Slider({min: 0, max: 25, step: 1}).appendTo($radius);
     /** @type {Slider} */      this.borderOpacity = new Slider({min: 0, max: 100}).appendTo($opacity);
     /** @type {ColorPicker} */ this.borderColor = new ColorPicker({useInput: true, title: __(36), titleHint: __(59)}).appendTo($style);
-    /** @type {Select} */      this.borderStyle = new Select({className: 'borderStyle', title: __(54)}).appendTo($style);
+    /** @type {Select} */      this.borderStyle = new Select({className: 'borderStyle', title: __(54), noBodyAppend: true}).appendTo($style);
     /** @type {NumberInput} */ this.borderWidth = new NumberInput({minValue: 0, maxValue: 25, title: __(39)}).appendTo($style);
 
     THEME.BORDER_STYLES.forEach(function (style) {
@@ -246,7 +252,7 @@ SettingsThemeManager.prototype.addTextStyle = function () {
     var $color = this.createSubBlock(__(36), $text);
     var $shadow = this.createSubBlock(__(50), $text).addClass('textShadow');
 
-    /** @type {Select} */      this.fontFamily = new Select({className: 'fontFamily'}).appendTo($font);
+    /** @type {Select} */      this.fontFamily = new Select({className: 'fontFamily', noBodyAppend: true}).appendTo($font);
     /** @type {NumberInput} */ this.fontSize = new NumberInput({minValue: 0, maxValue: 50, title: __(41)}).appendTo($font);
     /** @type {ColorPicker} */ this.textColor = new ColorPicker({useInput: true, title: __(33), titleHint: __(59)}).appendTo($color);
     /** @type {ColorPicker} */ this.textShadowColor = new ColorPicker({useInput: true, title: __(50), titleHint: __(59)}).appendTo($color);

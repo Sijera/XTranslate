@@ -85,7 +85,7 @@ App.prototype.state = {
         }
     },
     userInputContainer: {
-        rememberText: true,
+        rememberText: false,
         text: ''
     }
 };

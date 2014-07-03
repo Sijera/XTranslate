@@ -50,6 +50,8 @@ UserInputContainer.prototype.createDom = function () {
 
 /** @private */
 UserInputContainer.prototype.bindEvents = function () {
+    this.selectLang.on('swap', this.focus.bind(this));
+
     this.onTranslationDone = this.onTranslationDone.bind(this);
     this.translateTextLazy = UTILS.debounce(this.translateText.bind(this), 250);
 
@@ -73,7 +75,7 @@ UserInputContainer.prototype.setVendor = function (vendorName) {
     });
 
     this.translateText();
-    this.$text.focus();
+    this.focus();
 };
 
 /** @private */
@@ -109,7 +111,7 @@ UserInputContainer.prototype.translateText = function (text) {
 /** @private */
 UserInputContainer.prototype.onPlayText = function () {
     APP.getVendor(this.activeVendor).playText();
-    this.$text.focus();
+    this.focus();
 };
 
 /** @private */
@@ -136,12 +138,18 @@ UserInputContainer.prototype.onInput = function () {
 UserInputContainer.prototype.onTranslationDone = function (data) {
     if (data.sourceText !== this.getText() || data.vendor !== this.activeVendor) return;
     this.dataView.parseData(data).show();
-    if (document.activeElement === this.$text[0]) this.$text.blur().focus();
+    this.focus();
 };
 
 UserInputContainer.prototype.show = function () {
     UserInputContainer.superclass.show.apply(this, arguments);
     if (this.state.rememberText) this.setText(this.state.text);
+    this.focus();
+};
+
+/** @private */
+UserInputContainer.prototype.focus = function (blurBefore) {
+    if (blurBefore && document.activeElement === this.$text[0]) this.$text.blur();
     this.$text.focus();
 };
 
