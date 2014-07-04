@@ -6,9 +6,6 @@
  */
 var APP = require('./app').create({autoSave: false});
 
-// fix: doesn't applies from the manifest
-APP.extension.setIcon('img/icons/16.png');
-
 /**
  * @constructor
  */
