@@ -6,17 +6,7 @@
  * @param {Function} Parent
  */
 exports.inherit = function (Child, Parent) {
-    var childProto = Child.prototype;
     Child.prototype = Object.create(Parent.prototype);
-
-    var props = Object.getOwnPropertyNames(childProto);
-    for (var i = props.length; i--;) {
-        if (childProto.hasOwnProperty(props[i])) {
-            var desc = Object.getOwnPropertyDescriptor(childProto, props[i]);
-            Object.defineProperty(Child.prototype, props[i], desc);
-        }
-    }
-
     Child.prototype.constructor = Child;
     Child.superclass = Parent.prototype;
 };
@@ -106,8 +96,11 @@ exports.rgb2hex = function (color) {
     return false;
 };
 
+// Doesn't support username, password, and *maybe* can work wrong sometimes
+// In browser environment can be used other workaround with
+// creating temporary <a href=url> and getting all parsed values directly from there
 exports.parseUrl = function (url) {
-    url = url || location.href;
+    url = url || document.URL;
     var chunks = url.match(/^(?:([a-z]+:)\/\/)?((?:[a-z0-9-]+\.)+[a-z]+)(?::(\d+))?(\/(?:[^?]+)*)?(\?[^#]+)?(#.*)?$/i) || [];
     return {
         href: chunks[0] || url,
@@ -122,6 +115,7 @@ exports.parseUrl = function (url) {
 
 /**
  * Find object(s) in array by specific property name
+ * TODO: use underscore/lo-dash instead
  * @param {Array.<Object>} objectsList
  * @param {String} propName
  * @param {RegExp|String} testValue Regular expression or string to test the field
