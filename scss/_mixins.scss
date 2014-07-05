@@ -10,6 +10,14 @@
   #{$prop}: #{$value};
 }
 
+@mixin retina {
+  @media (-webkit-min-device-pixel-ratio: 2),
+  (min-resolution: 192dpi),
+  (min-resolution: 2dppx) {
+    @content;
+  }
+}
+
 // Draw a triangle via CSS-borders
 // Available direction: ltr, rtl, top to bottom, bottom to top
 @mixin triangle($size: 4px, $color: white, $dir: left, $base: 1) {
