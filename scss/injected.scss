@@ -1,6 +1,7 @@
 @import "vars", 'mixins', 'fa/font-awesome';
 
-// create "namespace" of all user data for the app
+// Encapsulate app styles to avoid conflict with the page style
+// But page style still can harm sometimes..
 #XTranslate {
   position: absolute;
   left: 0;
@@ -20,6 +21,10 @@
     border: none;
     font: inherit;
     color: inherit;
+    position: initial;
+    float: initial;
+    box-shadow: initial;
+    text-shadow: initial;
     line-height: initial;
     font-weight: initial;
     font-style: initial;
