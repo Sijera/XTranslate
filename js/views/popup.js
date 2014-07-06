@@ -1,8 +1,8 @@
 'use strict';
 
-var inherit = require('../utils').inherit,
+var UTILS = require('../utils'),
+    inherit = require('../utils').inherit,
     toCSS = require('../theme').toCSS,
-    pageZoomFree = require('../utils').pageZoomFree,
     ScrollBar = require('../ui/scroll_bar').ScrollBar,
     FlyingPanel = require('../ui/flying_panel').FlyingPanel,
     VendorDataView = require('./vendor_data_view').VendorDataView;
@@ -11,10 +11,10 @@ var inherit = require('../utils').inherit,
  * @constructor
  */
 var Popup = function (options) {
-    options = $.extend({fitToWidth: false, autoHide: true}, options);
+    options = $.extend({fitToWidth: false, autoHide: true, fixedSize: true}, options);
     Popup.superclass.constructor.call(this, options);
 
-    this.pageZoom = pageZoomFree(1);
+    this.pageZoomLevel = UTILS.pageZoomLevel;
     this.createDom();
     this.bindEvents();
 };
@@ -42,9 +42,9 @@ Popup.prototype.bindEvents = function () {
 
 /** @private */
 Popup.prototype.onResize = function () {
-    var pageZoom = pageZoomFree(1);
-    if (this.pageZoom !== pageZoom) {
-        this.pageZoom = pageZoom;
+    var pageZoomLevel = UTILS.pageZoomLevel;
+    if (this.pageZoom !== pageZoomLevel) {
+        this.pageZoom = pageZoomLevel;
         this.applyTheme();
     }
     this.update();

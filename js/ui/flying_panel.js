@@ -1,6 +1,7 @@
 'use strict';
 
-var inherit = require('../utils').inherit,
+var UTILS = require('../utils'),
+    inherit = require('../utils').inherit,
     UIComponent = require('./ui_component').UIComponent;
 
 /**
@@ -15,7 +16,8 @@ var FlyingPanel = function (options) {
     /** @type {Boolean} */ this.autoUpdate = options.autoUpdate !== false;
     /** @type {Boolean} */ this.autoHide = !!options.autoHide;
     /** @type {Boolean} */ this.noBodyAppend = !!options.noBodyAppend;
-    /** @type {Boolean} */ this.fitToWidth = options.fitToWidth !== false; // set width from anchor
+    /** @type {Boolean} */ this.fitToWidth = options.fitToWidth !== false; // set a calculated width from the anchor
+    /** @type {Boolean} */ this.fixedSize = !!options.fixedSize; // keep size despite on the page zoom level
 
     this.hidden = true;
     this.$container.addClass('flyingPanel');
@@ -32,7 +34,7 @@ inherit(FlyingPanel, UIComponent);
  */
 var POSITIONS = [
     {top: '100%', left: 0, className: 'bottomLeft'},
-    {top: '100%', right: 0,  className: 'bottomRight'},
+    {top: '100%', right: 0, className: 'bottomRight'},
     {bottom: '100%', left: 0, className: 'topLeft'},
     {bottom: '100%', right: 0, className: 'topRight'},
     {left: '100%', top: 0, className: 'rightTop'},
@@ -87,8 +89,8 @@ FlyingPanel.prototype.update = function () {
  * @param {HTMLElement|jQuery|UIComponent|*} anchor
  */
 FlyingPanel.prototype.setAnchor = function (anchor) {
-    if (anchor instanceof HTMLElement) $anchor = $(anchor);
-    else if (anchor instanceof jQuery) var $anchor = anchor;
+    if (anchor instanceof HTMLElement) var $anchor = $(anchor);
+    else if (anchor instanceof jQuery) $anchor = anchor;
     else if (anchor instanceof UIComponent) $anchor = anchor.$container;
 
     if ($anchor) {
@@ -106,6 +108,7 @@ FlyingPanel.prototype.setAnchor = function (anchor) {
 FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
     if (this.fitToWidth) pos.width = Math.min(this.anchorRect.width, this.maxWidth);
+    if (this.fixedSize) pos.zoom = 1 / UTILS.pageZoomLevel;
 
     this.position = this.getPositionClassName(position);
     this.$container.css(pos).toggleClass('large', !this.fitToWidth && this.containerRect.width > pos.width);
@@ -139,6 +142,7 @@ FlyingPanel.prototype.preparePosition = function (position) {
         }, this);
     }
     else {
+        var pageZoomLevel = this.fixedSize ? UTILS.pageZoomLevel : 1;
         Object.keys(pos).forEach(function (side) {
             var horizontal = side == 'left' || side == 'right';
             var inverse = side == 'right' || side == 'bottom' ? -1 : 1;
@@ -153,7 +157,7 @@ FlyingPanel.prototype.preparePosition = function (position) {
 
             if (side == 'bottom') posValue = this.borderRect.height - posValue;
             if (side == 'right') posValue = this.borderRect.width - posValue;
-            pos[side] = posValue + offset + scrollValue;
+            pos[side] = (posValue + offset + scrollValue) * pageZoomLevel;
         }, this);
     }
 
@@ -180,8 +184,8 @@ FlyingPanel.prototype.getGlobalScroll = function () {
 /** @private */
 FlyingPanel.prototype.getGlobalRect = function () {
     var rect = {left: 0, top: 0};
-    rect.width = rect.right = window.innerWidth;
-    rect.height = rect.bottom = window.innerHeight;
+    rect.width = rect.right = window.outerWidth;
+    rect.height = rect.bottom = window.outerHeight;
     return rect;
 };
 

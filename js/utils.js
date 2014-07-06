@@ -183,10 +183,13 @@ exports.approxEquals = function (num1, num2, offset) {
 };
 
 /**
- * Keep css-dimensions the same, even if page zoom was changed
- * @param {number} value
+ * Get current page zoom level
+ * Actually works correct only with low-DPI screens when default value = 1 (on MacBookPro Retina value is x2)
+ * Read more: http://stackoverflow.com/a/6365777/2160409
+ * @type number
  */
-exports.pageZoomFree = function (value) {
-    var ratio = window.devicePixelRatio || 1;
-    return Number((value / ratio).toFixed(2));
-};
+Object.defineProperty(exports, 'pageZoomLevel', {
+    get: function () {
+        return window.devicePixelRatio || 1;
+    }
+});

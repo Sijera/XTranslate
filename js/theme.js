@@ -2,8 +2,7 @@
 
 var UTILS = require('./utils'),
     sprintf = UTILS.sprintf,
-    hex2Rgba = UTILS.hex2Rgba,
-    pageZoomFree = UTILS.pageZoomFree;
+    hex2Rgba = UTILS.hex2Rgba;
 
 /** @const */
 var CSS_THEMES = {
@@ -115,30 +114,29 @@ var toCSS = function (theme) {
     // border
     var borderOpacity = theme.borderOpacity / 100;
     var borderColor = borderOpacity < 1 ? hex2Rgba(theme.borderColor, borderOpacity) : theme.borderColor;
-    var border = [pageZoomFree(theme.borderWidth) + 'px', theme.borderStyle, borderColor].join(' ');
-    var borderRadius = pageZoomFree(theme.borderRadius) + 'px';
+    var border = [theme.borderWidth + 'px', theme.borderStyle, borderColor].join(' ');
+    var borderRadius = theme.borderRadius + 'px';
 
     // text
     var textColor = theme.textColor;
     var fontFamily = theme.fontFamily;
-    var fontSizeDimension = theme.fontSize === 0 ? 'em' : 'px';
-    var fontSize = pageZoomFree(theme.fontSize || 1) + fontSizeDimension;
+    var fontSize = theme.fontSize === 0 ? 'initial' : theme.fontSize + 'px';
     var textShadow;
     if (!theme.textShadowOffsetX && !theme.textShadowOffsetY && !theme.textShadowBlur) textShadow = 'none';
     else {
-        var textShadowX = pageZoomFree(theme.textShadowOffsetX) + 'px';
-        var textShadowY = pageZoomFree(theme.textShadowOffsetY) + 'px';
-        var textShadowBlur = pageZoomFree(theme.textShadowBlur) + 'px';
+        var textShadowX = theme.textShadowOffsetX + 'px';
+        var textShadowY = theme.textShadowOffsetY + 'px';
+        var textShadowBlur = theme.textShadowBlur + 'px';
         textShadow = [textShadowX, textShadowY, textShadowBlur, theme.textShadowColor].join(' ');
     }
 
     // box
-    var maxWidth = pageZoomFree(theme.maxWidth) || 'none';
-    var maxHeight = pageZoomFree(theme.maxHeight) || 'none';
+    var maxWidth = theme.maxWidth || 'none';
+    var maxHeight = theme.maxHeight || 'none';
     var padding = theme.padding + 'em';
     var boxShadowOpacity = theme.boxShadowOpacity / 100;
     var boxShadowColor = boxShadowOpacity < 1 ? hex2Rgba(theme.boxShadowColor, boxShadowOpacity) : theme.boxShadowColor;
-    var boxShadowSize = pageZoomFree(theme.boxShadowSize) + 'px';
+    var boxShadowSize = theme.boxShadowSize + 'px';
     var boxShadow = [theme.boxShadowInner ? 'inset' : '', 0, 0, boxShadowSize, boxShadowColor].join(' ');
 
     return {
