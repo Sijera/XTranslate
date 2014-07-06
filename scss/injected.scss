@@ -21,10 +21,6 @@
     border: none;
     font: inherit;
     color: inherit;
-    position: initial;
-    float: initial;
-    box-shadow: initial;
-    text-shadow: initial;
     line-height: initial;
     font-weight: initial;
     font-style: initial;
@@ -45,7 +41,7 @@
     @include fa-icon(1.5em);
 
     position: absolute;
-    text-shadow: 0 0 .2em white;
+    text-shadow: 0 0 .05em white;
     cursor: pointer;
 
     &.leftTop {

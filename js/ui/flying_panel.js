@@ -112,7 +112,7 @@ FlyingPanel.prototype.setPosition = function (position) {
 
     this.position = this.getPositionClassName(position);
     this.$container.css(pos).toggleClass('large', !this.fitToWidth && this.containerRect.width > pos.width);
-    this.containerRect = this.getElementRect(this.$container);
+    this.containerRect = this.getElementRect(this.$container, true);
 };
 
 /** @private */
@@ -167,14 +167,25 @@ FlyingPanel.prototype.preparePosition = function (position) {
 /**
  * @private
  * @param {HTMLElement|jQuery} elem
+ * @param {Boolean} [withZoom]
  */
-FlyingPanel.prototype.getElementRect = function (elem) {
+FlyingPanel.prototype.getElementRect = function (elem, withZoom) {
     if (elem.jquery) elem = elem[0];
-    return $.extend({}, elem.getBoundingClientRect());
+    var rect = $.extend({}, elem.getBoundingClientRect());
+    if (withZoom && this.fixedSize) {
+        var pageZoom = 1 / UTILS.pageZoomLevel;
+        rect.left *= pageZoom;
+        rect.top *= pageZoom;
+        rect.width *= pageZoom;
+        rect.height *= pageZoom;
+        rect.right = rect.left + rect.width;
+        rect.bottom = rect.top + rect.height;
+    }
+    return rect;
 };
 
 /** @private */
-FlyingPanel.prototype.getGlobalScroll = function () {
+FlyingPanel.prototype.getViewPortScroll = function () {
     return {
         top : window.pageYOffset,
         left: window.pageXOffset
@@ -182,20 +193,20 @@ FlyingPanel.prototype.getGlobalScroll = function () {
 };
 
 /** @private */
-FlyingPanel.prototype.getGlobalRect = function () {
+FlyingPanel.prototype.getViewPortRect = function () {
     var rect = {left: 0, top: 0};
-    rect.width = rect.right = window.outerWidth;
-    rect.height = rect.bottom = window.outerHeight;
+    rect.width = rect.right = window.innerWidth;
+    rect.height = rect.bottom = window.innerHeight;
     return rect;
 };
 
 /** @protected */
 FlyingPanel.prototype.refreshDimensions = function () {
-    this.containerRect = this.getElementRect(this.$container);
+    this.containerRect = this.getElementRect(this.$container, true);
     this.anchorRect = this.getElementRect(this.anchor);
     this.borderRect = this.getElementRect(this.borderElem);
-    this.viewScroll = this.getGlobalScroll();
-    this.viewRect = this.getGlobalRect();
+    this.viewScroll = this.getViewPortScroll();
+    this.viewRect = this.getViewPortRect();
     this.maxWidth = parseInt(this.$container.css('max-width')) || Infinity;
 };
 

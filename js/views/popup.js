@@ -37,7 +37,7 @@ Popup.prototype.createDom = function () {
 
 /** @private */
 Popup.prototype.bindEvents = function () {
-    $(window).on('resize', this.onResize.bind(this));
+    $(window).on('resize', UTILS.debounce(this.onResize.bind(this), 100));
 };
 
 /** @private */
