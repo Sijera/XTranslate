@@ -138,7 +138,7 @@ UserInputContainer.prototype.onInput = function () {
 UserInputContainer.prototype.onTranslationDone = function (data) {
     if (data.sourceText !== this.getText() || data.vendor !== this.activeVendor) return;
     this.dataView.parseData(data).show();
-    this.focus();
+    if (document.activeElement === this.$text[0]) this.focus();
 };
 
 UserInputContainer.prototype.show = function () {
@@ -148,8 +148,7 @@ UserInputContainer.prototype.show = function () {
 };
 
 /** @private */
-UserInputContainer.prototype.focus = function (blurBefore) {
-    if (blurBefore && document.activeElement === this.$text[0]) this.$text.blur();
+UserInputContainer.prototype.focus = function () {
     this.$text.focus();
 };
 
