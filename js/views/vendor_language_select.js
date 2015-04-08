@@ -44,25 +44,28 @@ VendorLanguageSelect.prototype.bindEvents = function () {
  * Refresh the select boxes from active translation vendor
  */
 VendorLanguageSelect.prototype.refresh = function () {
-    var langList = APP.vendor.langList,
-        langListFrom = Object.keys(langList),
-        langListTo = langListFrom.slice(langListFrom[0] == APP.vendor.autoDetect ? 1 : 0),
+    var langListFrom = APP.vendor.getLangSet('from'),
+        langListTo = APP.vendor.getLangSet('to'),
+        langListFromKeys = Object.keys(langListFrom),
+        langListToKeys = Object.keys(langListTo),
         langFrom = this.state.langFrom,
         langTo = this.state.langTo;
 
-    if (!langList[langFrom]) langFrom = langListFrom[0];
-    if (!langList[langTo]) langTo = langListTo[0];
-    if (langFrom == langTo) langTo = langListTo[1];
+    if (!langListFrom[langFrom]) langFrom = langListFromKeys[0];
+    if (!langListTo[langTo]) langTo = langListToKeys[0];
+    if (langFrom == langTo) langTo = langListToKeys[1];
 
     this.langFrom.clear();
     this.langTo.clear();
 
-    langListFrom.forEach(function (lang) {
-        this.langFrom.add({value: lang, title: langList[lang], selected: lang == langFrom}, true);
+    langListFromKeys.forEach(function (langKey) {
+        this.langFrom.add({value: langKey, title: langListFrom[langKey], selected: langKey == langFrom}, true);
     }, this);
 
-    langListTo.forEach(function (lang) {
-        this.langTo.add({value: lang, title: langList[lang], selected: lang == langTo}, true);
+    langListToKeys.forEach(function (langKey) {
+      if (langKey !== APP.vendor.autoDetect) {
+        this.langTo.add({value: langKey, title: langListTo[langKey], selected: langKey == langTo}, true);
+      }
     }, this);
 
     this.setLangFrom(langFrom);

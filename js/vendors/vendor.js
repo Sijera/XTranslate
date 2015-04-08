@@ -44,7 +44,7 @@ Vendor.prototype.abort = function () {
 /** @protected */
 Vendor.prototype.loadData = function (data) {
     var lastReq = this.lastReqData;
-    data = $.extend(this.getLang(), data);
+    data = $.extend(this.getCurrentLang(), data);
 
     if (this.lastResData.resolved &&
         data.text === lastReq.text &&
@@ -78,7 +78,7 @@ Vendor.prototype.parseData = function (response) {
 Vendor.prototype.swapLang = function (parsedData) {
     if (this.swapped) return parsedData;
 
-    var langPair = this.getLang(),
+    var langPair = this.getCurrentLang(),
         langFrom = langPair.langFrom,
         langTo = langPair.langTo,
         langSource = parsedData.langSource,
@@ -96,7 +96,7 @@ Vendor.prototype.swapLang = function (parsedData) {
 
 Vendor.prototype.playText = function (text) {
     text = text || this.lastReqData.text;
-    var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getLang().langFrom;
+    var lang = this.lastResData.langSource || this.lastReqData.langFrom || this.getCurrentLang().langFrom;
     if (!this.urlTextToSpeech || !text) return;
 
     this.stopPlaying();
@@ -138,12 +138,18 @@ Vendor.prototype.getAudioUrl = function (text, lang) {
  * Get current selected languages
  * @return {{langFrom: String, langTo: String}}
  */
-Vendor.prototype.getLang = function () {
+Vendor.prototype.getCurrentLang = function () {
     var vendorBlock = APP.get('settingsContainer.vendorBlock');
     return {
         langFrom: vendorBlock.langFrom,
         langTo  : vendorBlock.langTo
     };
+};
+
+Vendor.prototype.getLangSet = function (direction) {
+  direction = direction || 'from';
+  var langSet = this.langList[direction];
+  return typeof langSet === 'object' ? langSet : this.langList;
 };
 
 exports.Vendor = Vendor;

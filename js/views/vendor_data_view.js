@@ -44,7 +44,7 @@ VendorDataView.prototype.parseData = function (data) {
     var vendor = APP.getVendor(data.vendor),
         lang = data.langSource,
         ts = data.transcription,
-        title = lang ? __(49, [vendor.langList[lang], vendor.title]) : '',
+        title = lang ? __(49, [vendor.getLangSet()[lang], vendor.title]) : '',
         spellCheckData = APP.get('settingsContainer.popupDefinitions.spellCheck') ? data.spellCheck : null;
 
     this.$playSound
