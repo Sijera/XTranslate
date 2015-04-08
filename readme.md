@@ -19,11 +19,3 @@ Out of the box it supports three translation vendors:
 * [Google](http://translate.google.com/)
 * [Yandex](http://translate.yandex.com/)
 * [Bing](http://bing.com/translator/)
-
-Help the project
------------
-The extension is open-source and free, so if someone can do something from the list below, I will be appreciate:
-* Translate user interface of the extension to [other languages](https://github.com/ixrock/XTranslate/tree/master/_locales)
-* For designers: draw promotional images for chrome web-store (440x280, 920x680, 1400x560)
-
-Thanks in advance!
