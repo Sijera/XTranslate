@@ -135,8 +135,9 @@ Vendor.prototype.getAudioUrl = function (text, lang) {
  */
 Vendor.prototype.getCurrentLang = function () {
     var vendorBlock = APP.get('settingsContainer.vendorBlock');
+    var hasLangFrom = this.getLangSet('from')[vendorBlock.langFrom] !== undefined;
     return {
-        langFrom: this.langList[vendorBlock.langFrom] ? vendorBlock.langFrom : this.defaultLang,
+        langFrom: hasLangFrom ? vendorBlock.langFrom : this.defaultLang,
         langTo  : vendorBlock.langTo
     };
 };
