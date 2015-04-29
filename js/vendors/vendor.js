@@ -12,6 +12,7 @@ var Vendor = function () {
     Vendor.superclass.constructor.call(this);
 
     this.autoDetect = 'auto';
+    this.defaultLang = 'en';
     this.urlTextToSpeech = '';
     this.langList = {};
     this.lastResData = {};
@@ -56,7 +57,7 @@ Vendor.prototype.loadData = function (data) {
     this.lastResData.resolved = false;
     return this.makeRequest($.extend(this.lastReqData, data))
         .then(this.parseData.bind(this))
-        .then(this.swapLang.bind(this));
+        .then(this.autoSwapLangsHandler.bind(this));
 };
 
 /**
@@ -75,20 +76,14 @@ Vendor.prototype.parseData = function (response) {
 };
 
 /** @protected */
-Vendor.prototype.swapLang = function (parsedData) {
-    if (this.swapped) return parsedData;
-
-    var langPair = this.getCurrentLang(),
-        langFrom = langPair.langFrom,
-        langTo = langPair.langTo,
-        langSource = parsedData.langSource,
-        langDetected = parsedData.langDetected;
-
-    if (langDetected && langDetected !== langSource && langFrom !== this.autoDetect) {
+Vendor.prototype.autoSwapLangsHandler = function (parsedData) {
+    var lang = this.getCurrentLang();
+    var sameText = parsedData.sourceText.toLowerCase().replace(/\s/g, "") === parsedData.translation.toLowerCase().replace(/\s/g, "");
+    if (!this.swapped && sameText) {
         this.swapped = true;
         return this.loadData({
-            langFrom: langDetected,
-            langTo  : langDetected !== langFrom ? langFrom : langTo
+            langFrom: lang.langTo,
+            langTo  : lang.langFrom
         });
     }
     return parsedData;
@@ -141,7 +136,7 @@ Vendor.prototype.getAudioUrl = function (text, lang) {
 Vendor.prototype.getCurrentLang = function () {
     var vendorBlock = APP.get('settingsContainer.vendorBlock');
     return {
-        langFrom: vendorBlock.langFrom,
+        langFrom: this.langList[vendorBlock.langFrom] ? vendorBlock.langFrom : this.defaultLang,
         langTo  : vendorBlock.langTo
     };
 };

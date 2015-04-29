@@ -37,19 +37,15 @@ Bing.prototype.makeRequest = function (data) {
 
 /** @private */
 Bing.prototype.parseData = function (data) {
-    var langSource = data[0]['From'];
-    var translation = data[0]['TranslatedText'];
-    var langDetected = translation.toLowerCase() == this.lastReqData.text.toLowerCase() ? this.lastReqData.langTo : '';
     return Bing.superclass.parseData.call(this, {
-        langSource  : langSource,
-        langDetected: langDetected,
-        translation : translation
+        langSource  : data[0]['From'],
+        translation : data[0]['TranslatedText']
     });
 };
 
 /** @const */
 var LANGUAGES = {
-    "auto"  : "Auto-Detect",
+    "auto"  : "Auto-detect",
     "ar"    : "Arabic",
     "bg"    : "Bulgarian",
     "ca"    : "Catalan",
