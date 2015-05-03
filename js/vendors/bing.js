@@ -37,6 +37,10 @@ Bing.prototype.makeRequest = function (data) {
 
 /** @private */
 Bing.prototype.parseData = function (data) {
+    if (typeof data === 'string') {
+        var lang = this.getCurrentLang();
+        data = [{From: lang.langFrom, TranslatedText: data}];
+    }
     return Bing.superclass.parseData.call(this, {
         langSource  : data[0]['From'],
         translation : data[0]['TranslatedText']

@@ -22,7 +22,7 @@ var Vendor = function () {
 inherit(Vendor, EventDriven);
 
 Vendor.prototype.translateText = function (text) {
-    this.swapped = false;
+    this.autoDetected = false;
     if (this.request && this.request.state() === 'pending') this.abort();
     return this.loadData({text: text});
 };
@@ -57,7 +57,7 @@ Vendor.prototype.loadData = function (data) {
     this.lastResData.resolved = false;
     return this.makeRequest($.extend(this.lastReqData, data))
         .then(this.parseData.bind(this))
-        .then(this.autoSwapLangsHandler.bind(this));
+        .then(this.autoDetection.bind(this));
 };
 
 /**
@@ -76,14 +76,16 @@ Vendor.prototype.parseData = function (response) {
 };
 
 /** @protected */
-Vendor.prototype.autoSwapLangsHandler = function (parsedData) {
+Vendor.prototype.autoDetection = function (parsedData) {
     var lang = this.getCurrentLang();
     var sameText = parsedData.sourceText.toLowerCase().replace(/\s/g, "") === parsedData.translation.toLowerCase().replace(/\s/g, "");
-    if (!this.swapped && sameText) {
-        this.swapped = true;
+    var langDetected = parsedData.langDetected || lang.langTo;
+    var langFrom = this.hasAutoDetect() ? this.autoDetect : langDetected;
+    if (!this.autoDetected && sameText) {
+        this.autoDetected = true;
         return this.loadData({
-            langFrom: lang.langTo,
-            langTo  : lang.langFrom
+            langFrom: langFrom,
+            langTo  : langDetected !== lang.langTo ? lang.langTo : lang.langFrom
         });
     }
     return parsedData;
@@ -146,6 +148,10 @@ Vendor.prototype.getLangSet = function (direction) {
   direction = direction || 'from';
   var langSet = this.langList[direction];
   return typeof langSet === 'object' ? langSet : this.langList;
+};
+
+Vendor.prototype.hasAutoDetect = function () {
+    return this.getLangSet('from')[this.autoDetect] !== undefined;
 };
 
 exports.Vendor = Vendor;
