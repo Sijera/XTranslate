@@ -66,6 +66,11 @@
   }
 }
 
+@keyframes loader {
+  from { background-position: 0 0; }
+  to { background-position: -40px 0; }
+}
+
 // Special mixin for correct building gaps between the elements in popup menus/blocks
 // If you need to support IE you should used, otherwise do the bicycle ;)
 @mixin spacer($size: 5px, $type: horizontal, $pos: 'left|right|top|bottom', $pseudo: ':before') {
