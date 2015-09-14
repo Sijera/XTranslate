@@ -181,15 +181,3 @@ exports.approxEquals = function (num1, num2, offset) {
     offset = offset || 1;
     return Math.abs(num1 - num2) <= offset;
 };
-
-/**
- * Get current page zoom level
- * Actually works correct only with low-DPI screens when default value = 1 (on MacBookPro Retina value is x2)
- * Read more: http://stackoverflow.com/a/6365777/2160409
- * @type number
- */
-Object.defineProperty(exports, 'pageZoomLevel', {
-    get: function () {
-        return window.devicePixelRatio || 1;
-    }
-});

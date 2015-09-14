@@ -11,10 +11,9 @@ var UTILS = require('../utils'),
  * @constructor
  */
 var Popup = function (options) {
-    options = $.extend({fitToWidth: false, autoHide: true, fixedSize: true}, options);
+    options = $.extend({fitToWidth: false, autoHide: true}, options);
     Popup.superclass.constructor.call(this, options);
 
-    this.pageZoomLevel = UTILS.pageZoomLevel;
     this.createDom();
     this.bindEvents();
 };
@@ -42,11 +41,6 @@ Popup.prototype.bindEvents = function () {
 
 /** @private */
 Popup.prototype.onResize = function () {
-    var pageZoomLevel = UTILS.pageZoomLevel;
-    if (this.pageZoom !== pageZoomLevel) {
-        this.pageZoom = pageZoomLevel;
-        this.applyTheme();
-    }
     this.update();
 };
 

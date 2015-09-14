@@ -13,7 +13,7 @@ var Bing = function (options) {
     this.title = 'Bing';
     this.url = 'http://bing.com/translator/';
     this.apiUrl = 'http://api.microsofttranslator.com/v2';
-    this.appId = 'C99C654F52B9010F7B789D98343831212B58CB34';
+    this.appId = '"XpTDL1vTEhs0T6kHuEcPCZgkLYe4jQQZ9ZDiZGyGXmDqlU2985jwT66LnhPqrgp7YZAQv9ZUhdlI-da3UEUCbTwI7FvDbb2bvJo0a_kDm4XZPI-SfPBpX9Z2FLh2xSkKJT5TaHKZ5mJ5UxGEfebC9Ig**"';
     this.ttsFormat = 'audio/wav';
     this.urlTextToSpeech = this.apiUrl + '/http.svc/Speak?format=' + this.ttsFormat + '&options=MaxQuality&text={0}&language={1}&appId=' + this.appId;
     this.langList = $.extend({}, this.langList, LANGUAGES);
@@ -24,7 +24,7 @@ inherit(Bing, Vendor);
 /** @private */
 Bing.prototype.makeRequest = function (data) {
     return (this.request = $.ajax({
-        url: this.apiUrl + '/ajax.svc/TranslateArray',
+        url: this.apiUrl + '/ajax.svc/TranslateArray?ref=WidgetV3CTF',
         dataType: 'json',
         data: {
             appId: this.appId,

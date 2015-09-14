@@ -17,7 +17,6 @@ var FlyingPanel = function (options) {
     /** @type {Boolean} */ this.autoHide = !!options.autoHide;
     /** @type {Boolean} */ this.noBodyAppend = !!options.noBodyAppend;
     /** @type {Boolean} */ this.fitToWidth = options.fitToWidth !== false; // set a calculated width from the anchor
-    /** @type {Boolean} */ this.fixedSize = !!options.fixedSize; // keep size despite on the page zoom level
 
     this.hidden = true;
     this.$container.addClass('flyingPanel');
@@ -108,11 +107,10 @@ FlyingPanel.prototype.setAnchor = function (anchor) {
 FlyingPanel.prototype.setPosition = function (position) {
     var pos = this.preparePosition(position);
     if (this.fitToWidth) pos.width = Math.min(this.anchorRect.width, this.maxWidth);
-    if (this.fixedSize) pos.zoom = 1 / UTILS.pageZoomLevel;
 
     this.position = this.getPositionClassName(position);
     this.$container.css(pos).toggleClass('large', !this.fitToWidth && this.containerRect.width > pos.width);
-    this.containerRect = this.getElementRect(this.$container, true);
+    this.containerRect = this.getElementRect(this.$container);
 };
 
 /** @private */
@@ -142,7 +140,6 @@ FlyingPanel.prototype.preparePosition = function (position) {
         }, this);
     }
     else {
-        var pageZoomLevel = this.fixedSize ? UTILS.pageZoomLevel : 1;
         Object.keys(pos).forEach(function (side) {
             var horizontal = side == 'left' || side == 'right';
             var inverse = side == 'right' || side == 'bottom' ? -1 : 1;
@@ -157,7 +154,7 @@ FlyingPanel.prototype.preparePosition = function (position) {
 
             if (side == 'bottom') posValue = this.borderRect.height - posValue;
             if (side == 'right') posValue = this.borderRect.width - posValue;
-            pos[side] = (posValue + offset + scrollValue) * pageZoomLevel;
+            pos[side] = posValue + offset + scrollValue;
         }, this);
     }
 
@@ -167,21 +164,10 @@ FlyingPanel.prototype.preparePosition = function (position) {
 /**
  * @private
  * @param {HTMLElement|jQuery} elem
- * @param {Boolean} [withZoom]
  */
-FlyingPanel.prototype.getElementRect = function (elem, withZoom) {
+FlyingPanel.prototype.getElementRect = function (elem) {
     if (elem.jquery) elem = elem[0];
-    var rect = $.extend({}, elem.getBoundingClientRect());
-    if (withZoom && this.fixedSize) {
-        var pageZoom = 1 / UTILS.pageZoomLevel;
-        rect.left *= pageZoom;
-        rect.top *= pageZoom;
-        rect.width *= pageZoom;
-        rect.height *= pageZoom;
-        rect.right = rect.left + rect.width;
-        rect.bottom = rect.top + rect.height;
-    }
-    return rect;
+    return $.extend({}, elem.getBoundingClientRect());
 };
 
 /** @private */
@@ -202,7 +188,7 @@ FlyingPanel.prototype.getViewPortRect = function () {
 
 /** @protected */
 FlyingPanel.prototype.refreshDimensions = function () {
-    this.containerRect = this.getElementRect(this.$container, true);
+    this.containerRect = this.getElementRect(this.$container);
     this.anchorRect = this.getElementRect(this.anchor);
     this.borderRect = this.getElementRect(this.borderElem);
     this.viewScroll = this.getViewPortScroll();
