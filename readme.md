@@ -15,7 +15,6 @@ Just mouse over the element and press hotkey!
 
 What it supports?
 -----------
-Out of the box it supports three translation vendors:
+Out of the box the extension supports next translation vendors:
 * [Google](http://translate.google.com/)
 * [Yandex](http://translate.yandex.com/)
-* [Bing](http://bing.com/translator/)

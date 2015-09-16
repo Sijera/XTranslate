@@ -29,13 +29,14 @@ SettingsVendor.prototype.createDom = function (state) {
 
 /**
  * @private
- * @param {Vendor|Google|Yandex|Bing} vendor
+ * @param {Vendor|Google|Yandex} vendor
  */
 SettingsVendor.prototype.addVendor = function (vendor) {
     var $label = $('<span class="title"/>').text(vendor.title);
+    var url = vendor.publicUrl || vendor.url;
     var $url = $('<a class="url" target="_blank" tabIndex="-1"/>')
-        .attr('href', vendor.url)
-        .text(vendor.url.replace(/^https?:\/\/|\/$/gi, ''))
+        .attr('href', url)
+        .text(url.replace(/^https?:\/\/|\/$/gi, ''))
         .on('click', function (e) { e.stopPropagation() });
 
     var radio = new Radio({
