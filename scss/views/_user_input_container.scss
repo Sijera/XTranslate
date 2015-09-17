@@ -40,6 +40,11 @@
         @include pseudoLink(white);
       }
 
+      &.unavailable {
+        opacity: .25;
+        pointer-events: none;
+      }
+
       &.active b {
         color: silver;
         cursor: default;

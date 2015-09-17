@@ -8,6 +8,7 @@ var UTILS = require('../utils'),
 
 /** @const */
 var ACTIVE_VENDOR_CLASS = 'active';
+var UNAVAILABLE_VENDOR_CLASS = 'unavailable';
 
 /**
  * @constructor
@@ -20,6 +21,7 @@ var UserInputContainer = function (options) {
 
     this.createDom();
     this.bindEvents();
+    this.refreshFastSwitchingBlock();
 };
 
 inherit(UserInputContainer, UIComponent);
@@ -42,7 +44,7 @@ UserInputContainer.prototype.createDom = function () {
             .toggleClass(ACTIVE_VENDOR_CLASS, vendor.name === this.activeVendor)
             .find('b')
                 .text(vendor.title)
-                .on('click', this.setVendor.bind(this, vendor.name));
+                .on('click', this.fastSwitchTo.bind(this, vendor.name));
 
         this.vendors.push(vendorData);
     }, this);
@@ -67,15 +69,25 @@ UserInputContainer.prototype.bindEvents = function () {
 };
 
 /** @private */
-UserInputContainer.prototype.setVendor = function (vendorName) {
+UserInputContainer.prototype.fastSwitchTo = function (vendorName) {
     if (vendorName === this.activeVendor) return;
     this.activeVendor = vendorName;
-    this.vendors.forEach(function (vendorData) {
-        vendorData.$link.toggleClass(ACTIVE_VENDOR_CLASS, vendorData.name === vendorName);
-    });
-
+    this.refreshFastSwitchingBlock();
     this.translateText();
     this.focus();
+};
+
+/** @private */
+UserInputContainer.prototype.refreshFastSwitchingBlock = function () {
+    var activeVendor = APP.getVendor(this.activeVendor);
+
+    this.vendors.forEach(function (vendorData) {
+        vendorData.active = vendorData.name === this.activeVendor;
+        vendorData.available = !activeVendor.canUseCurrentLangWith(APP.getVendor(vendorData.name));
+        vendorData.$link
+          .toggleClass(UNAVAILABLE_VENDOR_CLASS, vendorData.available)
+          .toggleClass(ACTIVE_VENDOR_CLASS, vendorData.active);
+    }, this);
 };
 
 /** @private */
@@ -116,6 +128,7 @@ UserInputContainer.prototype.onPlayText = function () {
 
 /** @private */
 UserInputContainer.prototype.onVendorChange = function () {
+    this.refreshFastSwitchingBlock();
     this.translateTextLazy();
 };
 

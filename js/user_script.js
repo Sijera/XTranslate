@@ -68,6 +68,13 @@ UserScript.prototype.bindEvents = function () {
         .on('playText', this.onPlayText.bind(this))
         .on('translateNext', this.onTranslateNext.bind(this));
 
+    var $popup = this.popup.$container;
+    $popup.on('keydown', function (e) {
+        if (e.keyCode === 39) { // ARROW RIGHT
+            $popup.find('.nextVendorIcon.visible').click();
+        }
+    }.bind(this));
+
     $(window)
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
         .on('contextmenu', this.onContextMenu.bind(this))

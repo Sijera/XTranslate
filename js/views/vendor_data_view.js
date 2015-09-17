@@ -24,16 +24,16 @@ VendorDataView.prototype.createDom = function () {
     this.$container.addClass('vendorDataView');
 
     this.$main = $('<div class="main">').appendTo(this.$container);
-    this.$nextVendor = $('<i class="nextVendorIcon fa-chevron-right"/>').appendTo(this.$main);
     this.$playSound = $('<i class="playIcon fa-volume-up"/>').appendTo(this.$main);
     this.$translation = $('<span class="translation"/>').appendTo(this.$main);
+    this.$nextVendorIcon = $('<i class="nextVendorIcon fa-chevron-right"/>').appendTo(this.$main);
     this.$dictionary = $('<dl class="dictionary"/>').appendTo(this.$container);
 };
 
 /** @private */
 VendorDataView.prototype.bindEvents = function () {
     this.$playSound.on('click', this.trigger.bind(this, 'playText'));
-    this.$nextVendor.on('click', this.trigger.bind(this, 'translateNext'));
+    this.$nextVendorIcon.on('click', this.trigger.bind(this, 'translateNext'));
     this.$container.on('click', '.link', this.onLinkClick.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
 };
@@ -45,6 +45,7 @@ VendorDataView.prototype.bindEvents = function () {
  */
 VendorDataView.prototype.parseData = function (data) {
     var vendor = APP.getVendor(data.vendor),
+        nextVendor = APP.getVendor(data.vendor, true),
         lang = data.langSource,
         ts = data.transcription,
         title = lang ? __(49, [vendor.getLangSet()[lang], vendor.title]) : '',
@@ -54,8 +55,12 @@ VendorDataView.prototype.parseData = function (data) {
       .attr('title', data.sourceText ? __(48) + ': ' + data.sourceText : '')
       .toggleClass('disabled', !data.ttsEnabled);
 
-    var nextVendor = APP.getVendor(data.vendor, true);
-    this.$nextVendor.attr('title', __(70, [nextVendor.title]));
+    // TODO: fix if number of vendors will be more than 2!
+    var canUseNextVendor = vendor.canUseCurrentLangWith(nextVendor);
+    this.$nextVendorIcon
+      .toggleClass('visible', canUseNextVendor)
+      .css('display', canUseNextVendor ? '' : 'none')
+      .attr('title', __(70, [nextVendor.title]));
 
     this.$translation
         .text(data.translation)

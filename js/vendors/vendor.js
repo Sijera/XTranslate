@@ -151,6 +151,20 @@ Vendor.prototype.getLangSet = function (direction) {
   return typeof langSet === 'object' ? langSet : this.langList;
 };
 
+/**
+ * @param {Google|Yandex|Vendor} otherVendor
+ */
+Vendor.prototype.canUseCurrentLangWith = function (otherVendor) {
+    var lang = this.getCurrentLang();
+    if (otherVendor.possibleDirections && lang.langFrom !== this.autoDetect) {
+        return otherVendor.possibleDirections.indexOf([lang.langFrom, lang.langTo].join('-')) > -1;
+    }
+    else {
+        return otherVendor.getLangSet('from')[lang.langFrom] !== undefined
+          && otherVendor.getLangSet('to')[lang.langTo] !== undefined;
+    }
+};
+
 Vendor.prototype.hasAutoDetect = function () {
     return this.getLangSet('from')[this.autoDetect] !== undefined;
 };
