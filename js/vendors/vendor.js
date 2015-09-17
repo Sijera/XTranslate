@@ -156,13 +156,8 @@ Vendor.prototype.getLangSet = function (direction) {
  */
 Vendor.prototype.canUseCurrentLangWith = function (otherVendor) {
     var lang = this.getCurrentLang();
-    if (otherVendor.possibleDirections && lang.langFrom !== this.autoDetect) {
-        return otherVendor.possibleDirections.indexOf([lang.langFrom, lang.langTo].join('-')) > -1;
-    }
-    else {
-        return otherVendor.getLangSet('from')[lang.langFrom] !== undefined
-          && otherVendor.getLangSet('to')[lang.langTo] !== undefined;
-    }
+    return otherVendor.getLangSet('from')[lang.langFrom] !== undefined
+      && otherVendor.getLangSet('to')[lang.langTo] !== undefined;
 };
 
 Vendor.prototype.hasAutoDetect = function () {
