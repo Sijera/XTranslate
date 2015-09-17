@@ -13,8 +13,11 @@
   line-height: 130%;
   z-index: 10000000000;
 
-  .vendorDataView {
+  &.has-scroll .vendorDataView {
     padding-right: $padding;
+  }
+
+  .vendorDataView {
     .link {
       color: inherit !important;
     }

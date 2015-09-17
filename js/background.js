@@ -49,7 +49,7 @@ Background.prototype.onConnect = function (channel) {
 /** @private */
 Background.prototype.onMessage = function (channel, msg) {
     var payload = msg.payload,
-        vendor = APP.getVendor(msg.vendorName);
+        vendor = APP.getVendor(msg.vendorName, !!msg.next);
 
     switch (msg.action) {
         case 'play':

@@ -23,14 +23,17 @@ inherit(VendorDataView, UIComponent);
 VendorDataView.prototype.createDom = function () {
     this.$container.addClass('vendorDataView');
 
-    this.$playSound = $('<i class="playIcon fa-volume-up"/>').appendTo(this.$container);
-    this.$translation = $('<span class="translation"/>').appendTo(this.$container);
+    this.$main = $('<div class="main">').appendTo(this.$container);
+    this.$nextVendor = $('<i class="nextVendorIcon fa-chevron-right"/>').appendTo(this.$main);
+    this.$playSound = $('<i class="playIcon fa-volume-up"/>').appendTo(this.$main);
+    this.$translation = $('<span class="translation"/>').appendTo(this.$main);
     this.$dictionary = $('<dl class="dictionary"/>').appendTo(this.$container);
 };
 
 /** @private */
 VendorDataView.prototype.bindEvents = function () {
-    this.$playSound.on('click', this.onPlayIconClick.bind(this));
+    this.$playSound.on('click', this.trigger.bind(this, 'playText'));
+    this.$nextVendor.on('click', this.trigger.bind(this, 'translateNext'));
     this.$container.on('click', '.link', this.onLinkClick.bind(this));
     APP.on('change:settingsContainer.popupDefinitions.showPlayIcon', this.refreshPlayIcon, this);
 };
@@ -48,8 +51,11 @@ VendorDataView.prototype.parseData = function (data) {
         spellCheckData = APP.get('settingsContainer.popupDefinitions.spellCheck') ? data.spellCheck : null;
 
     this.$playSound
-        .attr('title', __(48) + ': ' + data.sourceText)
-        .toggleClass('disabled', !data.ttsEnabled);
+      .attr('title', data.sourceText ? __(48) + ': ' + data.sourceText : '')
+      .toggleClass('disabled', !data.ttsEnabled);
+
+    var nextVendor = APP.getVendor(data.vendor, true);
+    this.$nextVendor.attr('title', __(70, [nextVendor.title]));
 
     this.$translation
         .text(data.translation)
@@ -115,11 +121,6 @@ VendorDataView.prototype.wrapHint = function (text, title) {
 /** @private */
 VendorDataView.prototype.onLinkClick = function (e) {
     this.trigger('linkClick', $(e.currentTarget).text());
-};
-
-/** @private */
-VendorDataView.prototype.onPlayIconClick = function (e) {
-    this.trigger('playText');
 };
 
 /** @private */

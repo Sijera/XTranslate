@@ -8,11 +8,11 @@
   $iconBgc: white;
   $linkColor: silver;
 
+  .nextVendorIcon,
   .playIcon {
     @include fa-icon(1.25em);
     cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
+    float: left;
     margin-right: $spacing;
     opacity: .7;
 
@@ -27,10 +27,16 @@
     }
   }
 
+  .nextVendorIcon {
+    $offset: $spacing * 2;
+    @include fa-icon(1em);
+    float: right;
+    margin: .15em 0 $offset $offset;
+  }
+
   .translation {
-    display: inline;
     overflow: hidden;
-    white-space: pre-line;
+    line-height: normal !important;
   }
 
   .dictionary {

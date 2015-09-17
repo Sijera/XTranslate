@@ -5,6 +5,10 @@
     height: 5em;
   }
 
+  .nextVendorIcon {
+    display: none !important;
+  }
+
   .vendorDataView {
     padding: $spacing;
     .partOfSpeech {

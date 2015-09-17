@@ -39,11 +39,12 @@ App.prototype.getExtension = function () {
 };
 
 /** @return {Vendor|*} */
-App.prototype.getVendor = function (name) {
+App.prototype.getVendor = function (name, next) {
     name = name || this.get('settingsContainer.vendorBlock.activeVendor');
-    return this.vendors.filter(function (vendor) {
-        return vendor.name === name;
-    })[0];
+    var vendors = this.vendors;
+    var vendor = vendors.filter(function (v) { return v.name === name; })[0];
+    var index = vendors.indexOf(vendor);
+    return next ? (vendors[index + 1] || vendors[0]) : vendor;
 };
 
 // Default settings

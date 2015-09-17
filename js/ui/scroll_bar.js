@@ -11,6 +11,7 @@ var UTILS = require('../utils'),
 /** @const */ var SCROLL_DELAY = 500; // delay before automatically scrolling
 /** @const */ var SCROLL_SIDES = ['right', 'left'];
 /** @const */ var IS_SCROLLABLE = 'scrollable';
+/** @const */ var HAS_SCROLL = 'has-scroll';
 
 /**
  * @constructor
@@ -139,6 +140,7 @@ ScrollBar.prototype.stop = function () {
 ScrollBar.prototype.show = function () {
     if (!this.hidden) return this;
     ScrollBar.superclass.show.apply(this, arguments);
+    this.$parent.addClass(HAS_SCROLL);
     this.$container.appendTo(this.$parent);
     return this;
 };
@@ -147,6 +149,7 @@ ScrollBar.prototype.show = function () {
 ScrollBar.prototype.hide = function () {
     if (this.hidden) return this;
     ScrollBar.superclass.hide.apply(this, arguments);
+    this.$parent.removeClass(HAS_SCROLL);
     this.$container.detach();
     return this;
 };

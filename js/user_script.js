@@ -65,7 +65,8 @@ UserScript.prototype.bindEvents = function () {
         .on('show', this.onShowPopup.bind(this))
         .on('hide', this.onHidePopup.bind(this))
         .on('linkClick', this.onLinkClick.bind(this))
-        .on('playText', this.onPlayText.bind(this));
+        .on('playText', this.onPlayText.bind(this))
+        .on('translateNext', this.onTranslateNext.bind(this));
 
     $(window)
         .on('mouseup', UTILS.debounce(this.onMouseUp.bind(this), 0))
@@ -88,19 +89,19 @@ UserScript.prototype.registerAction = function (name, handler) {
 };
 
 /** @private */
-UserScript.prototype.sendAction = function (action, payload) {
-    this.channel.sendMessage({
+UserScript.prototype.sendAction = function (action, payload, params) {
+    this.channel.sendMessage($.extend({
         id        : this.payloadId++,
-        vendorName: this.lastActiveVendor || APP.vendor.name,
+        vendorName: this.lastResponse ? this.lastResponse.vendor : APP.vendor.name,
         action    : action,
         payload   : payload
-    });
+    }, params));
 };
 
 /** @private */
 UserScript.prototype.onMessage = function (msg) {
     if (msg.pageUrl && msg.pageUrl !== document.URL) return;
-    this.lastActiveVendor = msg.vendorName;
+    this.lastResponse = msg.payload;
     var action = msg.action;
     if (this.actions[action]) this.actions[action].call(this, msg.payload);
 };
@@ -115,7 +116,7 @@ UserScript.prototype.onTranslateText = function (data) {
     if (this.settings.autoPlay) this.playTextAction();
     this.refreshRange();
     this.popup.parseData(data).show();
-    this.popup.setAnchor(this.$app);
+    this.popup.setAnchor(this.lastOvernode || this.$app);
     this.reselectText();
 };
 
@@ -145,7 +146,7 @@ UserScript.prototype.getOverText= function () {
 
         var range = new Range();
         overNode.childNodes.length ? range.selectNodeContents(overNode) : range.selectNode(overNode);
-        if (text) this.selection.addRange(range);
+        if (text) try { this.selection.addRange(range); } catch (e) {}
         this.popup.setAnchor(overNode);
     }
 
@@ -197,6 +198,7 @@ UserScript.prototype.onKeyDown = function (e) {
         var keyMatch = this.settings.hotKey == UTILS.getHotkey(e);
         if (keyMatch) {
             this.translateText(e, this.getOverText());
+            this.lastOvernode = this.overNode;
             e.preventDefault();
         }
     }
@@ -280,6 +282,13 @@ UserScript.prototype.onPlayText = function () {
 };
 
 /** @private */
+UserScript.prototype.onTranslateNext = function () {
+    this.reselectText();
+    var text = this.lastResponse ? this.lastResponse.sourceText : this.getText();
+    this.translateAction(text, {next: true});
+};
+
+/** @private */
 UserScript.prototype.onShowPopup = function () {
     if (this.settings.autoFocus) this.popup.focus();
     if (this.settings.showActionIcon) this.hideIcon();
@@ -289,7 +298,8 @@ UserScript.prototype.onShowPopup = function () {
 UserScript.prototype.onHidePopup = function () {
     this.selection.removeAllRanges();
     this.stopPlayingAction();
-    delete this.lastActiveVendor;
+    delete this.lastResponse;
+    delete this.lastOvernode;
 };
 
 /** @private */

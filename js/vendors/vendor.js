@@ -22,6 +22,7 @@ var Vendor = function () {
 inherit(Vendor, EventDriven);
 
 Vendor.prototype.translateText = function (text) {
+    if (!text) return $.Deferred().reject();
     this.autoDetected = false;
     if (this.request && this.request.state() === 'pending') this.abort();
     return this.loadData({text: text});

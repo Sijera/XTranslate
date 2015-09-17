@@ -31,6 +31,7 @@ Popup.prototype.createDom = function () {
     this.dataView = new VendorDataView({showFullData: false})
         .propagate('linkClick', this)
         .propagate('playText', this)
+        .propagate('translateNext', this)
         .appendTo(this);
 };
 
