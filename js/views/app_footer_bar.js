@@ -16,6 +16,7 @@ var AppFooterBar = function (options) {
     this.$container.addClass('appFooterBar');
 
     var pkgInfo = APP.extension.getInfo();
+    this.hashtags = ['xtranslate', 'chrome', 'opera', 'extension'];
     this.shareText = encodeURIComponent(pkgInfo.name + ' - ' + pkgInfo.description);
 
     this.$container.append('<p>' + __(60) + '</p>');
@@ -40,7 +41,7 @@ AppFooterBar.prototype.parseLinks = function (text) {
 AppFooterBar.prototype.getSocialIcons = function () {
     var $shareLinks = $('<span class="shareLinks"/>');
     this.socialIcons.map(function (data) {
-        var url = sprintf(data.shareUrl, STORE_URL, this.shareText);
+        var url = sprintf(data.shareUrl, STORE_URL, this.shareText, this.hashtags.join(','));
         $('<a class="share"/>')
             .addClass(data.className)
             .attr('href', url)
@@ -72,7 +73,7 @@ AppFooterBar.prototype.socialIcons = [
     {
         title: 'Twitter',
         className: 'fa-twitter',
-        shareUrl: 'https://twitter.com/intent/tweet?source=webclient&url={0}&text={1}'
+        shareUrl: 'https://twitter.com/intent/tweet?source=webclient&url={0}&text={1}&hashtags={2}'
     },
     {
         title: 'Google+',

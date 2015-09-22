@@ -65,6 +65,7 @@ App.prototype.state = {
             spellCheck  : true,
             contextMenu : true,
             zoomValue   : 100, //%
+            whiteTheme  : false,
             hotKey      : UTILS.getHotkey({altKey: true, char: 'X'})
         },
         vendorBlock     : {

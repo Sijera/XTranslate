@@ -72,6 +72,8 @@ UserScript.prototype.bindEvents = function () {
     $popup.on('keydown', function (e) {
         if (e.keyCode === 39) { // ARROW RIGHT
             $popup.find('.nextVendorIcon.visible').click();
+            e.stopPropagation();
+            e.preventDefault();
         }
     }.bind(this));
 

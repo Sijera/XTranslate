@@ -262,5 +262,9 @@
     "73": {
         "message"    : "Show/hide popup preview",
         "description": "A title for icon in the theme block"
+    },
+    "74": {
+        "message"    : "Use white theme for this window",
+        "description": "A title for checkbox in the display options block"
     }
 }

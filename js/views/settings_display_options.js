@@ -24,6 +24,12 @@ SettingsDisplayOptions.prototype.createDom = function (state) {
         .on('change', function (value) { state.autoPlay = value; })
         .appendTo(this.$content);
 
+    this.onWindowThemeChange(state.whiteTheme);
+    this.useWhiteTheme = new CheckBox({label: __(74), checked: state.whiteTheme})
+      .on('change', function (value) { state.whiteTheme = value; })
+      .on('change', this.onWindowThemeChange.bind(this))
+      .appendTo(this.$content);
+
     this.showPlayIcon = new CheckBox({label: __(16), checked: state.showPlayIcon })
         .on('change', function (value) { state.showPlayIcon = value; })
         .appendTo(this.$content);
@@ -124,6 +130,12 @@ SettingsDisplayOptions.prototype.onDefineKey = function (e) {
         e.preventDefault();
         e.stopPropagation();
     }
+};
+
+/** @private */
+SettingsDisplayOptions.prototype.onWindowThemeChange = function (use) {
+    var $themeCssLink = $('link.theme');
+    $themeCssLink.attr('href', use ? $themeCssLink.data('href') : '');
 };
 
 exports.SettingsDisplayOptions = SettingsDisplayOptions;

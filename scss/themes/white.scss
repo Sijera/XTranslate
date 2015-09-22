@@ -1,0 +1,158 @@
+// XTranslate theme for the settings window (addon for options.css)
+
+$blackColor: black;
+$darkColor: #222;
+$halfDark: lighten($darkColor, 50%);
+$lightColor: #fafafa;
+
+html, body, textarea, input {
+  color: $darkColor !important;
+  background: $lightColor !important;
+}
+
+.checkBox {
+  .box {
+    background: $lightColor;
+    border: 1px solid $halfDark;
+    &.checked:after {
+      border-color: $darkColor;
+    }
+  }
+}
+
+.itemList {
+  background: $lightColor;
+  .item {
+    &:not(.selected) {
+      border-bottom-color: $darkColor;
+    }
+    &:hover {
+      background: $halfDark;
+    }
+    &.selected {
+      background: none !important;
+    }
+  }
+}
+
+.scrollBar {
+  .bar {
+    background: rgba(0,0,0,.55);
+  }
+}
+
+.select {
+  &:after {
+    border-top-color: $halfDark;
+  }
+  &.open:after,
+  &:hover:after {
+    border-top-color: $darkColor;
+  }
+  .item {
+    &:not(.selected):hover,
+    &.selected {
+      background: $halfDark !important;
+    }
+  }
+}
+
+.slider {
+  border: 1px solid $halfDark;
+  .value {
+    .point {
+      box-shadow: 0 0 .1em $blackColor !important;
+    }
+  }
+}
+
+.numberInput {
+  .upArr:hover:after {
+    border-bottom-color: $darkColor;
+  }
+  .downArr:hover:after {
+    border-top-color: $darkColor;
+  }
+}
+
+.colorPicker .colorBox {
+  border: 1px solid $darkColor !important;
+}
+
+.colorPalette {
+  background: $lightColor !important;
+  box-shadow: 0 0 10px -3px $blackColor;
+  .color {
+    border-color: $darkColor !important;
+  }
+}
+
+.settingsThemeManager .name,
+.appHeaderBar .name,
+.settingsBlock .title {
+  text-shadow: initial !important;
+}
+
+.cancelSave,
+.saveTheme {
+  color: $darkColor !important;
+  opacity: .5;
+  text-shadow: 0 0 !important;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.settingsVendor .vendor .url {
+  color: blue;
+}
+
+.settingsDisplayOptions {
+  .zoomValue,
+  .fa-icon:before,
+  .hint:after {
+    color: lighten($darkColor, 25%) !important;
+  }
+}
+
+.settingsExclusions p {
+  color: $darkColor !important;
+}
+
+.swapLang {
+  .line {
+    background: $darkColor !important;
+  }
+  &:before {
+    border-right-color: $darkColor !important;
+  }
+  &:after {
+    border-left-color: $darkColor !important;
+  }
+}
+
+.userInputContainer {
+  .vendors {
+    .title {
+      text-shadow: none;
+    }
+    .vendorLink:not(.active) b {
+      color: $darkColor !important;
+      border-bottom-color: $darkColor;
+    }
+  }
+}
+
+.vendorDataView {
+  .link {
+    color: $halfDark;
+    &:hover {
+      color: $blackColor;
+    }
+  }
+}
+
+.appFooterBar,
+.appFooterBar * {
+  color: $darkColor;
+}
