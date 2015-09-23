@@ -129,7 +129,7 @@ Vendor.prototype.stopPlaying = function () {
 Vendor.prototype.getAudioUrl = function (text, lang) {
     text = encodeURIComponent(text);
     lang = lang !== this.autoDetect ? lang : '';
-    return UTILS.sprintf(this.urlTextToSpeech, text, lang);
+    return UTILS.sprintf(this.urlTextToSpeech, text, lang, this.appId);
 };
 
 /**

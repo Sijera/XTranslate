@@ -31,16 +31,24 @@ Yandex.prototype.makeRequest = function (data) {
       return [langFrom, langTo].join('-');
     };
 
-    var translateReq = function () {
+    var translateReq = function (useOldApi) {
+        var apiVersion, apiBasedData = {};
+        if(useOldApi) {
+          apiVersion = 1;
+          apiBasedData.srv = 'tr-text';
+          apiBasedData.id = '0c5ffcb4.56157de8.5b72bb19-11-0';
+        } else {
+          apiVersion = 1.5;
+          apiBasedData.key = 'trnsl.1.1.20150914T180031Z.d57dac9b80d5924d.b3cbe0d972e98684b6b5ec1d1ccdf5d4e0bc401f';
+        }
         return $.ajax({
-          url : that.url + '/api/v1.5/tr.json/translate',
-          data: {
-            key: 'trnsl.1.1.20150914T180031Z.d57dac9b80d5924d.b3cbe0d972e98684b6b5ec1d1ccdf5d4e0bc401f',
+          url: that.url + '/api/v' + apiVersion + '/tr.json/translate',
+          data: $.extend(apiBasedData, {
             format: 'plain', // or "html"
             options: 1, // add detected language to response
             lang   : langFrom === that.autoDetect ? langTo : getLangPair(),
             text   : text
-          }
+          })
         });
     };
 
@@ -55,23 +63,41 @@ Yandex.prototype.makeRequest = function (data) {
         });
     };
 
-    translateReq().done(function (translation) {
+    this.request = $.Deferred();
+    var resolve = this.request.resolve.bind(this.request);
+    var reject = this.request.reject.bind(this.request);
+
+    var onTranslationDone = function (translation) {
       if (langFrom === that.autoDetect) {
         langFrom = translation.detected.lang;
       }
       if (DICT_DIRECTIONS.indexOf([langFrom, langTo].join('-')) > -1) {
-        dictReq().done(function (dictionary) {
-          that.request.resolve(translation, dictionary);
-        }).fail(function () {
-          that.request.resolve(translation);
-        });
+        dictReq()
+          .done(function (dictionary) { resolve(translation, dictionary); })
+          .fail(function () { resolve(translation); });
       }
       else {
-        that.request.resolve(translation);
+        resolve(translation);
       }
-    });
+    };
 
-    return this.request = $.Deferred();
+   // first off trying to use old api without key (as it works from web-page service)
+    translateReq(true)
+      .done(onTranslationDone)
+      // responseText=Yandex.Translate API v1 is no longer active. Please migrate to API v1.5.
+      // responseJSON={"code": 401, "message": "API key is invalid"},
+      // responseJSON={"code": 404, "message": "Maximum daily translated text volume exceeded"}
+      .fail(function (xhr, errorType, statusCode) {
+        var response = xhr.responseJSON || {};
+        if (response.code >= 400 || statusCode === 'GONE') {
+          // second attempt to use latest api with a key
+          translateReq().done(onTranslationDone).fail(reject);
+        } else {
+          reject();
+        }
+      });
+
+    return this.request;
 };
 
 Yandex.prototype.abort = function () {

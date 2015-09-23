@@ -6,6 +6,7 @@ var UTILS = require('./utils'),
     themes = require('./theme').THEMES,
     Google = require('./vendors/google').Google,
     Yandex = require('./vendors/yandex').Yandex,
+    Bing = require('./vendors/bing').Bing,
     Opera = require('./extension/opera').Opera,
     Chrome = require('./extension/chrome').Chrome,
     EventDriven = require('./events').EventDriven;
@@ -14,14 +15,14 @@ var UTILS = require('./utils'),
  * @constructor
  * @description XTranslate - Easy translate text on web pages (chromium-based browser extension)
  * @property {Chrome|Opera} extension
- * @property {Google|Yandex} vendor
+ * @property {Google|Yandex|Bing} vendor
  */
 var App = function (options) {
     options = $.extend({autoSave: true}, options);
     App.superclass.constructor.call(this, options);
 
     this.autoSave = options.autoSave;
-    this.vendors = [new Google(), new Yandex()];
+    this.vendors = [new Google(), new Yandex(), new Bing()];
     this.extension = this.getExtension();
     this.localization = this.extension.getText.bind(this.extension);
     Object.defineProperty(this, 'vendor', {get: this.getVendor});
@@ -51,6 +52,9 @@ App.prototype.getVendor = function (name, next) {
 App.prototype.state = {
     headerBar: {
         activeTab: 0
+    },
+    vendors: {
+        bing: {appId: ''}
     },
     settingsContainer: {
         popupDefinitions: {
