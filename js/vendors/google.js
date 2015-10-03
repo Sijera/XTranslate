@@ -24,7 +24,7 @@ inherit(Google, Vendor);
 Google.prototype.makeRequest = function (data) {
   var dtParams = 'dt=bd&dt=ex&dt=ld&dt=md&dt=qca&dt=rw&dt=rm&dt=ss&dt=t&dt=at';
     return (this.request = $.ajax({
-        url : this.url + '/translate_a/single?client=t&ie=UTF-8&oe=UTF-8&otf=1&ssel=0&tsel=0&kc=3&'+ dtParams,
+        url : this.url + '/translate_a/single?client=t&ie=UTF-8&oe=UTF-8&otf=1&ssel=0&tsel=0&kc=3&rom=1&tk=671774|810671&'+ dtParams,
         dataType: 'json',
         dataFilter: this.dataFilter,
         data: {
