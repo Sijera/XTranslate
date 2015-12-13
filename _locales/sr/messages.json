@@ -1,0 +1,270 @@
+{
+    "0" : {
+        "message"    : "Лако преведите текст на веб страницама",
+        "description": "A description of the app in common list of extensions in Chrome"
+    },
+    "1" : {
+        "message"    : "Подешавања",
+        "description": "Tab name in top-right corner"
+    },
+    "2" : {
+        "message"    : "Унос текста",
+        "description": "Tab name in top-right corner"
+    },
+    "3" : {
+        "message"    : "Опције приказа",
+        "description": "A title for block of settings"
+    },
+    "4" : {
+        "message"    : "Преводилац",
+        "description": "A title for block of settings"
+    },
+    "5" : {
+        "message"    : "Менаџер тема",
+        "description": "A title for block of settings"
+    },
+    "6" : {
+        "message"    : "УРЛ изузеци",
+        "description": "A title for block of settings"
+    },
+    "7" : {
+        "message"    : "Прикажи облачић када два пута кликнем на реч",
+        "description": "A label for checkbox in settings"
+    },
+    "8" : {
+        "message"    : "Прикажи облачић када изаберем реч или фразу",
+        "description": "A label for checkbox in settings"
+    },
+    "9" : {
+        "message"    : "Прикажи облачић када притиснем $1",
+        "description": "A label for checkbox in settings"
+    },
+    "10": {
+        "message"    : "Да подесите пречицу, кликните на ово поње и притисните комбинацију тастера која се састоји од: cmd, ctrl, alt, shift, слова (a-z) или бројева (0-9).",
+        "description": "Help how to define hotkey to make translation"
+    },
+    "11": {
+        "message"    : "Тема $1 већ постоји!",
+        "description": "Error message appears when user tries to save a theme with name which is already exist"
+    },
+    "12": {
+        "message"    : "За чување тренутне теме, укуцајте име и притисните тастер [Enter]",
+        "description": "A tooltip for field with new theme name"
+    },
+    "13": {
+        "message"    : "Име теме мора садржати видљиве карактере",
+        "description": "Error message"
+    },
+    "14": {
+        "message"    : "Замени језике",
+        "description": "Replace direction of the translation on opposite"
+    },
+    "15": {
+        "message"    : "Аутоматски пусти изговор текста",
+        "description": "A label for checkbox in settings"
+    },
+    "16": {
+        "message"    : "Прикажи иконицу за изговор текста унутар облачића",
+        "description": "A label for checkbox in settings"
+    },
+    "18": {
+        "message"    : "Ако желите да искључите ово проширење на неким страницама или чак целим сајтовима, само наведите линкове у пољу испод.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "19": {
+        "message"    : "Можете користити звездицу (*) уместо једног или више симбола у низу у УРЛ адреси, осим косе црте (/).",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "20": {
+        "message"    : "Не заборавите да учитате поново страницу/е да би се примениле измене у подешавањима.",
+        "description": "Some extra info for URL exclusions block"
+    },
+    "21": {
+        "message"    : "Скупи или рашири блок",
+        "description": "A title for +/- icon in right-top corner of each block"
+    },
+    "22": {
+        "message"    : "Преведени текст",
+        "description": "Result of translation, dummy-text in pop-up (user styles)"
+    },
+    "23": {
+        "message"    : "именица",
+        "description": "Part of speech, dummy-text in pop-up (user styles)"
+    },
+    "24": {
+        "message"    : "Реч 1, Реч 2, Реч 3",
+        "description": "Result of translation for specific part of speech, dummy-text in pop-up (user styles)"
+    },
+    "25": {
+        "message"    : "Тема",
+        "description": "Set of styles for pop-up block"
+    },
+    "26": {
+        "message"    : "Откажи",
+        "description": "Text for a button to cancel saving the theme"
+    },
+    "27": {
+        "message"    : "Не можете користити заузето име за прилагођену тему",
+        "description": "Error tooltip appears in case if user tries to save a theme with reserved name"
+    },
+    "28": {
+        "message"    : "Сачувај тренутну тему",
+        "description": "Text for a button to save custom user theme"
+    },
+    "29": {
+        "message"    : "Уклони",
+        "description": "Text for a button to remove the theme"
+    },
+    "30": {
+        "message"    : "Опште",
+        "description": "Sub-title for CSS styles of pop-up generally (padding, shadow, etc.)"
+    },
+    "31": {
+        "message"    : "Позадина",
+        "description": "Sub-title for CSS styles relative to background (color, opacity, etc.)"
+    },
+    "32": {
+        "message"    : "Оквир",
+        "description": "Sub-title for CSS styles relative to border (color, radius, etc.)"
+    },
+    "33": {
+        "message"    : "Текст",
+        "description": "Sub-title for CSS styles relative to text (size, font, etc.)"
+    },
+    "36": {
+        "message"    : "Боја",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "37": {
+        "message"    : "Провидност",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "38": {
+        "message"    : "Користи линеарни градијент",
+        "description": "A label for checkbox, defines a type of gradient for CSS background"
+    },
+    "39": {
+        "message"    : "Ширина",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "40": {
+        "message"    : "Заокруживање",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "41": {
+        "message"    : "Величина",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "42": {
+        "message"    : "Фонт",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "43": {
+        "message"    : "Унутар кутије",
+        "description": "A title for checkbox, defines that the shadow it will be inner (inset)"
+    },
+    "47": {
+        "message"    : "Можда сте мислили $1?",
+        "description": "Suggestion to correct a word or sentence for translation"
+    },
+    "48": {
+        "message"    : "Изговор",
+        "description": "A title tooltip for an icon to play text-to-speech"
+    },
+    "49": {
+        "message"    : "Преведено са $1 (Преводилац $2)",
+        "description": "A title tooltip for pop-up block"
+    },
+    "50": {
+        "message"    : "Сенка",
+        "description": "A sub-title for definition a box shadow for the pop-up"
+    },
+    "51": {
+        "message"    : "Размак",
+        "description": "A sub-title for definition an inner margin inside the pop-up"
+    },
+    "52": {
+        "message"    : "Максимална ширина",
+        "description": "A sub-title for definition a maximum width for the pop-up"
+    },
+    "53": {
+        "message"    : "Максимална висина",
+        "description": "A sub-title for definition a maximum height for the pop-up"
+    },
+    "54": {
+        "message"    : "Стил",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "56": {
+        "message"    : "Замагљивљње",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "57": {
+        "message"    : "Одступање",
+        "description": "A title for part of pop-up CSS style"
+    },
+    "59": {
+        "message"    : "За глатку промену боје можете притиснути и задржати један или све контролне тастере заједно (Ctrl, Alt, Shift) и [↑] или [↓] тастер.",
+        "description": "A tooltip title for the color picker box"
+    },
+    "60": {
+        "message"    : "Драги пријатељи, ако вам се свиђа апликација, подржите нас!",
+        "description": "A text in the footer"
+    },
+    "61": {
+        "message"    : "['$1', 'Оставите коментар'], ['$2', 'донирајте'] или реците својим пријатељима:",
+        "description": "A text in the footer"
+    },
+    "62": {
+        "message"    : "Хвала!",
+        "description": "A text in the footer"
+    },
+    "63": {
+        "message"    : "Почните да куцате да бисте добили превод",
+        "description": "Placeholder inside text area in the user input"
+    },
+    "64": {
+        "message"    : "Сваки пут, када нема одабраног текста на страници, можете притиснути пречицу и добити превод са елемента на страници који лежи испод курсора миша. Додатно, могуће је добити превод из изменљивих поља, као што су поља за унос текста, превести текст са елемената са којих није могуће или је тешко могуће одабрати текст, као што су линкови и дугмад и чак и више од тога - добити превод са наслова /алтернативниг текста слика.",
+        "description": "A title for the text above"
+    },
+    "65": {
+        "message"    : "Аутоматско фокусирање на облачић након што је приказан",
+        "description": "A title for checkbox inside the display options"
+    },
+    "66": {
+        "message"    : "Брзо пребацивање",
+        "description": "A text title for fast switching between translation vendors"
+    },
+    "67": {
+        "message"    : "Запамти укуцани текст у пољу 'Унос текста'",
+        "description": "A label for checkbox in the display options"
+    },
+    "68": {
+        "message"    : "Прикажи предлоге за исправку правописа",
+        "description": "Ability to turn off suggestions to correct spelling in the text (Google only)"
+    },
+    "69": {
+        "message"    : "Прикажи ставку у контекстном менију када је одабран текст",
+        "description": "Don't show the extension item in the context menu (applicable only when text is selected)"
+    },
+    "70": {
+        "message"    : "Преведи са $1",
+        "description": "An item of the context menu"
+    },
+    "71": {
+        "message"    : "Величина фонта корисничког окружења",
+        "description": "A checkbox in the display options"
+    },
+    "72": {
+        "message"    : "Прикажи иконицу у близини одабраног текста за добијање превода",
+        "description": "An option to get translated text"
+    },
+    "73": {
+        "message"    : "Прикажи/сакриј преглед облачића",
+        "description": "A title for icon in the theme block"
+    },
+    "74": {
+        "message"    : "Користи белу тему за овај прозор",
+        "description": "A title for checkbox in the display options block"
+    }
+}
